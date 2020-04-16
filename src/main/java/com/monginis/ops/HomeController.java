@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -39,8 +40,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.CatWiseDashboardQuery;
 import com.monginis.ops.model.ConfiguredSpDayCkResponse;
+import com.monginis.ops.model.DashboardData;
+import com.monginis.ops.model.DateWiseDashboardGraphQuery;
 import com.monginis.ops.model.DummyItems;
 import com.monginis.ops.model.FrItemList;
 import com.monginis.ops.model.FrLoginResponse;
@@ -111,8 +116,8 @@ public class HomeController {
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("login");
-		//HttpSession session = request.getSession();
-		//session.setAttribute("message", "");
+		// HttpSession session = request.getSession();
+		// session.setAttribute("message", "");
 		logger.info("/login request mapping.");
 
 		return model;
@@ -275,9 +280,9 @@ public class HomeController {
 
 		if (loginResponse.getLoginInfo().isError()) {
 
-			//model.addObject("message", loginResponse.getLoginInfo().getMessage());
+			// model.addObject("message", loginResponse.getLoginInfo().getMessage());
 			session.setAttribute("message", "Login failed : Invalid username or password");
-		
+
 			return "redirect:/";
 
 		} else {
@@ -504,4 +509,138 @@ public class HomeController {
 		return model;
 
 	}
+
+	@RequestMapping(value = "/dashboarddemo", method = RequestMethod.GET)
+	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws ParseException {
+
+		ModelAndView model = new ModelAndView("home1");
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		try {
+
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			int type = 1;
+			String fromDate = null;
+			String toDate = null;
+			String typeTitle = null;
+			/*
+			 * try { type = Integer.parseInt(request.getParameter("type")); } catch
+			 * (Exception e) { type = 1; }
+			 */
+
+			model.addObject("type", type);
+			if (type == 4) {
+				fromDate = DateConvertor.convertToYMD(request.getParameter("fromDate"));
+				toDate = DateConvertor.convertToYMD(request.getParameter("toDate"));
+
+				String fDate = request.getParameter("fromDate");
+				String tDate = request.getParameter("toDate");
+
+				model.addObject("fromDate", fDate);
+				model.addObject("toDate", tDate);
+				model.addObject("typeTitle", "");
+
+			} else if (type == 1) {
+				fromDate = sf.format(date);
+				toDate = sf.format(date);
+				model.addObject("typeTitle", "Today's");
+			} else if (type == 2) {
+
+				Calendar calendar = Calendar.getInstance();
+				while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+					calendar.add(Calendar.DATE, -1);
+				}
+				Date d = calendar.getTime();
+				fromDate = sf.format(d);
+
+				System.err.println("d**" + fromDate);
+				Calendar calendar2 = Calendar.getInstance();
+				while (calendar2.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					calendar2.add(Calendar.DATE, 1);
+				}
+				Date d2 = calendar2.getTime();
+				toDate = sf.format(d2);
+				/*
+				 * Calendar calendar1 = Calendar.getInstance(); calendar1.add(Calendar.DATE, 0);
+				 * Date d1 =calendar1.getTime();
+				 */
+
+				// toDate=sf.format(d1);
+				System.err.println("d1**" + toDate);
+				model.addObject("typeTitle", "This Week");
+			} else {
+
+				Date begining, end;
+
+				Calendar calendar = getCalendarForNow();
+				calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+				setTimeToBeginningOfDay(calendar);
+				begining = calendar.getTime();
+				fromDate = sf.format(begining);
+				System.err.println("begining" + fromDate);
+
+				Calendar calendar1 = getCalendarForNow();
+				calendar1.set(Calendar.DAY_OF_MONTH, calendar1.getActualMaximum(Calendar.DAY_OF_MONTH));
+				setTimeToEndofDay(calendar1);
+				end = calendar1.getTime();
+				toDate = sf.format(end);
+
+				model.addObject("typeTitle", "This Month");
+			}
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			System.out.println(map);
+			DashboardData dashboardData = restTemplate.postForObject(Constant.URL + "/getDashboardData", map,
+					DashboardData.class);
+
+			DateWiseDashboardGraphQuery[] dateWiseDashboardGraphQuery = restTemplate.postForObject(
+					Constant.URL + "/dateWiseDashboardGraphQuery", map, DateWiseDashboardGraphQuery[].class);
+			List<DateWiseDashboardGraphQuery> datewiselist = new ArrayList<>(
+					Arrays.asList(dateWiseDashboardGraphQuery));
+
+			CatWiseDashboardQuery[] catWiseDashboardQuery = restTemplate
+					.postForObject(Constant.URL + "/catWiseDashboardQuery", map, CatWiseDashboardQuery[].class);
+			List<CatWiseDashboardQuery> catwiselist = new ArrayList<>(Arrays.asList(catWiseDashboardQuery));
+
+			System.out.println("dashboardData " + dashboardData);
+			System.out.println("datewiselist " + datewiselist);
+			System.out.println("catwiselist " + catwiselist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+
+	private static Calendar getCalendarForNow() {
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(new Date());
+		return calendar;
+	}
+
+	private static void setTimeToBeginningOfDay(Calendar calendar) {
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+	}
+
+	private static void setTimeToEndofDay(Calendar calendar) {
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 999);
+	}
+
 }
