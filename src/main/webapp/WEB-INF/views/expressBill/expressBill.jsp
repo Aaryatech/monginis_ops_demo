@@ -196,11 +196,12 @@ input:checked+.slider:before {
 				<!--rightSidebar-->
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
-					<div class="col-md-2">
+					<div class="col-md-12">
 						<h2 class="pageTitle">
 						<i class="fa fa-file-pdf-o"></i> Express Bill</h2>
 					</div>
 					<div class="col-md-12 text-left bill-date">
+					<div class="col-md-12">
 						<c:choose>
 
 							<c:when test="${count == 0}">
@@ -224,22 +225,27 @@ input:checked+.slider:before {
 											&nbsp; Bill Date :${sellBillHeader.billDate}</B>
 									</h4>
 								</div>
-					</div>
-					<div class="col-md-2">
+								</div>
+								
+								<div class="col-md-2">
 						<span
 							style="padding-top: 0px; float: left; margin-top: 13px; font-size: 16px; width: 100px;">Single
 							Print</span><label class="switch"> <input type="checkbox"
-							id="id"> <span class="slider round"></span>
+							id="id"> <span class="slider round"></span></label>
 					</div>
-					</label>
-					<div class="row">
-						<div class="col-md-2">
+					
+					<div class="col-md-2">
 							<span
 								style="padding-top: 0px; float: left; margin-top: 13px; font-size: 14px; width: 100px;">SP</span>
 							<label class="switch"> <input type="checkbox" id="sp"
 								name="sp"> <span class="slider round"></span>
 							</label>
 						</div>
+					</div>
+					
+					
+					<div class="row">
+						
 
 						<div class="col-md-2" style="display: none;" id="tp">
 							<select class="form-control" data-placeholder="Search Type"
@@ -373,7 +379,7 @@ input:checked+.slider:before {
 													style="width: 65px; border-radius: 18px; text-align: center;" />
 													&nbsp;
 													<button class="btn btn-primary" onclick="insertItem1()"
-									disabled="disabled" id="insertItemButton"  >Submit</button>
+									disabled="disabled" id="insertItemButton" style="margin:5px 0;" >Submit</button>
 												</td>
 											</tr>
 										</table>

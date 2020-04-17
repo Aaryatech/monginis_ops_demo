@@ -144,7 +144,7 @@ table, th, td {
 				<div class="row" style="margin: 0 0 20px 0;">
 					<div class="col-md-6">
 						<div class="order-left">
-					<h2 class="pageTitle">Petty Cash Management</h2>
+					<h2 class="pageTitle"><i class="fa fa-suitcase" aria-hidden="true"></i> Petty Cash Management</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
 					</div>

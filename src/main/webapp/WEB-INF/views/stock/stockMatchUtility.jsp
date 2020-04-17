@@ -75,7 +75,7 @@ a:hover {
 			 	<form action="${pageContext.request.contextPath}/showStockMatchUtility" method="POST" >
 			
 				<div class="order-left">
-					<h2 class="pageTitle">Bill As Per Physical Stock</h2>
+					<h2 class="pageTitle"><i class="fa fa-bar-chart-o" aria-hidden="true"></i> Bill As Per Physical Stock</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
 				<div class="order-right" align="right">
@@ -244,7 +244,7 @@ a:hover {
 					</div>
 
 							<div class="colOuter" id="sellBillAdd">
-								<div class="col4full" align="right">
+								<div class="col4full" align="center">
 									<input name="" class="buttonsaveorder" value="Add Sell Bill"
 										id="substk" type="submit" style="display:${btnDisplayStyle}">
 								</div>

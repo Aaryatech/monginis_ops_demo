@@ -67,7 +67,7 @@ table, th, td {
 
 					<div class="row">
 						<div class="col-md-12">
-							<h2 class="pageTitle">Billwise Sale Report</h2>
+							<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Billwise Sale Report</h2>
 						</div>
 					</div>
 
@@ -98,8 +98,8 @@ table, th, td {
 								View</button>
 
 							<%--  <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-							<button class="btn btn-primary" value="PDF" id="PDFButton"
-								onclick="genPdf()">PDF</button>
+							<button class="btn additem_btn" value="PDF" id="PDFButton"
+								onclick="genPdf()" style="margin: 0;">PDF</button>
 
 
 							<br>

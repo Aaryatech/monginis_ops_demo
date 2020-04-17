@@ -38,6 +38,13 @@
 
 </head>
 <body style=" background: url(resources/images/lgn_bg.jpg) no-repeat left top;">
+
+	<div class="power_logo"><a href="https://aaryatechindia.in/" target="_blank">
+		<img src="${pageContext.request.contextPath}/resources/images/powerd_logo.png"
+						alt="monginis">
+	</a> </div>
+
+
 <%-- <div class="fix_btm">
 	<img src="${pageContext.request.contextPath}/resources/images/login_table.png"
 						alt="monginis">
@@ -154,7 +161,7 @@
 								<div class="loginfildset">
 									<div class="logintexboxleft">
 										<a href="${pageContext.request.contextPath}/forgetPwd"><i
-											class="fa fa-lock"></i> Forgot your Password</a>
+											class="fa fa-lock"></i> Forgot Password</a>
 									</div>
 									<!-- <div class="checkbox">
 										<input id="check1" type="checkbox" name="check" value="check1">

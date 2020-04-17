@@ -60,7 +60,7 @@ table, th, td {
 				</c:if>
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Request GRN</h2>
+						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> View GRN <!-- Request GRN --></h2>
 					</div>
 				</div>
 

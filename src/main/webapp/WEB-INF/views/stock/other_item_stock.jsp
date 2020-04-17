@@ -135,10 +135,49 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Other Item Stock Details</h2>
+				
+				<div class="row">
+					<div class="col-md-4">
+						
+					<h2 class="pageTitle"><i class="fa fa-file-pdf-o "></i> Other Item Stock Details</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+				
+					</div>
+					<div class="col-md-8">
+						<div class="col-md-4">
+						<div class="col1title">Select View Option</div>
+					</div>
+					<div class="col-md-4">
+						<select name="selectStock" class="form-control chosen"
+							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
+
+							<option value="-1">Select Option</option>
+							<option value="1" id="currentStock">Get Current Stock</option>
+
+							<option value="3" id="dateStock">Stock Between Dates</option>
+
+						</select>
+					</div>
+					<div id="crnt_stk_btn">
+					<div class="col-md-1">
+						<input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()">
+					</div>
+
+					<div class="col-md-1">
+						<button type="button" class="buttonsaveorder" id='pdf'
+							onclick="genPdf()" disabled>PDF</button>
+					</div>
+					 <div class="col-md-2" style="margin:10px 0 0 0;">
+						<b>Month: ${monthName}/${year}</b>
+			     	</div>
+					</div>
+					</div>
 				</div>
+				
+				
+				
+				
 
 				<!-- 
 				<div class="colOuter">
@@ -170,34 +209,7 @@ table, th, td {
 
 
 
-					<div class="col-md-2">
-						<div class="col1title">Select View Option</div>
-					</div>
-					<div class="col-md-2">
-						<select name="selectStock" class="form-control chosen"
-							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
-
-							<option value="-1">Select Option</option>
-							<option value="1" id="currentStock">Get Current Stock</option>
-
-							<option value="3" id="dateStock">Stock Between Dates</option>
-
-						</select>
-					</div>
-					<div id="crnt_stk_btn">
-					<div class="col-md-1">
-						<input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()">
-					</div>
-
-					<div class="col-md-1">
-						<button type="button" class="buttonsaveorder" id='pdf'
-							onclick="genPdf()" disabled>PDF</button>
-					</div>
-					 <div class="col-md-2" >
-						<b>Month: ${monthName}/${year}</b>
-			     	</div>
-					</div>
+					
 	              
 				</div>
 

@@ -106,7 +106,7 @@
 					<div class="login_r frget_pass">
 				
 					<h2 class="login_head_one">
-						Forget Password
+						Forgot Password
 					</h2>
 					<div class="loginBox">
 						<%-- <div class="loginUser">

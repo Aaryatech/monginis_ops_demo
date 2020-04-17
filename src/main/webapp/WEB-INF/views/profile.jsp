@@ -94,7 +94,10 @@
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-										
+					
+					<h2 class="pageTitle">
+					<i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile
+				</h2>					
 
 
 					<!--slider-->

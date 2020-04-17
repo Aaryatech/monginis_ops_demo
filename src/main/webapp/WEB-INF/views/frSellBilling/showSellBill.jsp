@@ -98,7 +98,7 @@ jQuery(document).ready(function(){
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">Sale Bill Details</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle"><i class="fa fa-eye" aria-hidden="true"></i> View Sale Bill</h2></div>
 	</div>
 	 <%String frmDate = session.getAttribute("fromSellBillDate").toString();
 	 String tDate = session.getAttribute("toSellBillDate").toString();%>

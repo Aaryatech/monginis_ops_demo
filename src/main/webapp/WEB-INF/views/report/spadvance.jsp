@@ -35,7 +35,7 @@
 			<!--rightSidebar-->
 			<div class="sidebarright">
 				<div class="order-left">
-					<h2 class="pageTitle">Sp Advance Report</h2>
+					<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Sp Advance Report</h2>
 
 				</div>
 				<form id="validation-form">
@@ -58,18 +58,20 @@
 								placeholder="To Date">
 						</div>
 
-						<div class="col-md-1"></div>
-						<div class="col-md-1">
-							<button type="button" class="btn  buttonsaveorder"
+						
+						<div class="col-md-2">
+							<button type="button" class="btn search_btn pull-left"
 								onclick="searchSpAdv()">Search</button>
-						</div>
-
-						<div class="col-md-1">
-							<button type="button" class="btn  buttonsaveorder" id='pdf'
-								onclick="genPdf()" disabled>Pdf</button>
+								
+								<button type="button" class="btn  buttonsaveorder" id='pdf'
+								onclick="genPdf()" style="float:left; margin: 0 0 0 10px;" disabled>Pdf</button>
 							<input type="hidden" name="frId" id="frId" value="${frId}">
 						</div>
-					</div>
+
+						
+							
+						</div>
+					
 
 					<!--tabNavigation-->
 					<div class="cd-tabs">
@@ -209,7 +211,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-3  controls">
+						<div class="col-sm-12  controls">
 							<input type="button" id="expExcel" class="btn btn-primary"
 								value="EXPORT TO Excel" onclick="exportToExcel();"
 								disabled="disabled">
@@ -219,7 +221,7 @@
 
 					</div>
 					<!--tabNavigation-->
-
+					</div>
 
 				</form>
 			</div>

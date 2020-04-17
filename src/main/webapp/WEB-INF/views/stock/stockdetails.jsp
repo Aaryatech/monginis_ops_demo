@@ -171,7 +171,7 @@ table, th, td {
 			<!--rightSidebar-->
 			<div class="sidebarright">
 			<div class="col-md-4"><div class="order-left">
-					<h2 class="pageTitle">Stock Details </h2>
+					<h2 class="pageTitle"><i class="fa fa-bar-chart-o" aria-hidden="true" ></i> Stock Details </h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div></div>
 			<div class="col-md-8"><div align="right">
@@ -373,7 +373,7 @@ table, th, td {
 
 
 
-				<div class="colOuter">
+				<div class="colOuter" style="margin: 15px 0 0 0;"> 
 					<div class="col1">
 						<div class="col1title"></div>
 					</div>

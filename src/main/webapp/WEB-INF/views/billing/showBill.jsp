@@ -112,7 +112,7 @@ table, th, td {
 					
 						<div class="col-md -3">
 							
-								<div class="col1title" align="left"><h3>Purchase Bill Details</h3></div>
+								<h2 class="pageTitle" align="left"><i class="fa fa-money "></i> Purchase Bill Details</h2>
 						</div>
 					<div class="colOuter">
 						<div class="col-md-1">

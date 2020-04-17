@@ -100,9 +100,7 @@ abbr:hover {cursor: pointer;}
 				<li><a
 					href="${pageContext.request.contextPath}/showStockMatchUtility"><div
 							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
-								alt="img">
+							<i class="fa fa-bar-chart-o" aria-hidden="true" style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
 							Bill As Per <span>Physical Stock </span>
@@ -110,11 +108,11 @@ abbr:hover {cursor: pointer;}
 			</c:if>
 				<li><a href="${pageContext.request.contextPath}/viewBill"><div
 							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-eye" aria-hidden="true"  style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
-							View Sale Bills <span></span>
+							 View Sale Bill
+							 <span></span>
 						</div></a></li>
 			</c:if>
 				
@@ -133,9 +131,7 @@ abbr:hover {cursor: pointer;}
 			<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
 				<li><a href="#" onClick="openNav1()"><div class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/nav-goodsreturn.png"
-								alt="img">
+							<i class="fa fa-refresh" aria-hidden="true"  style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
 							Goods <span>Return</span>
@@ -245,7 +241,7 @@ abbr:hover {cursor: pointer;}
 			<c:if test="${info.accessRight==1  && flag==1}">
 
 				<li><a href="#" onClick="openNav4()"><div class="img">
-							<i class="fa fa-file-o icon" style="font-size: 22px !important;"></i>
+							<i class="fa fa-pie-chart" aria-hidden="true" style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
 							<span>Reports</span>
@@ -294,9 +290,7 @@ abbr:hover {cursor: pointer;}
 				<li><a
 					href="${pageContext.request.contextPath}/showstockdetail"><div
 							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
-								alt="img">
+							<i class="fa fa-bar-chart-o" aria-hidden="true" style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
 							Stock <span>Details</span>
@@ -305,9 +299,7 @@ abbr:hover {cursor: pointer;}
 				<li><a
 					href="${pageContext.request.contextPath}/showPattyCashMgmnt"><div
 							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
-								alt="img">
+							<i class="fa fa-suitcase" aria-hidden="true" style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
 							Petty <span>Cash</span>
@@ -334,9 +326,7 @@ abbr:hover {cursor: pointer;}
 					href="${pageContext.request.contextPath}/showeditprofile"><div
 							class="img">
 
-							<img
-								src="${pageContext.request.contextPath}/resources/images/nav-editprofile.png"
-								alt="img">
+							<i class="fa fa-pencil" aria-hidden="true" style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
 							Edit <span>Profile</span>

@@ -61,12 +61,12 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-2">
-						<h2 class="pageTitle">Request GVN</h2>
+						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> View GVN <!-- Request GVN --></h2>
 					</div>
                    
 
 					<div class="col-md-3">
-						<br> <select name="view_opt" id="view_opt" class="form-control"
+						<select name="view_opt" id="view_opt" class="form-control"
 							style="width: 250px; background-color: white; height: 40px" onchange="showDate()">
 							<option value="0">Select From Bill</option>
 							<option value="1">Select From Date</option>
@@ -74,7 +74,7 @@ table, th, td {
 						</select>
 					</div>
 
-					<br>
+					
 
 
 					<div class="col-md-2">
@@ -90,23 +90,15 @@ table, th, td {
 						<!--<button type="button" class="btn">Cancel</button>-->
 
 					</div>
-
-				</div>
-
-				<br />
-
-				<div class="row">
-					<div class="col-md-12">
+					
+					<div class="col-md-6">
 						<!--table-->
 						<form
 							action="${pageContext.request.contextPath}/getGvnBillDetails"
 							name="grn" id="grn" method="get">
 
 							<div class="row" id="byBillNo">
-							<div class="col-md-2">
-						<h2 class="pageTitle"> </h2>
-					</div>
-								<div class="col-md-3">
+								<div class="col-md-6">
 									<select name="bill_no" id="bill_no" class="form-control"
 										style="width: 250px; background-color: white; height: 40px">
 									
@@ -141,6 +133,15 @@ table, th, td {
 								<!-- </div> -->
 							</div>
 						</form>
+					</div>
+
+				</div>
+
+				<br />
+
+				<div class="row">
+					<div class="col-md-12">
+						
 
 					</div>
 					<!-- 						</form>

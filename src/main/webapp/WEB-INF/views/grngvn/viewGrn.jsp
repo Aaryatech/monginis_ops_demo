@@ -45,7 +45,7 @@ table, th, td {
 			<!--rightSidebar-->
 			<div class="sidebarright">
 				<div class="order-left">
-					<h2 class="pageTitle">GRN Headers</h2>
+					<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> GRN Headers</h2>
 
 				</div>
 				<form id="validation-form">

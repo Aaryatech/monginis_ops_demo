@@ -107,7 +107,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Billwise Purchase Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Billwise Purchase Report</h2>
 					</div>
 				</div>
 
@@ -134,10 +134,9 @@ jQuery(document).ready(function(){
 					<div class="col-md-2">
 						<button class="btn search_btn pull-left"
 							onclick="billWisePurchaseReport()">Search</button>
-						<%-- 		  &nbsp;&nbsp;&nbsp;   <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+					
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()" style="margin:0 0 0 10px; float: left;">PDF</button>
 
 					</div>
 

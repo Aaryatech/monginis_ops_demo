@@ -216,7 +216,7 @@ jQuery(document).ready(function(){
 				<!--rightSidebar-->
 				<div class="sidebarright">
 					<div class="order-left">
-						<h2 class="pageTitle">Order History</h2>
+						<h2 class="pageTitle"><i class="fa fa-file-text-o"></i> Order History</h2>
 						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 					</div>
 

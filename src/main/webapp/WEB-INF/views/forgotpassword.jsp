@@ -66,7 +66,7 @@ jQuery(document).ready(function(){
 	<div class="loginBox">
 		<div class="loginUser"><img src="${pageContext.request.contextPath}/resources/images/loginuser.png" align="img"></div>
 		
-		<h3> Forgot your Password ?</h3>
+		<h3> Forgot Password</h3>
 		
 		<div class="loginfildset">
 		<div class="loginfildset"><input class="texboxlogin" placeholder="Enter Mobile No" name="" type="text"></div>

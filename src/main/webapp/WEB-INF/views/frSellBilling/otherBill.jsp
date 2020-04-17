@@ -241,20 +241,20 @@ body {
 					
 					<div class="col-md-4">
 					<div class="order-left" style="margin-top: 14px;">
-						<h2 class="pageTitle">Other Purchase Bill</h2>
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Other Purchase Bill</h2>
 
 					</div></div>
 					
 					<div class="col-md-8" align="right" >
-					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn additem_btn">
+					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn additem_btn" style="margin:5px 0 0 0;">
 										</a>
-					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn additem_btn">
+					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn additem_btn" style="margin:5px 0 0 0;">
 										</a>
-					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="btn additem_btn">
+					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="btn additem_btn" style="margin:5px 0 0 0;">
 										</a>
-						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn additem_btn">
+						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn additem_btn" style="margin:5px 0 0 0;">
 										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="btn additem_btn">
+						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="btn additem_btn" style="margin:5px 0 0 0;">
 										</a>
 					</div>
 

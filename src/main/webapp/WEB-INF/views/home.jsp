@@ -107,8 +107,9 @@
 						<div class="latestNews">
 					
 						<h3 class="latestNewsTitle">Latest News</h3>
-							<div class="microsoft marquee">
+							<div class="microsoft"> <!-- marquee -->
 							
+							<marquee behavior="scroll" direction="left" style="font-size: 16px; color: white;" scrollamount="4" onmouseover="this.stop()" onmouseout="this.start()">
 						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
 						
 					            <c:set var="colors" value=""/>
@@ -124,6 +125,7 @@
 							
 						
 						</c:forEach>
+						</marquee>
 						</div>
 					</div>
 					<div id="owl-example" class="owl-carousel">
