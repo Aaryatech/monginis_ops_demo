@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
 .pageTitle {
 	margin-top: 0px;
@@ -306,23 +307,32 @@
 
 											<div class="sale_divide">
 												<div class="sales_l">
-													<span>1000</span>
+													<span><fmt:formatNumber type="number" pattern="#"
+															value="${dashboardData.totalSell}" maxFractionDigits="2"
+															minFractionDigits="2" /></span>
 												</div>
 												<div class="sales_l">
-													<span>1000</span>
+													<span><fmt:formatNumber type="number" pattern="#"
+															value="${dashboardData.spCakeTotalBill}"
+															maxFractionDigits="2" minFractionDigits="2" /></span>
 												</div>
 												<div class="clr"></div>
 											</div>
 
 
-											<h1 class="price_sale">99,000</h1>
+											<h1 class="price_sale">
+
+												<fmt:formatNumber type="number" pattern="#"
+													value="${dashboardData.totalSell+dashboardData.spCakeTotalBill}"
+													maxFractionDigits="2" minFractionDigits="2" />
+											</h1>
 										</div>
 										<div class="clr"></div>
 									</div>
 								</li>
 
 								<!-- second li box -->
-								<li>
+								<!-- <li>
 									<div class="sale_one bg_two">
 										<div class="sale_l">
 											<i class="fa fa-inr" aria-hidden="true"></i>
@@ -331,6 +341,40 @@
 											<h3 class="sale_head">Discount Rate</h3>
 
 											<h5 class="price_sale">57236</h5>
+										</div>
+										<div class="clr"></div>
+									</div>
+								</li> -->
+
+								<li>
+									<div class="sale_one bg_two">
+										<div class="sale_l">
+											<i class="fa fa-inr" aria-hidden="true"></i>
+										</div>
+										<div class="sale_r">
+											<h3 class="sale_head">Approved Return</h3>
+
+											<div class="sale_divide">
+												<div class="sales_l">
+													<span><fmt:formatNumber type="number" pattern="#"
+															value="${dashboardData.grnAprAmt}" maxFractionDigits="2"
+															minFractionDigits="2" /></span>
+												</div>
+												<div class="sales_l">
+													<span><fmt:formatNumber type="number" pattern="#"
+															value="${dashboardData.grnAprAmmt}" maxFractionDigits="2"
+															minFractionDigits="2" /></span>
+												</div>
+												<div class="clr"></div>
+											</div>
+
+
+											<h1 class="price_sale">
+
+												<fmt:formatNumber type="number" pattern="#"
+													value="${dashboardData.grnAprAmt+dashboardData.grnAprAmmt}"
+													maxFractionDigits="2" minFractionDigits="2" />
+											</h1>
 										</div>
 										<div class="clr"></div>
 									</div>
@@ -343,9 +387,14 @@
 											<i class="fa fa-inr" aria-hidden="true"></i>
 										</div>
 										<div class="sale_r">
-											<h3 class="sale_head">Purchase</h3>
+											<h3 class="sale_head">Contribution</h3>
 
-											<h5 class="price_sale">3760</h5>
+											<h5 class="price_sale">
+												<fmt:formatNumber type="number" pattern="#"
+													value="${(dashboardData.totalSell+dashboardData.spCakeTotalBill)-
+													(dashboardData.grnAprAmt+dashboardData.grnAprAmmt+dashboardData.purchaseBill)}"
+													maxFractionDigits="2" minFractionDigits="2" />
+											</h5>
 
 
 										</div>
@@ -361,8 +410,8 @@
 
 										</div>
 										<div class="sale_r">
-											<h3 class="sale_head">&nbsp;No. of Bill</h3>
-											<h5 class="price_sale">125047</h5>
+											<h3 class="sale_head">Target</h3>
+											<h5 class="price_sale">0.00</h5>
 										</div>
 										<div class="clr"></div>
 									</div>
