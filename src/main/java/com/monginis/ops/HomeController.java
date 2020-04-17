@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -527,10 +528,12 @@ public class HomeController {
 			String fromDate = null;
 			String toDate = null;
 			String typeTitle = null;
-			/*
-			 * try { type = Integer.parseInt(request.getParameter("type")); } catch
-			 * (Exception e) { type = 1; }
-			 */
+
+			try {
+				type = Integer.parseInt(request.getParameter("type"));
+			} catch (Exception e) {
+				type = 1;
+			}
 
 			model.addObject("type", type);
 			if (type == 4) {
@@ -603,24 +606,110 @@ public class HomeController {
 			DashboardData dashboardData = restTemplate.postForObject(Constant.URL + "/getDashboardData", map,
 					DashboardData.class);
 
-			DateWiseDashboardGraphQuery[] dateWiseDashboardGraphQuery = restTemplate.postForObject(
-					Constant.URL + "/dateWiseDashboardGraphQuery", map, DateWiseDashboardGraphQuery[].class);
-			List<DateWiseDashboardGraphQuery> datewiselist = new ArrayList<>(
-					Arrays.asList(dateWiseDashboardGraphQuery));
+			/*
+			 * DateWiseDashboardGraphQuery[] dateWiseDashboardGraphQuery =
+			 * restTemplate.postForObject( Constant.URL + "/dateWiseDashboardGraphQuery",
+			 * map, DateWiseDashboardGraphQuery[].class); List<DateWiseDashboardGraphQuery>
+			 * datewiselist = new ArrayList<>( Arrays.asList(dateWiseDashboardGraphQuery));
+			 */
 
-			CatWiseDashboardQuery[] catWiseDashboardQuery = restTemplate
-					.postForObject(Constant.URL + "/catWiseDashboardQuery", map, CatWiseDashboardQuery[].class);
-			List<CatWiseDashboardQuery> catwiselist = new ArrayList<>(Arrays.asList(catWiseDashboardQuery));
+			/*
+			 * CatWiseDashboardQuery[] catWiseDashboardQuery = restTemplate
+			 * .postForObject(Constant.URL + "/catWiseDashboardQuery", map,
+			 * CatWiseDashboardQuery[].class); List<CatWiseDashboardQuery> catwiselist = new
+			 * ArrayList<>(Arrays.asList(catWiseDashboardQuery));
+			 */
 
-			System.out.println("dashboardData " + dashboardData);
-			System.out.println("datewiselist " + datewiselist);
-			System.out.println("catwiselist " + catwiselist);
+			model.addObject("frmd", fromDate);
+			model.addObject("tod", toDate);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 
+	}
+
+	@RequestMapping(value = "/getCatSellList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CatWiseDashboardQuery> getCatSellList(HttpServletRequest request, HttpServletResponse responsel) {
+
+		System.err.println("************");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		String fromDate = request.getParameter("frmd");
+		String toDate = request.getParameter("tod");
+		RestTemplate restTemplate = new RestTemplate();
+		List<CatWiseDashboardQuery> catwiselist = new ArrayList<>();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			CatWiseDashboardQuery[] catWiseDashboardQuery = restTemplate
+					.postForObject(Constant.URL + "/catWiseDashboardQuery", map, CatWiseDashboardQuery[].class);
+			catwiselist = new ArrayList<>(Arrays.asList(catWiseDashboardQuery));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return catwiselist;
+	}
+
+	@RequestMapping(value = "/getItemSellBill", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CatWiseDashboardQuery> getItemSellBill(HttpServletRequest request, HttpServletResponse responsel) {
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		String fromDate = request.getParameter("frmd");
+		int catId = Integer.parseInt(request.getParameter("id"));
+		int flag = Integer.parseInt(request.getParameter("flag"));
+		String toDate = request.getParameter("tod");
+		RestTemplate restTemplate = new RestTemplate();
+		List<CatWiseDashboardQuery> sectionList = new ArrayList<>();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			map.add("frId", frDetails.getFrId());
+			map.add("catId", catId);
+			map.add("flag", flag);
+
+			System.out.println("sdfdsfdsf");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sectionList;
+	}
+
+	@RequestMapping(value = "/getDatewiseSellList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<DateWiseDashboardGraphQuery> getDatewiseSellList(HttpServletRequest request,
+			HttpServletResponse responsel) {
+
+		System.err.println("************");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		String fromDate = request.getParameter("frmd");
+		String toDate = request.getParameter("tod");
+		RestTemplate restTemplate = new RestTemplate();
+		List<DateWiseDashboardGraphQuery> datewiselist = new ArrayList<>();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			System.out.println(map);
+			DateWiseDashboardGraphQuery[] dateWiseDashboardGraphQuery = restTemplate.postForObject(
+					Constant.URL + "/dateWiseDashboardGraphQuery", map, DateWiseDashboardGraphQuery[].class);
+			datewiselist = new ArrayList<>(Arrays.asList(dateWiseDashboardGraphQuery));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datewiselist;
 	}
 
 	private static Calendar getCalendarForNow() {
