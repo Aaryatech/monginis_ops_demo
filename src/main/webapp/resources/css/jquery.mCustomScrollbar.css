@@ -67,7 +67,7 @@ y-axis
 		width: 16px;
 		height: auto;
 		left: auto;
-		top: 0;
+		top: 5px /* 0 */;
 		right: 0;
 		bottom: 0;
 	}

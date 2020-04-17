@@ -37,15 +37,20 @@
 
 
 </head>
-<body>
-
+<body style=" background: url(resources/images/lgn_bg.jpg) no-repeat left top;">
+<%-- <div class="fix_btm">
+	<img src="${pageContext.request.contextPath}/resources/images/login_table.png"
+						alt="monginis">
+</div> --%>
+	
 	<!--wrapper-start-->
 	<div class="wrapper">
 
+		
 
 
 		<!--topHeader-->
-		<div class="fullGrid center logoBarbg slideposi">
+		<%-- <div class="fullGrid center logoBarbg slideposi">
 			<div class="wrapperIn positionR">
 				<div class="logoBarLeft">
 					<a href=""><img
@@ -56,25 +61,28 @@
 					<div id="menuzord" class="menuzord red menuzord-responsive">
 						<ul
 							class="menuzord-menu menuzord-right menuzord-indented scrollable">
-							<%--  <li><a href="#"><div class="usericon">John doe</div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
+							 <li><a href="#"><div class="usericon">John doe</div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
                 	<ul class="dropdown">
                         <li><a href="#">My Account</a></li>
 						<li><a href="#">Edit Profile</a></li>
 						<li><a href="#">Setting</a></li>
 						<li><a href="#">Log out</a></li>
 					</ul>
-                </li> --%>
+                </li>
 						</ul>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --%>
 		<!--topHeader-->
 
 		<!--rightContainer-->
 		<div class="fullGrid center">
 			<!--fullGrid-->
 			<div class="wrapperIn2">
+			
+				
+			
 
 
 				<!-- <form method="POST" action="uploadFile" enctype="multipart/form-data">
@@ -89,22 +97,42 @@
 			
 				<c:if test="${not empty message && message!=''}">
 					<!-- here would be a message with a result of processing -->
-					<div class="messages messagesErr">${message}</div>
+					<div class="messages messagesErr">${message}</div><!-- messagesErr -->
 
 				</c:if>
+				
+				<!-- <div class="a">
+					<div class="login_new">
+						<div class="login_l">dvdv</div>
+						<div class="login_r">sbdsbsdf</div>
+						<div class="clr"></div>
+					</div>
+				</div> -->
 
 
 				<form id="form-login" action="loginProcess" method="post">
 					<div class="loginInner">
-						<h2>
-							Login to your <span>Account</span>
+					
+						<div class="login_l"><a href=""><img
+						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
+						alt="monginis"></a>
+						
+						<p class="login_txt">Delivering with Professional Excellence To be preferred Chartered Accountant, Advisor or Consultant to Business across India; and provide utility oriented legal compliance. </p>
+						
+						</div>
+						
+						<div class="login_r">
+					
+					
+						<h2 class="login_head_one">
+							Login to your Account
 						</h2>
 						<div class="loginBox">
-							<div class="loginUser">
+							<%-- <div class="loginUser">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/loginuser.png"
 									align="img">
-							</div>
+							</div> --%>
 							<form action="login" class="form-horizontal" id="validation-form"
 								method="post">
 
@@ -135,7 +163,7 @@
 								</div>
 							</form>
 						</div>
-
+						</div>
 						<%-- <div class="loginBox">
 		<div class="loginUser"><img src="${pageContext.request.contextPath}/resources/images/loginuser.png" align="img"></div>
 		
@@ -147,6 +175,7 @@
 		</div>
 	
 	</div> --%>
+					<div class="clr"></div>
 					</div>
 				</form>
 				<!-- <div class="messages messagesErr">err message</div>

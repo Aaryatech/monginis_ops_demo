@@ -34,15 +34,15 @@
 }
 
 .pageTitle {
-    padding-bottom: 0px;
+    padding-bottom: 15px /* 0px */;
 }
 
 .sidebarright {
-    padding-top: 0px;
+    /*padding-top: 0px;*/
 }
 
 .pageTitle {
-    margin-top: 14px;
+    /* margin-top: 14px; */
 }
 
 .calender-title{
@@ -88,7 +88,7 @@ margin: 0px auto;
 }
 
 .logoBarbg {
-   height:60px;
+   height:58px /* 60px */;
 }
 
 .logoBarRight {
@@ -154,10 +154,10 @@ font-size: 16px;
 }
 
 .table-scroll th, .table-scroll td {
-	padding:8px 3px;
+	padding:8px 10px /* 8px 3px */;
 	vertical-align: top;
 	text-align: left;
-	font-size: 18px;
+	font-size: 16px /* 18px */;
 	
 }
 .faux-table table {
@@ -212,7 +212,7 @@ font-size: 16px;
 }
 
 .sidenav {
-    top: 62px;
+    top: 58px /* 62px */;
     left: 0px;
 }
 
@@ -221,9 +221,10 @@ font-size: 16px;
 }
 
 .userimg img {
-    max-width: 60px;
+    /*max-width: 60px;
     height: 40px;
-    width:40px;
+    width:40px;*/
+    max-width: 30px; height: 30px; width: 30px; vertical-align: top; margin: 10px 0 0 15px;
  }
  
  .userimg {
@@ -317,7 +318,7 @@ font-size: 18px !important;
  }
  
  .cd-tabs-navigation a {
-    padding: 3px 30px;
+    padding:5px 10px  /* 3px 30px */;
 }
 
 .table td {

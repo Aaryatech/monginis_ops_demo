@@ -115,26 +115,26 @@ table, th, td {
 								<div class="col1title" align="left"><h3>Purchase Bill Details</h3></div>
 						</div>
 					<div class="colOuter">
-						<div class="col-md-2">
+						<div class="col-md-1">
 							<div class="col1title">From Date</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<input id="fromdatepicker" class="texboxitemcode texboxcal"
 								placeholder="From Date" name="from_datepicker"  autocomplete="off" type="text" value="${fromDate}">
 
 						</div>
 
 
-						<div class="col-md-2">
+						<div class="col-md-1">
 							<div class="col1title">To Date</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<input id="todatepicker" class="texboxitemcode texboxcal"
 								placeholder="To Date" name="to_datepicker" autocomplete="off" type="text" value="${toDate}">
 
 						</div>
 
-						<div align="center">
+						<div align="left">
 							<input name="" class="buttonsaveorder" value="Search"
 								type="submit" align="center">
 						</div>

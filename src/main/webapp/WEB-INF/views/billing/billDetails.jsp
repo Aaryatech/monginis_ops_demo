@@ -133,17 +133,18 @@ However, delay the fade out process for 2.5 seconds */
 		<br>
 	
 		<div class=" col-md-2">
-		    <h2 class=" pull-left">Invoice No:-  <b>${invoiceNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		    <h2 class=" pull-left flt_one">Invoice No:-  <b>
+		    ${invoiceNo}</b></h2>
 		</div>
 	
 		<div class="col-md-2">
-		    <h2 class="pull-left">Bill Date:- <b> ${billDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		    <h2 class="pull-left flt_one">Bill Date:- <b> ${billDate}</b></h2>
 		</div>
 			<div class="col-md-3">
-		    <h2 class="pull-left">Grand Total:- <b> ${grandTotal}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		    <h2 class="pull-left flt_one">Grand Total:- <b> ${grandTotal}</b></h2>
 		</div>
 		<div class="col-md-4 ">
-			  <h2 class="pull-left">Bill Status:-<input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
+			  <h2 class="pull-left flt_one">Bill Status:-<input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
 																	<c:when test="${billStatus==1}">
 																		<b><label  id="status1">Pending</label></b>
 																	</c:when>
@@ -185,12 +186,12 @@ However, delay the fade out process for 2.5 seconds */
 					<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
+				<div id="table-scroll" class="table-scroll" style="margin:0 0 20px 0;">
 					<div id="faux-table" class="faux-table" aria="hidden">
 <!-- 					<div class="table-wrap">
  -->						 </div>
 							<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+						<table id="table_grid" class="main-table" >
 							<thead>
 								
 											<tr class="bgpink">

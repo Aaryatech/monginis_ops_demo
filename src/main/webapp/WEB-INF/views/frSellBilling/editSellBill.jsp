@@ -116,13 +116,12 @@ jQuery(document).ready(function(){
 							Bill No:- <b>${sellBillNo}</b>
 						</h4>
 					</div>
-					<div class="col-md-2 "></div>
 					<div class="col-md-3">
 						<h4 class="pull-left">
 							Bill Date:- <b> ${billDate}</b>
 						</h4>
 					</div>
-					<div class="col-md-2 "></div>
+					
 
 				</div>
 				<br />
@@ -139,8 +138,8 @@ jQuery(document).ready(function(){
 
 							
 								<table width="100%" border="0" cellspacing="0" cellpadding="0"
-									id="table_grid6" class="table table-bordered">
-									<tr class="bgpink">
+									id="table_grid6" class="table table-bordered" style="font-size: 16px;">
+									<tr class="bgpink"  style="font-size: 16px;">
 										<th>Sr</th>
 										<th>Item Name
 										</th>
@@ -231,16 +230,16 @@ jQuery(document).ready(function(){
 					</div>
 				</div>
 					<div class="row">
-					<div class="col-md-3"><b>Previous Paid Amt : </b>&nbsp;${sellBillHeader.paidAmt}
+					<div class="col-md-2" style="margin: 7px 0 0 0;"><b>Previous Paid Amt : </b>&nbsp; &nbsp; &nbsp;${sellBillHeader.paidAmt}
 				</div>
-				<div class="col-md-2"><b>Paid Amt : </b>
+				<div class="col-md-2" style="margin: 7px 0 0 0;"><b>Paid Amt : </b>
 				</div>
 				<div class="col-md-2">
 					<input type="number" name="paidAmt" class="form-control" min="0" id="paidAmt" value="${sellBillHeader.paidAmt}" min="0"   oninput="onPaidAmt(${sellBillHeader.paidAmt},${sellBillHeader.remainingAmt},this.value)"/>
 				</div>
-				<div class="col-md-2"><b>Remaining Amt : </b>
+				<div class="col-md-2" style="margin: 7px 0 0 0;"><b>Remaining Amt : </b>
 				</div>
-				<div class="col-md-1" id="remainingAmt">
+				<div class="col-md-2" id="remainingAmt"  style="margin: 7px 0 0 0;">
 				      <fmt:formatNumber type="number" minFractionDigits="0"
 														maxFractionDigits="0" value="${sellBillHeader.remainingAmt}" groupingUsed="false" />
 				</div>

@@ -37,15 +37,15 @@
 
 
 </head>
-<body>
+<body style=" background: url(resources/images/lgn_bg.jpg) no-repeat left top;">
 
 	<!--wrapper-start-->
 	<div class="wrapper">
-
+	
 
 
 		<!--topHeader-->
-		<div class="fullGrid center logoBarbg slideposi">
+		<%-- <div class="fullGrid center logoBarbg slideposi">
 			<div class="wrapperIn positionR">
 				<div class="logoBarLeft">
 					<a href=""><img
@@ -56,19 +56,19 @@
 					<div id="menuzord" class="menuzord red menuzord-responsive">
 						<ul
 							class="menuzord-menu menuzord-right menuzord-indented scrollable">
-							<%--  <li><a href="#"><div class="usericon">John doe</div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
+							 <li><a href="#"><div class="usericon">John doe</div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
                 	<ul class="dropdown">
                         <li><a href="#">My Account</a></li>
 						<li><a href="#">Edit Profile</a></li>
 						<li><a href="#">Setting</a></li>
 						<li><a href="#">Log out</a></li>
 					</ul>
-                </li> --%>
+                </li>
 						</ul>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --%>
 		<!--topHeader-->
 
 		<!--rightContainer-->
@@ -89,22 +89,31 @@
 
 				<c:if test="${not empty message}">
 					<!-- here would be a message with a result of processing -->
-					<div class="messages messagesErr">${message}</div>
+					<div class="messages">${message}</div><!-- messagesErr -->
 
 				</c:if>
 
 
 				<!-- <form id="form-login" action="loginProcess" method="post"> -->
 				<div class="loginInner">
-					<h2>
-						<span>Forget Password</span>
+				
+					<div class="login_l light_height"><a href=""><img
+						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
+						alt="monginis"></a>
+						<p class="login_txt">Delivering with Professional Excellence To be preferred Chartered Accountant, Advisor or Consultant to Business across India; and provide utility oriented legal compliance. </p>	
+					</div>
+						
+					<div class="login_r frget_pass">
+				
+					<h2 class="login_head_one">
+						Forget Password
 					</h2>
 					<div class="loginBox">
-						<div class="loginUser">
+						<%-- <div class="loginUser">
 							<img
 								src="${pageContext.request.contextPath}/resources/images/loginuser.png"
 								align="img">
-						</div>
+						</div> --%>
 						<form action="getFranchiseeInfo" class="form-horizontal"
 							id="validation-form" method="post">
 
@@ -139,7 +148,9 @@
 		</div>
 	
 	</div> --%>
-				</div>
+	</div>	
+	<div class="clr"></div>
+</div>
 				</form>
 				<!-- <div class="messages messagesErr">err message</div>
         <div class="messages messagesInfo">info message</div>

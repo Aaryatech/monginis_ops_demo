@@ -104,19 +104,19 @@ jQuery(document).ready(function(){
 	 String tDate = session.getAttribute("toSellBillDate").toString();%>
 	<div class="row">
 	
-		<div class="col-md-2 from_date">
+		<div class="col-md-1 from_date">
 		    <h4 class="pull-left">From Date:-</h4>
 		</div>
 		<div class="col-md-2 ">
 			<input id="fromdatepicker" class="texboxitemcode texboxcal"  autocomplete="off" placeholder="DD-MM-YYYY" name="fromDate" type="text" value="<%=frmDate%>">
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-1">
 		    <h4 class="pull-left">To Date:-</h4>
 		</div>
 		<div class="col-md-2 ">
 			<input id="todatepicker" class="texboxitemcode texboxcal"  autocomplete="off" placeholder="DD-MM-YYYY" name="toDate" type="text" value="<%=tDate%>">
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-1">
 		    <button class="buttonsaveorder" onclick="searchSellBill()">Search </button>
 		</div>
 		

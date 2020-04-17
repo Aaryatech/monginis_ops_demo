@@ -82,7 +82,7 @@ a:hover {
              	</div>
 				<div class="colOuter">
 					<div class="col-md-2">
-						<div class="col1title">Select Category</div>
+						<div class="col1title">Select Category :-</div>
 					</div>
 					<div class="col-md-3">
 						<select name="cat_id" class="form-control chosen"
@@ -113,7 +113,7 @@ a:hover {
                  <input type="hidden" name="selectRate" id="selectRate" value="2" />
 			
 
-					<div class="col2">
+					<div class="col-md-1">
 						<input name="search" class="buttonsaveorder" value="Search"
 							type="submit" >
 					</div>
@@ -192,11 +192,11 @@ a:hover {
 												<tr class="bgpink"style="background-color: #ee578f;color:#ffffff;">
 												 <td class="col-md-1" style="text-align: left;">Sr.No</td>
                                                  <td class="col-md-2" style="text-align: left;" >Item Name</td>
-                                                 <td class="col-md-1">Current Stock</td>
-                                                 <td class="col-md-1">Physical Qty</td>
-                                                 <td class="col-md-1">Bill Qty</td>
-                                                 <td class="col-md-1">MRP</td>
-                                                 <td class="col-md-1">Total</td>
+                                                 <td class="col-md-1" style="text-align: left;" >Current Stock</td>
+                                                 <td class="col-md-1" style="text-align: left;" >Physical Qty</td>
+                                                 <td class="col-md-1" style="text-align: left;" >Bill Qty</td>
+                                                 <td class="col-md-1" style="text-align: left;" >MRP</td>
+                                                 <td class="col-md-1" style="text-align: left;" >Total</td>
 												</tr>
 												</thead>
 												<tbody>
@@ -214,8 +214,8 @@ a:hover {
                                        		 	<tr class="bgpink" style="color:${color}">
 												 <td class="col-md-1" style="text-align: left;">${(loop.index)+1}</td>
                                                  <td class="col-md-2" style="text-align: left;">${stockDetailList.itemName}</td>
-                                                 <td class="col-md-1">${stockDetailList.currentRegStock}</td>
-                                                 <td class="col-md-1"><c:choose>
+                                                 <td class="col-md-1" style="text-align: left;" >${stockDetailList.currentRegStock}</td>
+                                                 <td class="col-md-1" style="text-align: left;" ><c:choose>
                                                  <c:when test="${flag==0}">
                                                   <input type="number" class="form-control" style="width: 80%;" name="physicalQty${stockDetailList.id}" id="physicalQty${stockDetailList.id}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.id},${stockDetailList.currentRegStock})"/>
                                                  </c:when>
@@ -225,9 +225,9 @@ a:hover {
                                                  </c:choose>
                                                 </td>
                                                 <input type="hidden" name="qty${stockDetailList.id}" id="qty${stockDetailList.id}"  />
-                                                 <td class="col-md-1" id="billQty${stockDetailList.id}">0 </td>
-                                                 <td class="col-md-1">${stockDetailList.spTotalPurchase}</td>
-                                                 <td class="col-md-1" id="total${stockDetailList.id}">0</td>
+                                                 <td class="col-md-1" style="text-align: left;"  id="billQty${stockDetailList.id}">0 </td>
+                                                 <td class="col-md-1" style="text-align: left;" >${stockDetailList.spTotalPurchase}</td>
+                                                 <td class="col-md-1" style="text-align: left;"  id="total${stockDetailList.id}">0</td>
 												</tr>
  										 	</c:if>  
  										 </c:forEach>

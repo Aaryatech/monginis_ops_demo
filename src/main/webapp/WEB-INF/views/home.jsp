@@ -108,6 +108,7 @@
 					
 						<h3 class="latestNewsTitle">Latest News</h3>
 							<div class="microsoft marquee">
+							
 						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
 						
 					            <c:set var="colors" value=""/>
@@ -139,8 +140,8 @@
 									
 
 									</div>
-									<h3 class="homesliderTitle" style="font-size:15px "><center>${msgList.msgHeader}</center></h3>
-	                                <h3 class="homesliderTitle"  >${msgList.msgDetails}</h3>
+									<h3 class="homesliderTitle">${msgList.msgHeader}</h3>
+	                                <p class="homeslidertxt"  >${msgList.msgDetails}</p>
 
 								</div>
 							</div>

@@ -140,16 +140,26 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
+			
+				<div class="row" style="margin: 0 0 20px 0;">
+					<div class="col-md-6">
+						<div class="order-left">
 					<h2 class="pageTitle">Petty Cash Management</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
-				 <div class="order-right" align="right" style="padding-top:2%; padding-bottom: 2%;">
+					</div>
+					<div class="col-md-6">
+						<div align="right" >
 
 					<a href="${pageContext.request.contextPath}/getPettyCashTransactions"><input
-						type="button" value="Petty Cash Details" class="btn additem_btn">
+						type="button" value="Petty Cash Details" class="btn additem_btn" style="margin: 0;">
 					</a>
 				</div> 
+					</div>
+				</div>
+				
+				
+				 
 		<form action="addPettyCash" method="post">
 			<input type="hidden" value="${pettycash.pettycashId}" name="petty_id">
 			<input type="hidden" value="${pettycash.cashAmt}" name="cash_edit_amt">

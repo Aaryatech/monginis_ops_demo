@@ -329,13 +329,13 @@ label:before{
 				<div class="sidebarright">
 
 					<div class="order-left">
-						<h2 class="pageTitle">Customer Bill</h2>
+						<h2 class="pageTitle"><i class="fa fa-user" aria-hidden="true"></i> Customer Bill</h2>
 
 					</div>
-					<br>
+					
 					<div class="order-right" align="right">
 						<a href="${pageContext.request.contextPath}/viewBill"><button
-								class="btn btn-success">View Bill</button></a>
+								class="btn additem_btn" style="margin: 0;">View Bill</button></a>
 					</div>
 
 					<!--tabNavigation-->
@@ -442,7 +442,8 @@ label:before{
 
 
 
-									<div class="col-md-2">
+									<div class="col-md-3" style="margin:15px 0 0 0;">
+									<div class="one_left">
 										<input name="rate1" id="rate1" type="hidden" value="00" />
 
 										<center>
@@ -450,13 +451,25 @@ label:before{
 												id="b1">Add Item</button>
 										</center>
 									</div>
-									<div class="col-md-3"> 
+									<div class="two_left">
+										
+										<span style="padding-top: 0px;float: left;margin-top: 7px; font-size: 16px; margin-right: 10px;">B2B:</span>
+                                       <label class="switch">
+                                                           <input type="checkbox" name='isb2b' id='is_b2b' />
+                                                           <span class="slider round"></span>
+                                                             </label>
+									</div>
+										
+										
+										
+									</div>
+									<!-- <div class="col-md-3"> 
                                       <span style="padding-top: 0px;float: left;margin-top: 13px;margin-left: 13px;font-size: 16px; ">B2B:</span>
                                        <label class="switch">
                                                            <input type="checkbox" name='isb2b' id='is_b2b' />
                                                            <span class="slider round"></span>
                                                              </label>
-                                </div>
+                                </div> -->
 									
 								</div>	
 								<div class="se-pre-con" style="display: none;" id="loader1"></div>
@@ -494,7 +507,7 @@ label:before{
 								<div class="row">
 									<div class="col-md-3">
 										<h4 class="col-md-7">
-											<b>Total:-</b>
+											Total:-
 										</h4>
 										<h4 class="col-md-5" id="total1">00</h4>
 										<input type="hidden" class="form-control" id="tot1">
@@ -502,7 +515,7 @@ label:before{
 
 									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
+											Discount(%):-
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount1"
@@ -511,7 +524,7 @@ label:before{
 									</div>
 									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(Rs):-</b>
+											Discount(Rs):-
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discountRs1"
@@ -521,7 +534,7 @@ label:before{
 
 									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
+											Grand Total:-
 										</h4>
 
 										<h4 class="col-md-5" id="grandtotal1">00</h4>
@@ -533,7 +546,7 @@ label:before{
 									<div class="col-md-3">
 
 										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
+											Payment Mode:-
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
@@ -551,7 +564,7 @@ label:before{
 
 									<div class="col-md-3">
 										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
+											Paid Amount:-
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount1"
@@ -562,7 +575,7 @@ label:before{
 
 									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
+											Remaining Amt:-
 										</h4>
 
 
@@ -591,7 +604,7 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Mo No:-</h4>
+											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter phone No." name="phoneNo1" id="phoneNo1" maxlength="10">
 										</div>

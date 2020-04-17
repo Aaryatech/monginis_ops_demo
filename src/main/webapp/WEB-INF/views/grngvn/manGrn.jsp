@@ -174,9 +174,9 @@ table, th, td {
 							</div>
 							
 							<div class="table-wrap">
-								<table id="table_grid" class="responsive-table">
+								<table id="table_grid" class="responsive-table" style="font-size: 16px;">
 									<thead>
-										<tr class="bgpink">
+										<tr class="bgpink" style="font-size: 16px;">
 											<!-- 	<th class="col-md-1">Sr No.</th>
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
@@ -213,32 +213,32 @@ table, th, td {
 													type="checkbox" name="select_to_grn"
 													id="${grnConfList.billDetailNo}"
 													value="${grnConfList.billDetailNo}" /></td>
-												<td class="col-md-2" style="text-align: center;"><fmt:formatDate
+												<td class="col-md-2" style="text-align: center;font-size: 16px;"><fmt:formatDate
 														pattern="dd-MM-yyyy" value="${grnConfList.billDate}" /></td>
-												<td class="col-md-1" style="text-align: center;"><c:out
+												<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 														value="${grnConfList.invoiceNo}"></c:out></td>
-												<td class="col-md-2" style="text-align: center;"><c:out
+												<td class="col-md-2" style="text-align: center;font-size: 16px;"><c:out
 														value="${grnConfList.itemName}"></c:out></td>
 												<c:choose>
 													<c:when test="${grnConfList.grnType==0}">
-														<td class="col-md-1" style="text-align: center;"><c:out
+														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 																value="GRN 1(85%)"></c:out></td>
 													</c:when>
 													<c:when test="${grnConfList.grnType==1}">
-														<td class="col-md-1" style="text-align: center;"><c:out
+														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 																value="GRN 2(75%)"></c:out></td>
 													</c:when>
 													<c:when test="${grnConfList.grnType==2}">
-														<td class="col-md-1" style="text-align: center;"><c:out
+														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 																value="GRN 3(100%)"></c:out></td>
 													</c:when>
 													<c:when test="${grnConfList.grnType==3}">
-														<td class="col-md-1" style="text-align: center;"><c:out
+														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 																value="No GRN"></c:out></td>
 													</c:when>
 
 													<c:when test="${grnConfList.grnType==4}">
-														<td class="col-md-1" style="text-align: center;"><c:out
+														<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 																value="GRN 3(100%)"></c:out></td>
 													</c:when>
 													<c:otherwise>
@@ -247,18 +247,18 @@ table, th, td {
 
 												</c:choose>
 
-												<td class="col-md-1" style="text-align: center;"><c:out
+												<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 														value="${grnConfList.billQty}"></c:out> <input
 													type="hidden" name="grnqty${grnConfList.billDetailNo}"
 													id="grnqty${grnConfList.billDetailNo}" size="3"
 													readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
 
-												<td class="col-md-1" style="text-align: center;"
+												<td class="col-md-1" style="text-align: center;font-size: 16px;"
 													id="grn_rate${grnConfList.billDetailNo}"><c:out
 														value="${grnConfList.rate}"></c:out></td>
 
 
-												<td class="col-md-1"><input type="text"
+												<td class="col-md-1" style="font-size: 16px;"><input type="text"
 													name="grnqtyauto${grnConfList.billDetailNo}" value="0"
 													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
 													style="text-align: center;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
@@ -268,7 +268,7 @@ table, th, td {
 
 												</td>
 
-												<td class="col-md-1" style="text-align: center;"
+												<td class="col-md-1" style="text-align: center;font-size: 16px;"
 													id="tax_per${grnConfList.billDetailNo}"><c:out
 														value="${grnConfList.taxPer}"></c:out></td>
 
@@ -278,12 +278,12 @@ table, th, td {
 
 												<c:set var="taxableAmt" value="${taxableAmt}" />
 
-												<td id='taxable_amt${grnConfList.billDetailNo}'
+												<td style="font-size: 16px;" id='taxable_amt${grnConfList.billDetailNo}'
 													style="text-align: center;" class="col-md-1"><c:out
 														value="${taxableAmt}"></c:out></td>
 
 
-												<td id='tax_amt${grnConfList.billDetailNo}' class="col-md-1"><c:out
+												<td style="font-size: 16px;" id='tax_amt${grnConfList.billDetailNo}' class="col-md-1"><c:out
 														value="${grnConfList.taxAmt}"></c:out></td>
 
 												<fmt:formatNumber var="grnAmt" type="number"
@@ -292,10 +292,10 @@ table, th, td {
 
 												<c:set var="grnAmt" value="${grnAmt}" />
 
-												<td class="col-md-2" id="grn_amt${grnConfList.billDetailNo}"><c:out
+												<td style="font-size: 16px;" class="col-md-2" id="grn_amt${grnConfList.billDetailNo}"><c:out
 														value="${grnAmt}"></c:out></td>
 
-												<td class="col-md-1"><select
+												<td class="col-md-1" style="font-size: 16px;"><select
 													name="grn_remark${grnConfList.billDetailNo}"
 													style="width: 200px" required="required"
 													id="grn_remark${grnConfList.billDetailNo}"

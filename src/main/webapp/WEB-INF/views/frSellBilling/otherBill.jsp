@@ -238,12 +238,14 @@ body {
 				<div class="sidebarright">
 			<form name="frm_search" id="frm_search" method="post"
 					action="${pageContext.request.contextPath}/submitOtherBill">
-					<div class="order-left">
+					
+					<div class="col-md-4">
+					<div class="order-left" style="margin-top: 14px;">
 						<h2 class="pageTitle">Other Purchase Bill</h2>
 
-					</div>
-					<br>
-					<div class="col-md-12" align="right"  style="width:100%">
+					</div></div>
+					
+					<div class="col-md-8" align="right" >
 					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn additem_btn">
 										</a>
 					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn additem_btn">

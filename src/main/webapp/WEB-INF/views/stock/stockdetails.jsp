@@ -170,23 +170,25 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Stock Details</h2>
+			<div class="col-md-4"><div class="order-left">
+					<h2 class="pageTitle">Stock Details </h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
-				<div class="order-right" align="right">
+				</div></div>
+			<div class="col-md-8"><div align="right">
 
 					<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
-						type="button" value="Add Opening Stock" class="btn additem_btn">
+						type="button" value="Add Opening Stock" class="btn additem_btn" style="margin: 0; text-align: right;">
 					</a>
 
-				</div>
+				</div></div>
+				
+				
 
 				<div class="colOuter">
-					<div class="col-md-2" style="padding-right: 2px;">
+					<div class="col-md-1" style="margin: 5px 0 0 0;">
 						Current Month:
 					</div>
-					<div class="col-md-10" style="padding-left: 2px;">
+					<div class="col-md-11" style="text-align: left;">
 
 						<c:forEach items="${category}" var="category" varStatus="count">
 							<c:forEach items="${getMonthList}" var="getMonthList"
@@ -247,7 +249,7 @@ table, th, td {
 						</c:forEach>
 					</div>
 				</div>
-				<div class="colOuter">
+				<div class="colOuter" style="margin: 10px 0 ;">
 					<div class="col-md-1">
 						<div class="col1title">Category</div>
 					</div>
@@ -525,22 +527,21 @@ table, th, td {
 							</div>
 
 
-							<div class="col-md-2">
+							<div class="col-md-12">
 
-								<button type="button" class="btn btn-primary"
+								<button type="button" class="btn additem_btn"
 									onclick="exportToExcel();" id="expExcel"
 									>
 									Export To Excel</button>
-						 	</div>
-
-
-							<div class="col-md-3">
- 
-								<button type="button" class="btn btn-primary" onclick="genPdf()"
+									
+									<button type="button" class="btn additem_btn" onclick="genPdf()"
 									id="PDFButton"
 									>
 									PDF</button>
-							</div>
+						 	</div>
+
+
+							
 
 
 							<div class="colOuter" id="monthEnd" style="display: none">

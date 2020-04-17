@@ -351,7 +351,7 @@ table, th, td {
 
 							</div>
 							<div class="col-md-1">
-								<input type="button" id="expExcel" class="btn btn-primary"
+								<input type="button" id="expExcel" class="btn additem_btn"
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">
 							</div>

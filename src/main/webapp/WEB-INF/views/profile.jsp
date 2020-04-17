@@ -127,7 +127,7 @@
 					
 					
 					<div class="topSlide">
-			<div class="topSlide2 textcen">
+			<div class=" textcen">
 				
 				<div class="profileinsite">
 		<form name="updateprofile" id="updateprofile" method="post" action="${pageContext.request.contextPath}/updateprofile"enctype="multipart/form-data" >
@@ -339,8 +339,8 @@
 						
 							<div class="form-group">
 						
-								<input name="" class="" value="Change Admin Password"
-									type="button" id="changePwd1" onclick="showDiv()"style="font-size: 8pt; height: 33px;">
+								<input name="" class="btn additem_btn" value="Change Admin Password"
+									type="button" id="changePwd1" onclick="showDiv()"style="margin: 0;">
 							
 						</div>	
 							<div  class="update FormAlert" id="divCheckPasswordMatch">
@@ -351,14 +351,14 @@
                   <div class="profile">
 							<div class="profilefildset">CSP Password</div>
 							<div class="col2">
-								<input class="texboxitemcode" placeholder="CSP Password"
+								<input class="texboxitemcode" class="btn additem_btn" placeholder="CSP Password"
 									name="user3_password" type="password"  value="${frSup.pass3}" id="user3_password" 
 									style="font-size: 16px; height: 33px; width:130px; background-color:LightGrey;"disabled="disabled">
 								
 							</div> 
 							<div class="form-group">
-								<input name="" class="" value="Change Password"
-									type="button" id="changePwd2" onclick="showDiv1()"style="font-size: 8pt; height: 33px; width:90px;">
+								<input name="" class="btn additem_btn" value="Change Password"
+									type="button" id="changePwd2" onclick="showDiv1()"style="margin: 0;'">
 						</div>	
 						
 						</div>

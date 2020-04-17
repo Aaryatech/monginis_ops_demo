@@ -117,7 +117,7 @@ a:hover {
 					</c:when>
 				</c:choose>
 				<div class="order-left">
-					<h2 class="pageTitle">${menuTitle}</h2>
+					<h2 class="pageTitle"><i class="fa fa-birthday-cake" aria-hidden="true"></i> ${menuTitle}</h2>
 					<h3 class="pageTitle2">Order Date :
 						${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
@@ -288,7 +288,7 @@ a:hover {
 																	<c:when test="${items.itemImage!=''}">
 																	<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;color:#000000;"   >${items.itemName}</a>
+																		data-lightbox="image-1" tabindex="-1" style="color:#000000;"   >${items.itemName}</a>
 																	</c:when>	
 																	<c:otherwise>
 																	${items.itemName}

@@ -589,10 +589,10 @@ jQuery(document).ready(function(){
 					</div>
 
 				</div>
-				<div class="col-md-5">
-					<input type="button" id="expExcel" class="btn btn-primary"
+				<div class="col-md-12">
+					<input type="button" id="expExcel" class="btn additem_btn"
 						value="EXPORT TO Excel" onclick="exportToExcel();">
-					<button class="btn btn-primary" value="PDF" id="PDFButton"
+					<button class="btn additem_btn" value="PDF" id="PDFButton"
 						onclick="genPdf()">PDF</button>
 				</div>
 				<!--tab1-->

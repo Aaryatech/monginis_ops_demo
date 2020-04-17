@@ -174,8 +174,8 @@ table, th, td {
 
 
 
-								<div class="col-sm-3  controls">
-									<input type="button" id="expExcel" class="btn btn-primary"
+								<div class="col-sm-12  controls">
+									<input type="button" id="expExcel" class="btn additem_btn"
 										value="EXPORT TO Excel" onclick="exportToExcel();"
 										disabled="disabled">
 								</div>

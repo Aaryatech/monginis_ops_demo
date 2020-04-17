@@ -197,8 +197,8 @@ input:checked+.slider:before {
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
 					<div class="col-md-2">
-						<h2 class="pageTitle" style="color: #e53878;">Express
-							Bill</h2>
+						<h2 class="pageTitle">
+						<i class="fa fa-file-pdf-o"></i> Express Bill</h2>
 					</div>
 					<div class="col-md-12 text-left bill-date">
 						<c:choose>

@@ -58,12 +58,12 @@ body{font-family:'MyriadPro-Regular'!important;}
 }
 .menuzord-menu ul.dropdown, .menuzord-menu ul.dropdown li ul.dropdown {
 	list-style: none; 
-	margin: -13px 0px 0px 88px;
+	margin: -23px 0px 0px 126px /* -13px 0px 0px 88px */;
 	padding:0px 0 0 0;
 	display: none;
 	position: absolute;
 	z-index: 99;
-	min-width: 120px;
+	min-width: 150px /*120px*/;
 	white-space: nowrap;
 	background: #fff;
 }
