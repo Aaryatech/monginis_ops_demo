@@ -65,6 +65,7 @@
 <c:url var="getCatSellList" value="/getCatSellList" />
 <c:url var="getItemSellBill" value="/getItemSellBill" />
 <c:url var="getDatewiseSellList" value="/getDatewiseSellList" />
+<c:url var="drawLineChart" value="/drawLineChart" />
 <!--topLeft-nav-->
 <div class="sidebarOuter"></div>
 <!--topLeft-nav-->
@@ -440,10 +441,11 @@
 
 							<div class="col-md-6">
 								<div class="one_graph ">
-									<div class="graph_one two"></div>
+									<div class="graph_one two" style="background-color: white;">
+										<div id="line_chart_div" style="width: 100%; height: 100%;"></div>
+									</div>
 									<!-- <div class="daily_sale">
-										<h2>Completed Tasks</h2>
-										<p>Last Campaign Performance</p>
+										<div id="chart_div"></div>
 									</div> -->
 								</div>
 							</div>
@@ -552,13 +554,11 @@
 
 
 						<div class="charts_bx">
-							<div class="chart_l">
-
-								<c:if test="${type!=1}">
+							<c:if test="${type!=1}">
+								<div class="chart_l">
 									<div id="chart_div"></div>
-								</c:if>
-
-							</div>
+								</div>
+							</c:if>
 							<!-- <div class="chart_r">
 							<h3 class="bx_title">Top Products</h3>
 							<div class="right_btns">
@@ -730,6 +730,11 @@
 			});
 			google.charts.setOnLoadCallback(drawStuff);
 
+			google.charts.load('current', {
+				'packages' : [ 'corechart', 'line' ]
+			});
+			google.charts.setOnLoadCallback(drawlinechart);
+
 			var type = document.getElementById("typesele").value;
 			if (type == 4) {
 				document.getElementById("ihide").style = "visible"
@@ -749,7 +754,7 @@
 			var frmd = document.getElementById("frmd").value;
 			var tod = document.getElementById("tod").value;
 			var chartDiv = document.getElementById('chart_div');
-			document.getElementById("chart_div").style.border = "thin dotted red";
+			//document.getElementById("chart_div").style.border = "thin dotted red";
 			var dataTable = new google.visualization.DataTable();
 
 			dataTable.addColumn('string', 'Date'); // Implicit domain column.
@@ -772,8 +777,6 @@
 				//alert(11);
 
 				var materialOptions = {
-					width : 600,
-					height : 450,
 					chart : {
 						title : 'Sell Amount per Day',
 						subtitle : ' '
@@ -813,6 +816,82 @@
 				}
 
 				drawMaterialChart();
+
+			});
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function drawlinechart() {
+			//alert("hii bar ch");
+			var frmd = document.getElementById("frmd").value;
+			var tod = document.getElementById("tod").value;
+			var typesele = document.getElementById("typesele").value;
+			var chartDiv = document.getElementById('line_chart_div');
+			//document.getElementById("chart_div").style.border = "thin dotted red";
+			var dataTable = new google.visualization.DataTable();
+
+			dataTable.addColumn('string', 'Date'); // Implicit domain column.
+			dataTable.addColumn('number', 'Amount'); // Implicit data column.
+
+			$.post('${drawLineChart}', {
+				frmd : frmd,
+				tod : tod,
+				typeId : typesele,
+				ajax : 'true'
+			}, function(chartsBardata) {
+
+				 //alert(JSON.stringify(chartsBardata));
+				$.each(chartsBardata, function(key, chartsBardata) {
+
+					dataTable.addRows([ [ chartsBardata.billDate,
+							parseInt(chartsBardata.total) ] ]);
+
+				});
+
+				//alert(11);
+
+				var materialOptions = {
+					chart : {
+						title : 'Sell Amount per Day',
+						subtitle : ' '
+					},
+					series : {
+						0 : {
+							axis : 'distance'
+						}, // Bind series 0 to an axis named 'distance'.
+						1 : {
+							axis : 'brightness'
+						}
+					// Bind series 1 to an axis named 'brightness'.
+					},
+					axes : {
+						y : {
+							distance : {
+								label : 'Sell Amount'
+							}, // Left y-axis.
+							brightness : {
+								side : 'right',
+								label : 'Total Tax'
+							}
+						// Right y-axis.
+						}
+					}
+				};
+
+				var materialChart = new google.charts.Line(chartDiv);
+
+				function drawMaterialChart1() {
+					// var materialChart = new google.charts.Bar(chartDiv);
+					// google.visualization.events.addListener(materialChart, 'select', selectHandler);    
+					materialChart.draw(dataTable, google.charts.Line
+							.convertOptions(materialOptions));
+					// button.innerText = 'Change to Classic';
+					// button.onclick = drawClassicChart;
+				}
+
+				drawMaterialChart1();
 
 			});
 

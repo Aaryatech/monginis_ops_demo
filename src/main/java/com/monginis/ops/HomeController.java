@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
@@ -55,6 +56,7 @@ import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.FrTotalSale;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
+import com.monginis.ops.model.GetDataForLineChart;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetFrMenus;
 import com.monginis.ops.model.GetItemListForDashboardByCatId;
@@ -597,10 +599,10 @@ public class HomeController {
 				model.addObject("typeTitle", "This Month");
 			}
 
-			Date my = new Date(); // your date
+			Date current = new Date(); // your date
 			// Choose time zone in which you want to interpret your Date
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
-			cal.setTime(my);
+			cal.setTime(current);
 			int year = cal.get(Calendar.YEAR);
 			int month = cal.get(Calendar.MONTH);
 
@@ -609,11 +611,10 @@ public class HomeController {
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
 			map.add("year", year);
-			map.add("month", month);
+			map.add("month", month + 1);
 
 			RestTemplate restTemplate = new RestTemplate();
 
-			System.out.println(map);
 			DashboardData dashboardData = restTemplate.postForObject(Constant.URL + "/getDashboardData", map,
 					DashboardData.class);
 
@@ -634,11 +635,16 @@ public class HomeController {
 			model.addObject("frmd", fromDate);
 			model.addObject("tod", toDate);
 
-			CustomerListForDash[] customerListForDash = restTemplate
-					.postForObject(Constant.URL + "/getListOfCustomer", map, CustomerListForDash[].class);
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", sf.format(current));
+			map.add("toDate", sf.format(current));
+			System.out.println(map);
+			CustomerListForDash[] customerListForDash = restTemplate.postForObject(Constant.URL + "/getListOfCustomer",
+					map, CustomerListForDash[].class);
 			List<CustomerListForDash> customerListForDashlist = new ArrayList<>(Arrays.asList(customerListForDash));
 			model.addObject("customerListForDashlist", customerListForDashlist);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -720,7 +726,7 @@ public class HomeController {
 			map.add("frId", frDetails.getFrId());
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
-			System.out.println(map);
+			 
 			DateWiseDashboardGraphQuery[] dateWiseDashboardGraphQuery = restTemplate.postForObject(
 					Constant.URL + "/dateWiseDashboardGraphQuery", map, DateWiseDashboardGraphQuery[].class);
 			datewiselist = new ArrayList<>(Arrays.asList(dateWiseDashboardGraphQuery));
@@ -729,6 +735,90 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		return datewiselist;
+	}
+
+	@RequestMapping(value = "/drawLineChart", method = RequestMethod.POST)
+	@ResponseBody
+	public List<GetDataForLineChart> drawLineChart(HttpServletRequest request, HttpServletResponse responsel) {
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		String fromDate = request.getParameter("frmd");
+		String toDate = request.getParameter("tod");
+		int typeId = Integer.parseInt(request.getParameter("typeId"));
+		RestTemplate restTemplate = new RestTemplate();
+		List<GetDataForLineChart> datewiselist = new ArrayList<>();
+		try {
+
+			int flag = 1;
+			
+			System.out.println("typeId"+typeId);
+			System.out.println("fromDate"+fromDate);
+			System.out.println("toDate"+toDate);
+			if (typeId == 2) {
+
+				Date current = new Date(); 
+				SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(current);
+				cal.add(Calendar.DATE, -29);
+				Date dateBefore30Days = cal.getTime();
+				fromDate = myFormat.format(dateBefore30Days);
+				flag = 2;
+			} else if (typeId == 3) {
+				flag = 3;
+			} else if (typeId == 4) {
+				int diff = difffun(fromDate, toDate);
+				if (diff <= 7) {
+					flag = 1;
+				} else if (diff > 7 && diff <= 31) {
+					flag = 2;
+				} else if (diff > 31) {
+					flag = 3;
+				}
+			} else {
+				SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = myFormat.parse(fromDate);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				cal.add(Calendar.DATE, -6);
+				Date dateBefore7Days = cal.getTime();
+				fromDate = myFormat.format(dateBefore7Days);
+				flag = 1;
+			}
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			map.add("flag", flag);
+
+			System.out.println("asdfdsfdsf"+map);
+			GetDataForLineChart[] dateWiseDashboardGraphQuery = restTemplate.postForObject(
+					Constant.URL + "/getDataForLineChart", map, GetDataForLineChart[].class);
+			datewiselist = new ArrayList<>(Arrays.asList(dateWiseDashboardGraphQuery));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datewiselist;
+	}
+
+	public int difffun(String date1, String date2) {
+
+		SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		int result = 0;
+
+		try {
+			Date date3 = myFormat.parse(date1);
+			Date date4 = myFormat.parse(date2);
+			long diff = date4.getTime() - date3.getTime();
+			result = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+		} catch (Exception e) {
+
+		}
+
+		return result + 1;
 	}
 
 	private static Calendar getCalendarForNow() {
