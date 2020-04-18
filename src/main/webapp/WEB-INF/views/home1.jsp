@@ -307,14 +307,10 @@
 
 											<div class="sale_divide">
 												<div class="sales_l">
-													<span><fmt:formatNumber type="number" pattern="#"
-															value="${dashboardData.totalSell}" maxFractionDigits="2"
-															minFractionDigits="2" /></span>
+													<span> ${dashboardData.totalSell} </span>
 												</div>
 												<div class="sales_l">
-													<span><fmt:formatNumber type="number" pattern="#"
-															value="${dashboardData.spCakeTotalBill}"
-															maxFractionDigits="2" minFractionDigits="2" /></span>
+													<span> ${dashboardData.spCakeTotalBill} </span>
 												</div>
 												<div class="clr"></div>
 											</div>
@@ -322,10 +318,7 @@
 
 											<h1 class="price_sale">
 
-												<fmt:formatNumber type="number" pattern="#"
-													value="${dashboardData.totalSell+dashboardData.spCakeTotalBill}"
-													maxFractionDigits="2" minFractionDigits="2" />
-											</h1>
+												${dashboardData.totalSell+dashboardData.spCakeTotalBill}</h1>
 										</div>
 										<div class="clr"></div>
 									</div>
@@ -356,14 +349,10 @@
 
 											<div class="sale_divide">
 												<div class="sales_l">
-													<span><fmt:formatNumber type="number" pattern="#"
-															value="${dashboardData.grnAprAmt}" maxFractionDigits="2"
-															minFractionDigits="2" /></span>
+													<span> ${dashboardData.grnAprAmt} </span>
 												</div>
 												<div class="sales_l">
-													<span><fmt:formatNumber type="number" pattern="#"
-															value="${dashboardData.grnAprAmmt}" maxFractionDigits="2"
-															minFractionDigits="2" /></span>
+													<span> ${dashboardData.grnAprAmmt} </span>
 												</div>
 												<div class="clr"></div>
 											</div>
@@ -371,10 +360,7 @@
 
 											<h1 class="price_sale">
 
-												<fmt:formatNumber type="number" pattern="#"
-													value="${dashboardData.grnAprAmt+dashboardData.grnAprAmmt}"
-													maxFractionDigits="2" minFractionDigits="2" />
-											</h1>
+												${dashboardData.grnAprAmt+dashboardData.grnAprAmmt}</h1>
 										</div>
 										<div class="clr"></div>
 									</div>
@@ -390,10 +376,8 @@
 											<h3 class="sale_head">Contribution</h3>
 
 											<h5 class="price_sale">
-												<fmt:formatNumber type="number" pattern="#"
-													value="${(dashboardData.totalSell+dashboardData.spCakeTotalBill)-
-													(dashboardData.grnAprAmt+dashboardData.grnAprAmmt+dashboardData.purchaseBill)}"
-													maxFractionDigits="2" minFractionDigits="2" />
+												${(dashboardData.totalSell+dashboardData.spCakeTotalBill)-
+													(dashboardData.grnAprAmt+dashboardData.grnAprAmmt+dashboardData.purchaseBill)}
 											</h5>
 
 
@@ -411,7 +395,7 @@
 										</div>
 										<div class="sale_r">
 											<h3 class="sale_head">Target</h3>
-											<h5 class="price_sale">0.00</h5>
+											<h5 class="price_sale">${dashboardData.target}</h5>
 										</div>
 										<div class="clr"></div>
 									</div>
@@ -531,7 +515,10 @@
 
 						<div class="charts_bx">
 							<div class="chart_l">
-								<div id="chart_div"></div>
+
+								<c:if test="${type!=1}">
+									<div id="chart_div"></div>
+								</c:if>
 
 							</div>
 							<!-- <div class="chart_r">

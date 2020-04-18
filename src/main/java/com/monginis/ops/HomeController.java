@@ -138,8 +138,6 @@ public class HomeController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
-		
-		
 		ModelAndView model = new ModelAndView("home");
 		HttpSession session = request.getSession();
 		RestTemplate restTemplate = new RestTemplate();
@@ -597,11 +595,20 @@ public class HomeController {
 				model.addObject("typeTitle", "This Month");
 			}
 
+			Date my = new Date(); // your date
+			// Choose time zone in which you want to interpret your Date
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+			cal.setTime(my);
+			int year = cal.get(Calendar.YEAR);
+			int month = cal.get(Calendar.MONTH); 
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
-
+			map.add("year", year);
+			map.add("month", month);
+			
 			RestTemplate restTemplate = new RestTemplate();
 
 			System.out.println(map);
