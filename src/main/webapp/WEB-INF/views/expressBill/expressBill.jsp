@@ -1,3 +1,5 @@
+
+
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -83,7 +85,7 @@
 	display: inline-block;
 	width: 60px;
 	height: 25px;
-	margin-top: 14px;
+	margin-top: 7px;
 }
 
 .switch input {
@@ -196,16 +198,13 @@ input:checked+.slider:before {
 				<!--rightSidebar-->
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
-					<div class="col-md-12">
-						<h2 class="pageTitle">
-						<i class="fa fa-file-pdf-o"></i> Express Bill</h2>
-					</div>
-					<div class="col-md-12 text-left bill-date">
-					<div class="col-md-12">
-						<c:choose>
+					<div class="row">
+						<div class="col-md-7"><h2 class="pageTitle">
+						<i class="fa fa-file-pdf-o"></i> Express Bill</h2></div>
+						<div class="col-md-5"><c:choose>
 
 							<c:when test="${count == 0}">
-								<div class="">
+								<div class="" >
 									<div>
 										<center>
 											<input name="" class="buttonsaveorder" value="Start Day"
@@ -221,33 +220,32 @@ input:checked+.slider:before {
 								<div>
 
 									<h4>
-										<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp;
-											&nbsp; Bill Date :${sellBillHeader.billDate}</B>
+										<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											 Bill Date :${sellBillHeader.billDate}</B>
 									</h4>
-								</div>
-								</div>
-								
+								</div></div>
+					
+					
+						
+					</div>
+					<div style="margin:15px 0">
+					<div class="row text-left bill-date">
 								<div class="col-md-2">
 						<span
-							style="padding-top: 0px; float: left; margin-top: 13px; font-size: 16px; width: 100px;">Single
+							style="padding-top: 0px; float: left; margin-top: 11px; font-size: 16px; width: 100px;">Single
 							Print</span><label class="switch"> <input type="checkbox"
 							id="id"> <span class="slider round"></span></label>
 					</div>
 					
 					<div class="col-md-2">
 							<span
-								style="padding-top: 0px; float: left; margin-top: 13px; font-size: 14px; width: 100px;">SP</span>
+								style="padding-top: 0px; float: left; margin-top: 11px; font-size: 14px; width: 40px;">SP</span>
 							<label class="switch"> <input type="checkbox" id="sp"
 								name="sp"> <span class="slider round"></span>
 							</label>
 						</div>
-					</div>
-					
-					
-					<div class="row">
 						
-
-						<div class="col-md-2" style="display: none;" id="tp">
+					<div class="col-md-2" style="display: none;" id="tp">
 							<select class="form-control" data-placeholder="Search Type"
 								name="type" tabindex="-1" id="type" data-rule-required="true"
 								onchange="onchangetype()">
@@ -255,13 +253,14 @@ input:checked+.slider:before {
 								<option value="1">Search By Date</option>
 								<option value="2">Search By Order No.</option>
 							</select>
-						</div>
-
-						<div class="row" style="display: none;" id="byDate">
+						</div>	
+						
+						
+					<div class="col-md-6" style="display: none;" id="byDate">
 							<form name="frm_search" id="frm_search" method="post"
 								action="itemHistory">
 
-								<div class="col-md-2">
+								<div class="col-md-5">
 									<select name="group" id="group" placeholder="Select Menu"
 										class="form-control" required>
 										<option value="">Select Type</option>
@@ -278,25 +277,26 @@ input:checked+.slider:before {
 										</c:forEach>
 									</select>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-5">
 									<input id="todatepicker" class="texboxitemcode texboxcal"
 										placeholder="Delivery Date" name="datepicker" type="text"
 										autocomplete="off">
 								</div>
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<input name="" class="buttonsaveorder" value="Search"
 										type="button" onclick="searchOrders()">
 								</div>
 							</form>
-						</div>
-
-						<div style="display: none;" id="byOrderNo">
+						</div>	
+						
+						
+						<div class="col-md-6" style="display: none;" id="byOrderNo">
 							<form name="frm_search" id="frm_search" method="post"
 								action="itemHistory">
 								<div class="col-md-2">
 									<div class="col1title">Order No.</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<input id="orderno" class="form-control" placeholder="Order No"
 										name="orderno" type="text">
 								</div>
@@ -306,6 +306,20 @@ input:checked+.slider:before {
 								</div>
 							</form>
 						</div>
+						
+						
+					</div>
+					
+					</div>
+					
+					<div class="row">
+						
+
+						
+
+						
+
+						
 						<div class="clearfix"></div>
 						<div class="table-wrap" id="orderHistory" style="display: none;">
 
@@ -378,7 +392,7 @@ input:checked+.slider:before {
 													oninput="onRateChange(this.value)"
 													style="width: 65px; border-radius: 18px; text-align: center;" />
 													&nbsp;
-													<button class="btn btn-primary" onclick="insertItem1()"
+													<button class="btn additem_btn" onclick="insertItem1()"
 									disabled="disabled" id="insertItemButton" style="margin:5px 0;" >Submit</button>
 												</td>
 											</tr>
@@ -395,16 +409,19 @@ input:checked+.slider:before {
 						<%-- 	<center> --%>
 								
 
-								<label style="float: right;margin-top: 13px;margin-left: 40px;font-size: 18px;">Total : &nbsp;<input
-									type="text" id="total" name="total" readonly="readonly"
-									value="${itemTotal}" style="width:100px;border:0px;text-align: center;"></label>
+								
 
 
 
-								<button style="float:left;"  type="button"
-									class="btn btn-primary" onclick="printExBill()" disabled
+								<button style="float:right;"  type="button"
+									class="btn additem_btn" onclick="printExBill()" disabled
 									id="printExBill">Print</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="itemNameForZeroMrp"></label>
+								
+								<label style="float: right;margin-top: 5px;margin-left: 40px;font-size: 18px;">Total : &nbsp;<input
+									type="text" id="total" name="total" readonly="readonly"
+									value="${itemTotal}" style="width:100px;border:0px;text-align: center;"></label>
+								
 						<%-- 	</center> --%>
 							<div align="center" id="loader11"
 								style="display: none; color: BLUE; font-size: 20px;">
@@ -492,7 +509,7 @@ input:checked+.slider:before {
 						</c:when>
 					</c:choose>
 					<center>
-						<input type="button" class="btn btn-primary"
+						<input type="button" class="btn additem_btn"
 							onclick="todaysDayClose()" value="DAY CLOSE" id="dayClose1"
 							${dayCloseStyleDisplay} />
 					</center>
@@ -976,28 +993,22 @@ function myFunction1() {
 
 	<script type="text/javascript">
 	function todaysDayClose(){
-		//	alert("Hi ");
-			var isError = false;
+			//alert("Hi ");
 			 document.getElementById("dayClose1").disabled = true;
 			 $('#loader11').show();
-			 
-			 var x = confirm("Do you really want to submit the bill (Day Close) ?");
-					if (x == true) {
-						$.getJSON('${dayClose}',{
-	
-							ajax : 'true',
-						 },
-						 function(data) {
-						//	 alert("Data------"+JSON.stringify(data));
-									 
-							 window.location.reload();
-									 
-					});
-				$('#loader11').hide();
-				return true;
-			}
-			
-			return false; 
+
+							$.getJSON('${dayClose}',{
+
+								ajax : 'true',
+							 },
+							 function(data) {
+								 //alert(data);
+								 
+								 window.location.reload();
+								 
+			});
+			$('#loader11').hide();
+		//	alert("Hi End  ");
 	}
 	
 	</script>

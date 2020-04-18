@@ -103,7 +103,7 @@ document.body.onload = function()
             <td><p style="font-size:12px">${spCakeOrder.itemId}</p></td>
             <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}&nbsp;&nbsp;</p></td>
             <td align="center"><p style="font-size:12px">
-            <fmt:formatNumber type = "number"  maxFractionDigits = "2"   minFractionDigits = "2" value = " ${(spCakeOrder.spSubTotal)/spCakeOrder.spSelectedWeight}"/>
+            <fmt:formatNumber type = "number" maxFractionDigits="2" minFractionDigits="2" value="${(spCakeOrder.spSubTotal)/spCakeOrder.spSelectedWeight}"/>
          </p></td>
             <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal}</p></td>
           </tr>

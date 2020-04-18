@@ -58,78 +58,28 @@ table, th, td {
 			<div class="sidebarright">
 
 				<div class="row">
-					<!-- 	<div class="col-md-3">
-						<h6 class="pageTitle">Request Manual GRN</h6>
-					</div>
-					 -->
-					<div class="col-md-3">
+					
+				<!-- 	<div class="col-md-3">
 
 						<button type="button" class="buttonsaveorder"
 							style="display: none;" id='searchButton'
 							onclick="getViewOption()" style="width: 100px; height: 40px">Search
 						</button>
-						<!--<button type="button" class="btn">Cancel</button>-->
+						
 
 					</div>
-
-					<!-- </div>
-
-				<div class="row"> -->
-					<div class="col-md-12">
-						<!--table-->
-						<form action="${pageContext.request.contextPath}/getGrnBillDetail"
-							name="grn" id="grn" method="get">
-
-							<%-- 			<div class="row">
-							<div class="col-md-2">
-						<h2 class="pageTitle"> </h2>
-					</div>
-								<div class="col-md-3">
-									<select name="bill_no" id="bill_no" class="form-control"
-										style="width: 250px; background-color: white; height: 40px">
-									
-										<c:forEach items="${frBillList}" var="frBillList">
-											<c:choose>
-
-												<c:when test="${selctedBillNo == frBillList.billNo}">
-													<option selected value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
-												</c:when>
-
-												<c:otherwise>
-													<option value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
-												</c:otherwise>
-
-											</c:choose>
-										</c:forEach>
-
-									</select>
-
-								</div>
-
-								<!-- <div class="form-group"> -->
-									<div class="col-sm-2 col-sm-offset-1 col-lg-1 col-lg-offset-0">
-
-										<button type="submit" class="buttonsaveorder"
-											style="width: 110px; height:40px">BillDetail</button>
-										<!--<button type="button" class="btn">Cancel</button>-->
-
-									</div>
-
-								<!-- </div> -->
-							</div> --%>
-						</form>
-
-					</div>
-					<!-- 						</form>
  -->
+					
+
+				
 					<form action="${pageContext.request.contextPath}/postManualGrn"
 						onsubmit="return confirm('Do you really want to save ?');"
 						name="grn_add" id="grn_add" method="post">
 
 						<div class="col-md-9">
-							<h6 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> Request GRN</h6>
+							<h6 class="pageTitle" style="margin: 0; padding:0;"><i class="fa fa-refresh" aria-hidden="true"></i> Request GRN</h6>
 						</div>
-						<label for="search" class="col-md-3" id="search"> <i
+						<label for="search" class="col-md-3" id="search" style="margin:-10px 0 0 0 ;"> <i
 							class="fa fa-search" style="font-size: 20px"></i> <input
 							type="text" style="border-radius: 25px;" id="myInput"
 							onkeyup="myFunction()" placeholder="Search items by name.."
@@ -319,8 +269,8 @@ table, th, td {
 
 							<c:choose>
 								<c:when test="${isOpen==1 || flag==0}">
-									<button type="submit" class="buttonsaveorder" disabled>
-										<i class="fa fa-check"></i> Save
+									<button type="submit" class="btn additem_btn" disabled>
+										Save
 									</button>
 
 								</c:when>

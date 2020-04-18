@@ -60,7 +60,7 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Subcategory Summery Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Subcategory Summery Report</h2>
 					</div>
 				</div>
 				<input type="hidden" name="factoryName" id="factoryName"
@@ -68,7 +68,7 @@
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<div class="col-md-2 from_date">
+					<div class="col-md-1 from_date">
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
 					<div class="col-md-2 ">
@@ -84,12 +84,10 @@
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
 					</div>
-					<div class="col-md-2">
-						<button class="btn search_btn pull-left" onclick="searchReport()">Search</button>
-						<%-- 		  &nbsp;&nbsp;&nbsp;  <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseTaxBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+					<div class="col-md-2" style="text-align: left;">
+						<button class="btn additem_btn" onclick="searchReport()" style="margin: 0;">Search</button>
+							<button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()" style="margin: 0;">PDF</button>
 					</div>
 
 				</div>

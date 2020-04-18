@@ -67,7 +67,7 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Categorywise- Itemwise Sale Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Categorywise- Itemwise Sale Report</h2>
 					</div>
 				</div>
 
@@ -95,10 +95,10 @@ table, th, td {
 
 
 					<div align="left" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
+						<button class="btn additem_btn" onclick="searchSellBill()" style="margin: 0;">
 							View</button>
-						<button class="btn search_btn" onclick="showChart()">Graph</button>
-						<button id="btn_pdf" class="btn btn-primary" onclick="genPdf()">PDF
+						<button class="btn additem_btn" onclick="showChart()" style="margin: 0;">Graph</button>
+						<button id="btn_pdf" class="btn additem_btn" onclick="genPdf()" style="margin: 0;">PDF
 						</button>
 					</div>
 				</div>

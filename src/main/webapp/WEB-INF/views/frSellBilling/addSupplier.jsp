@@ -71,16 +71,21 @@ table, th, td {
 					action="${pageContext.request.contextPath}/insertSupplier">
 					<input type="hidden" name="mod_ser" id="mod_ser"
 						value="search_result">
-
+						
+						
+						<div class="row">
+					<div class="col-md-5"><h2 class="pageTitle"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Supplier</h2></div>
+					<div class="col-md-7" style="text-align: right;">
 					
-						<div class="col-md -3">
-							
-								<div class="col1title" align="left"><h3>Add Supplier</h3></div>
-								<div class="col1title" align="right"> 
-						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn additem_btn">
+					<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn additem_btn"
+					style="margin:0;">
+						
 										</a>
 					</div>
-						</div>
+				</div>
+
+					
+						
 						
 					<div class="colOuter">
 						<div class="col-md-2">
@@ -209,10 +214,10 @@ table, th, td {
 					</div> 
 					<div class="colOuter">
 						<div align="center">
-							<input name="submit" class="buttonsaveorder" value="Submit"
-								type="submit" align="center" id="sub1">
+							<input name="submit" class="btn additem_btn" value="Submit"
+								type="submit" align="center" id="sub1" style="margin: 0 5px;">
 								<!-- <input type="button" class="buttonsaveorder" value="Cancel" id="cancel" onclick="cancel1()" disabled> -->
-								<a href="${pageContext.request.contextPath}/showOtherBill" class="buttonsaveorder" id="sub2">Cancel</a>
+								<a href="${pageContext.request.contextPath}/showOtherBill"  style="margin: 0 5px;" class="btn additem_btn" id="sub2">Cancel</a>
 						</div>
 				 
 					</div>

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -102,11 +103,11 @@
 </form> -->
 
 			
-				<%-- <c:if test="${not empty message && message!=''}">
+				<c:if test="${not empty message && message!=''}">
 					<!-- here would be a message with a result of processing -->
 					<div class="messages messagesErr">${message}</div><!-- messagesErr -->
 
-				</c:if> --%>
+				</c:if>
 				
 				<!-- <div class="a">
 					<div class="login_new">
@@ -124,7 +125,9 @@
 						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
 						alt="monginis"></a>
 						
-						<p class="login_txt">Delivering with Professional Excellence To be preferred Chartered Accountant, Advisor or Consultant to Business across India; and provide utility oriented legal compliance. </p>
+						<p class="login_txt">
+						Welcome to India’s one of most preferred bakery brand !
+						<span>Lets make Monginis a part of everybody’s celebration!!</span> </p>
 						
 						</div>
 						
@@ -132,7 +135,7 @@
 					
 					
 						<h2 class="login_head_one">
-							Login to your Account
+							Account Login
 						</h2>
 						<div class="loginBox">
 							<%-- <div class="loginUser">
@@ -167,16 +170,6 @@
 										<input id="check1" type="checkbox" name="check" value="check1">
 										<label for="check1">Remember me</label>
 									</div> -->
-									<br>
-									 
-										<c:if test="${not empty message && message!=''}">
-											<!-- here would be a message with a result of processing -->
-											<div class="messages" style="color: white;">${message}</div>
-						
-										</c:if>
-										<%
-											session.removeAttribute("message");										
-										%>
 								</div>
 							</form>
 						</div>

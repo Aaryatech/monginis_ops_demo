@@ -135,8 +135,8 @@ table, th, td {
 						</div>
 
 						<div align="left">
-							<input name="" class="buttonsaveorder" value="Search"
-								type="submit" align="center">
+							<input name="" class="btn additem_btn" value="Search"
+								type="submit" align="center" style="margin: 1px 0 0 0;">
 						</div>
 					</div>
 
@@ -237,7 +237,7 @@ table, th, td {
 										<c:out value="${newFormattedDateString}" /></td>
 										<td class="col-md-1" style="text-align: center;">
 												<a
-													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}"
+													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}" target="_blank"
 													class="fa fa-info"></a>&nbsp;&nbsp;
 													 <a
 													href="${pageContext.request.contextPath}/billPdf?url=pdf/showBillPdf/By-Road/0/${billHeader.billNo}"	class="fa fa-file-pdf-o" target="_blank"></a>

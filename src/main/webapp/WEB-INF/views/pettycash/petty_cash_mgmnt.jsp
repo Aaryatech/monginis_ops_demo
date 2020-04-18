@@ -164,132 +164,41 @@ table, th, td {
 			<input type="hidden" value="${pettycash.pettycashId}" name="petty_id">
 			<input type="hidden" value="${pettycash.cashAmt}" name="cash_edit_amt">
 				
-				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">Date</div>
-					</div>
-					<div class="col-md-3">
-							<input id="fromdatepicker" class="texboxitemcode texboxcal"
+				<div class="row">
+					<div class="col-md-1" style="margin: 10px 0 0 0;">Date</div>
+					<div class="col-md-2"><input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="Date" name="cash_date"
-							type="text" value="${pettycash.date}" onchange="compareDate()">
-					</div>
+							type="text" value="${pettycash.date}" onchange="compareDate()"></div>
 					
-					<div class="col-md-1"></div>
-					
-					<div class="col-sm-2">
-						<div class="col1title" align="left">Opening Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="opening_amt"  class="form-control" readonly="readonly" value="${pettycash.openingAmt}"
+					<div class="col-md-1" style="margin: 10px 0 0 0;">Opening Amt</div>
+					<div class="col-md-2"><input id="opening_amt"  class="form-control" readonly="readonly" value="${pettycash.openingAmt}"
 							autocomplete="off" placeholder="Opening Amt" name="opening_amt"  
-							type="text">
-					</div>
+							type="text"></div>
 					
-					
-				</div>
-				
-				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">Cash Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="cash_amt"  class="form-control" value="${pettycash.cashAmt}"
+					<div class="col-md-1" style="margin: 10px 0 0 0;">Cash Amt</div>
+					<div class="col-md-2"><input id="cash_amt"  class="form-control" value="${pettycash.cashAmt}"
 							autocomplete="off" placeholder="Cash Amt" name="cash_amt" onchange="calClosingAmt()"
-							type="text">
-					</div>					
+							type="text"></div>
 					
-					<div class="col-md-1"></div>
-					
-					<div class="col-md-2">
-						<div class="col1title" align="left">Withdrawal Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="withdrawal_amt"  class="form-control" value="${pettycash.withdrawalAmt}"
+					<div class="col-md-1" style="margin: 10px 0 0 0;">Withdrawal Amt</div>
+					<div class="col-md-2"><input id="withdrawal_amt"  class="form-control" value="${pettycash.withdrawalAmt}"
 							autocomplete="off" placeholder="Withdrawal Amt" name="withdrawal_amt"
-							type="text" onchange="calClosingAmt()">
-					</div>
-					
-					
-				</div>
-
-				<!-- <div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">Card Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="card_Amt"  class="form-control"
-							autocomplete="off" placeholder="Card Amt" name="card_Amt"
-							type="text">
-					</div>	
-					
-					<div class="col-md-1"></div>			
-					
-					<div class="col-md-2">
-						<div class="col1title" align="left">Other Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="other_amt"  class="form-control"
-							autocomplete="off" placeholder="Other Amt" name="other_amt"
-							type="text">
-					</div>
-				</div> -->
-				
-				<div class="colOuter">				
-				<div class="col-md-2">
-						<div class="col1title" align="left">Closing Amt</div>
-					</div>
-					
-					<div class="col-md-3">
-							<input id="closing_amt"  class="form-control" value="${pettycash.closingAmt}" readonly="readonly"
+							type="text" onchange="calClosingAmt()"></div>
+							
+							
+					<div class="col-md-1" style="margin: 30px 0 0 0;">Closing Amt</div>
+					<div class="col-md-2" style="margin: 30px 0 0 0;"><input id="closing_amt"  class="form-control" value="${pettycash.closingAmt}" readonly="readonly"
 							autocomplete="off" placeholder="Closing Amt" name="closing_amt"
-							type="text">
-					</div>
-						
-						
-						<%-- <c:if test="${isEdit==1}">
-					<div class="col-md-3">
-							<input id="closing_amt2"  class="form-control" disabled value="${pettycash.closingAmt}"
-							autocomplete="off" placeholder="Other Amt" name="closing_amt"
-							type="text">
-					</div>
-						</c:if> --%>							
-					
-					<div class="col-md-1"></div>
-					
-					<!-- <div class="col-md-2">
-						<div class="col1title" align="left">Total Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="total_amt"  class="form-control" disabled value="00"
-							autocomplete="off" placeholder="Total Amt" name="total_amt"
-							type="text">
-					</div>	 -->				
-					
-				</div>	
-
-				<div class="colOuter">
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
-					<div class="col2">
-						<input class="buttonsaveorder" value="Submit"
-							type="submit" id="btnsub">
-
-						<!-- <div align="center" id="loader" style="display: none">
-
-							<span>
-								<h4>
-									<font color="#343690">Loading</font>
-								</h4>
-							</span> <span class="l-1"></span> <span class="l-2"></span> <span
-								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-							<span class="l-6"></span>
-						</div> -->
-					</div>
-
-
-
+							type="text"></div>	
+							
+					<div class="col-md-2" style="text-align: left;"><input class="btn additem_btn" value="Submit"
+							type="submit" id="btnsub" style="margin: 30px 0 0 0;"></div>
+								
 				</div>
+				
+				
+
+				
 				
 				</form>
 

@@ -343,7 +343,7 @@
 							<div class="form-group">
 						
 								<input name="" class="btn additem_btn" value="Change Admin Password"
-									type="button" id="changePwd1" onclick="showDiv()"style="margin: 0;">
+									type="button" id="changePwd1" onclick="showDiv()"style="margin: 0; padding:6px 7px">
 							
 						</div>	
 							<div  class="update FormAlert" id="divCheckPasswordMatch">
@@ -416,7 +416,7 @@
 					</div>
 					
 					<div class="profile">
-							<div class="profileinput">
+							<div class="" style="text-align: center;">
 								<input name="" class="btn additem_btn" value="Save"
 									type="submit" id="btnupdate_profile">
 							<input name="" class="btn additem_btn" value="Cancel"

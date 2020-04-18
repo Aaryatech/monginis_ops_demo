@@ -57,23 +57,30 @@ table, th, td {
             	<div class="sidebarright">
 				 
 	<form name="frm_search" id="frm_search" method="post"	action="${pageContext.request.contextPath}/addOtherItemProcess">
-					
-						<div class="col-md -3">
+						<div class="row">
+						<div class="col-md-5">
 						<c:choose>
 						<c:when test="${isEdit==1}">
-						<div class="col1title" align="left"><h3>Edit Other Item</h3></div>
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Edit Other Item</h2>
 						</c:when>
 						<c:otherwise>
-						<div class="col1title" align="left"><h3>Add Other Item</h3></div>
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Add Other Item</h2>
 						</c:otherwise>
 						</c:choose>
+							
+					</div>
+					<div class="col-md-7">
 							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
 							<input id="id" class="form-control"	  name="id"  value="${item.id}" type="hidden" >	
-								<div class="col1title" align="right"> 
-						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn additem_btn">
+								<div class="" align="right"> 
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" 
+						class="btn additem_btn" style="margin:0;">
 							</a>
+						</div></div>
 					</div>
-						</div>
+						
+						
+						
 						
 					<div class="colOuter">
 						<div class="col-md-2">
@@ -241,7 +248,7 @@ table, th, td {
 							<div class="colOuter">
 						<div align="center">
 						<!-- <button type="submit" name="submit" class="buttonsaveorder" id="submtbtn" disabled="disabled">Submit</button> -->
-							 <input name="submit" class="buttonsaveorder" value="Submit"
+							 <input name="submit" class="btn additem_btn" value="Submit"
 								type="submit" align="center" id="submtbtn"> 
 						</div>
 				 

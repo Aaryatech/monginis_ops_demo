@@ -97,7 +97,7 @@ table, th, td {
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle">Sub-Category Month Wise Report</h2>
+								<h2 class="pageTitle" style="margin: 0; padding:0;"><i class="fa fa-pie-chart" aria-hidden="true"></i> Sub-Category Month Wise Report</h2>
 							</div>
 						</div>
 
@@ -124,9 +124,9 @@ table, th, td {
 						<div class="row">
 
 
-							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
+							
+								<div class="col-md-1" style="margin: 10px 0 0 0;">From Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
 										size="30" type="text" value="${todaysDate}" />
@@ -136,22 +136,16 @@ table, th, td {
 
 					<div class="form-group  "> -->
 
-								<div class="col-sm-3 col-lg-2	">To Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
+								<div class="col-md-1" style="margin: 10px 0 0 0;">To Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
 										type="text" value="${todaysDate}" />
 								</div>
-							</div>
-
-						</div>
-
-						<br> <br>
-
-						<div class="row">
-							<div class="col-md-2">Select Category</div>
-							<div class="col-md-4" style="text-align: left;">
-								<select data-placeholder="Select Group"
+							
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0;">Select Category</div>
+							<div class="col-md-2"><select data-placeholder="Select Group"
 									class="chosen-select" name="item_grp1" tabindex="-1"
 									onchange="getSubCategoriesByCatId()" id="item_grp1"
 									data-rule-required="true" multiple="multiple">
@@ -163,27 +157,24 @@ table, th, td {
 									</c:forEach>
 
 
-								</select>
-							</div>
-
-							<div class="col-sm-2 col-lg-2 ">Sub Category</div>
-							<div class="col-md-4">
-								<select data-placeholder="Select Sub Category"
+								</select></div>
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0;">Sub Category</div>
+							<div class="col-md-2"><select data-placeholder="Select Sub Category"
 									multiple="multiple" class="chosen-select"
 									name="item_grp2" id="item_grp2" tabindex="-1"
 									data-rule-required="true">
 
-								</select>
-							</div>
+								</select></div>
 
 						</div>
-						<br> <br>
-						<div class="row">
-							<div class="form-group">
 
-								<div class="col-sm-3 col-lg-2 ">Report Type</div>
-								<div class="col-sm-6 col-lg-4 controls ">
-									<select data-placeholder="Choose Type"
+						
+						<div style="margin: 20px 0 40px 0">
+						<div class="row">
+						
+							<div class="col-md-1" style="margin: 10px 0 0 0;">Report Type</div>
+							<div class="col-md-2 controls"><select data-placeholder="Choose Type"
 										class="form-control chosen" id="typeId" name="typeId">
 
 										<option value="1">Consolidated</option>
@@ -191,30 +182,19 @@ table, th, td {
 										<option value="3">Amount</option>
 										<option value="4">Taxable Amount</option>
 
-									</select>
-								</div>
-
-
-
-							</div>
+									</select></div>
+									
+									
+						
+								<div class="col-sm-2" style="text-align: left;">
+									<input type="button" id="submit" class="btn additem_btn"
+										value="Search Report" onclick="searchReport()" style="margin:0;">
+								</div>			
+						
+							
 						</div>
-
-						<br> <br>
-
-						<div class="row">
-							<div class="form-group">
-
-
-
-								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submit" class="btn btn-primary"
-										value="Search Report" onclick="searchReport()">
-								</div>
-
-							</div>
-						</div>
-
-<br> <br>
+</div>
+						
 
 					</form>
 
@@ -227,7 +207,7 @@ table, th, td {
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle">Item Month Wise Report</h2>
+								<h2 class="pageTitle" style="margin: 15px 0 0 0; padding: 0;"><i class="fa fa-pie-chart" aria-hidden="true"></i> Item Month Wise Report</h2>
 							</div>
 						</div>
 
@@ -239,30 +219,24 @@ table, th, td {
 						<div class="row">
 
 
-							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
+							
+								<div class="col-md-1" style="margin: 10px 0 0 0;">From Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDateItem" name="fromDateItem"
 										size="30" type="text" value="${todaysDate}" />
 								</div>
 
 								
-								<div class="col-sm-3 col-lg-2	">To Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
+								<div class="col-md-1" style="margin: 10px 0 0 0;">To Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDateItem" name="toDateItem" size="30"
 										type="text" value="${todaysDate}" />
 								</div>
-							</div>
-
-						</div>
-
-						<br> <br>
-
-						<div class="row">
-							<div class="col-md-2">Select Category</div>
-							<div class="col-md-4" style="text-align: left;">
+								
+								<div class="col-md-1" style="margin: 10px 0 0 0;">Select Category</div>
+							<div class="col-md-2" style="text-align: left;">
 								<select data-placeholder="Select Group"
 									class="chosen-select" name="item_grp1Item" tabindex="-1"
 									 id="item_grp1Item"
@@ -278,8 +252,8 @@ table, th, td {
 								</select>
 							</div>
 
-							<div class="col-sm-3 col-lg-2 ">Report Type</div>
-							<div class="col-sm-6 col-lg-4 controls date_select">
+							<div class="col-md-1" style="margin: 10px 0 0 0;">Report Type</div>
+							<div class="col-md-2 controls date_select">
 								<select data-placeholder="Choose Type"
 									class="form-control chosen" id="typeIdItem" name="typeIdItem">
 
@@ -290,20 +264,20 @@ table, th, td {
 
 								</select>
 							</div>
+							
 
 						</div>
-						<br> <br>
+
 						<div class="row">
-							<div class="form-group">
+							
 
 
-
-								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submitItem" class="btn btn-primary"
+								<div class="col-sm-12 " style="text-align: center; margin: 15px 0 0 0;">
+									<input type="button" id="submitItem" class="btn additem_btn"
 										value="Search Report" onclick="searchItemReport()">
 								</div>
 
-							</div>
+							
 						</div>
 <br> <br>
 

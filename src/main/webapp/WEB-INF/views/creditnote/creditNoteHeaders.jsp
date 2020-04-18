@@ -63,7 +63,7 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Credit Note Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Credit Note Report</h2>
 					</div>
 				</div>
 
@@ -71,7 +71,7 @@ table, th, td {
 					<form action="" class="form-horizontal" method="get"
 						id="validation-form">
 
-						<div class="col-md-2 from_date">
+						<div class="col-md-1 from_date">
 							<h4 class="pull-left">From Date:-</h4>
 						</div>
 						<div class="col-md-2 ">
@@ -87,12 +87,11 @@ table, th, td {
 								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 								name="toDate" type="text">
 						</div>
-						<div class="col-md-2">
-							<!-- <button class="btn search_btn pull-left" onclick="searchReport()">Search</button> -->
+						<div class="col-md-2" style="text-align: left;">
+							
 							<input type="button" value="Search" onclick="searchReport()"
-								class="btn btn-primary">
-							<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
-								onclick="genPdf()">PDF</button> -->
+								class="btn additem_btn" style="margin: 0;">
+							
 
 						</div>
 					</form>
@@ -157,9 +156,9 @@ table, th, td {
 					</div>
 					<!--table end-->
 					<br>
-					<div class="col-sm-2 col-lg-2 controls">
+					<div class="col-md-12 controls">
 						<input type="button" value="Generate PDF For Fr"
-							onclick="genPdf()" class="btn btn-primary">
+							onclick="genPdf()" class="btn additem_btn">
 					</div>
 				</div>
 			</div>

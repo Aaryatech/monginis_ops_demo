@@ -493,8 +493,8 @@ a:hover {
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 					<div class="order-btn textcenter">
 
-						<input name="" id="subm" class="buttonsaveorder" value="SAVE ORDER"
-							type="button" ONCLICK="button1()">
+						<input name="" id="subm" class="btn additem_btn" value="SAVE ORDER"
+							type="button" ONCLICK="button1()" style="margin: 0;">
 					</div>
 
 

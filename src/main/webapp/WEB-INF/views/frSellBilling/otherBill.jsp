@@ -239,13 +239,13 @@ body {
 			<form name="frm_search" id="frm_search" method="post"
 					action="${pageContext.request.contextPath}/submitOtherBill">
 					
-					<div class="col-md-4">
+					<div class="col-md-5">
 					<div class="order-left" style="margin-top: 14px;">
 						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Other Purchase Bill</h2>
 
 					</div></div>
 					
-					<div class="col-md-8" align="right" >
+					<div class="col-md-7" align="right" >
 					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn additem_btn" style="margin:5px 0 0 0;">
 										</a>
 					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn additem_btn" style="margin:5px 0 0 0;">
@@ -356,7 +356,7 @@ body {
 																			class="form-control" name="discPer" id="discPer" value="0"
 																			onkeypress="onQty(event,1)"
 																			oninput="validity.valid||(value='');"></td>
-																		 <td ><input type="button" class="buttonsaveorder" value="Add Item" onclick="addItem();"
+																		 <td ><input type="button" class="btn additem_btn" value="Add Item" onclick="addItem();"
 												id="b1"/> </td>
 																	</tr>
 																</table>
@@ -388,7 +388,7 @@ body {
 								<div id="table-scroll" > <!-- class="table-scroll" -->
 									<div id="faux-table" class="faux-table" aria="hidden" style="display: none;"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid1" class="responsive-table">
+										<table id="table_grid1" class="responsive-table" style="margin: 0;">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1" style="text-align: center;">Sr no.</th>
@@ -463,7 +463,7 @@ body {
 
 
 								<center>
-									<input type="submit" class="buttonsaveorder" id="insert"
+									<input type="submit" class="btn additem_btn" id="insert"
 										 value="Submit" disabled>  
 								 
 								</center>  

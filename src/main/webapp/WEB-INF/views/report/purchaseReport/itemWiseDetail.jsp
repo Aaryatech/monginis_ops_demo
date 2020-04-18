@@ -113,7 +113,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Itemwise-Billwise-Datewise Purchase
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Itemwise-Billwise-Datewise Purchase
 							Report</h2>
 					</div>
 				</div>
@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
 						<h4 class="pull-left">Group:-</h4>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<select name="catId" id="catId" class="form-control chosen"
 							required onchange="getSubCategoriesByCatId()">
 							<option value="" selected>Select Group</option>
@@ -142,7 +142,7 @@ jQuery(document).ready(function(){
 					<div class="col-md-1 pull-left">
 						<h4 class="pull-left">Sub-Cat:-</h4>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<select name="item_grp2" id="item_grp2"
 							data-placeholder="Choose Items..." class="chosen-select"
 							style="text-align: left;" required onchange="getItemList()">
@@ -153,13 +153,28 @@ jQuery(document).ready(function(){
 					<div class="col-md-1 pull-left">
 						<h4 class="pull-left">Items:-</h4>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<select name="itemId" id="itemId"
 							data-placeholder="Choose Items..." class="chosen-select"
 							style="text-align: left;" required multiple="multiple">
 
 						</select>
 					</div>
+					
+					
+					<input type="hidden" name="frId" id="frId" value="${frId}">
+					<input type="hidden" name="factoryName" id="factoryName"
+						value="${Constant.FACTORYNAME}">
+					<div class="col-md-1 from_date">
+						<h4 class="pull-left">From:-</h4>
+					</div>
+					<div class="col-md-2">
+						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="From Date" name="fromDate"
+							type="text">
+					</div>
+					
+					
 				</div>
 
 				<br>
@@ -167,33 +182,22 @@ jQuery(document).ready(function(){
 
 
 				<div class="row">
-					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<input type="hidden" name="factoryName" id="factoryName"
-						value="${Constant.FACTORYNAME}">
-
-					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From</h4>
-					</div>
-					<div class="col-md-3 ">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="From Date" name="fromDate"
-							type="text">
-					</div>
+					
 					<div class="col-md-1">
 						<h4 class="pull-left">To</h4>
 					</div>
-					<div class="col-md-3 ">
+					<div class="col-md-2 ">
 						<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="To Date" name="toDate"
 							type="text">
 					</div>
-					<div class="col-md-2">
-						<button class="btn search_btn pull-left"
-							onclick="itemWiseTaxReport()">Search</button>
+					<div class="col-md-2" style="text-align: left;">
+						<button class="btn additem_btn"
+							onclick="itemWiseTaxReport()" style="margin: 0;">Search</button>
 						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseDetailPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()" style="margin: 0;">PDF</button>
 					</div>
 
 				</div>

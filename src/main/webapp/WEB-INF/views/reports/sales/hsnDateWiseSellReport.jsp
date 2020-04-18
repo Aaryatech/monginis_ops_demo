@@ -140,7 +140,7 @@ table, th, td {
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle">Bill wise HSN Wise Report</h2>
+								<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Bill wise HSN Wise Report </h2>
 							</div>
 						</div>
 
@@ -154,29 +154,28 @@ table, th, td {
 
 
 							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
-								<div class="col-sm-6 col-lg-2 controls date_select">
+								<div class="col-md-1" style="margin: 10px 0 0 0">From Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
 										size="30" type="text" value="${todaysDate}" />
 								</div>
 
 
-								<div class="col-sm-3 col-lg-2	">To Date</div>
-								<div class="col-sm-6 col-lg-2 controls date_select">
+								<div class="col-md-1" style="margin: 10px 0 0 0">To Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
 										type="text" value="${todaysDate}" />
 								</div>
 
-								<div class="col-md-3"
-									style="margin-top: 3px; text-align: right;">
-									<input type="button" id="submit" class="btn btn-primary"
-										value="Search Report" onclick="searchReport()">
+								<div class="col-md-3" style="margin-top: 3px; text-align: left;">
+									<input type="button" id="submit" class="btn additem_btn"
+										value="Search Report" onclick="searchReport()" style="margin: 0;">
 
 
-									<button class="btn btn-primary" value="PDF" id="PDFButton"
-										onclick="genPdf()">PDF</button>
+									<button class="btn additem_btn" value="PDF" id="PDFButton"
+										onclick="genPdf()" style="margin: 0;">PDF</button>
 
 								</div>
 

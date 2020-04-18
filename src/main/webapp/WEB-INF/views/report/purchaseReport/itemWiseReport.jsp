@@ -68,7 +68,7 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Itemwise Purchase Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Itemwise Purchase Report</h2>
 					</div>
 				</div>
 
@@ -80,7 +80,7 @@ table, th, td {
 					<div class="col-md-1 from_date">
 						<h4 class="pull-left">Group:-</h4>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<select name="catId" id="catId" class="form-control chosen"
 							required>
 							<option value="" selected>Select Group</option>
@@ -94,7 +94,7 @@ table, th, td {
 						<h4 class="pull-left">Select:-</h4>
 					</div>
 
-					<div class="col-md-3 ">
+					<div class="col-md-2 ">
 						<select id="typeId" name="typeId" class="form-control">
 							<option value="">Select</option>
 							<option value="1">Purchase</option>
@@ -102,13 +102,8 @@ table, th, td {
 							<option value="3">Cumulative</option>
 						</select>
 					</div>
-				</div>
-
-				<br>
-
-
-
-				<div class="row">
+					
+					
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 					<input type="hidden" name="factoryName" id="factoryName"
 						value="${Constant.FACTORYNAME}">
@@ -116,7 +111,7 @@ table, th, td {
 					<div class="col-md-1 from_date">
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
-					<div class="col-md-3 ">
+					<div class="col-md-2 ">
 						<input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="DD-MM-YYYY" name="fromDate"
 							type="text">
@@ -124,18 +119,24 @@ table, th, td {
 					<div class="col-md-1">
 						<h4 class="pull-left">To Date:-</h4>
 					</div>
-					<div class="col-md-3 ">
+					<div class="col-md-2 ">
 						<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="DD-MM-YYYY" name="toDate"
 							type="text">
 					</div>
-					<div class="col-md-2">
-						<button class="btn search_btn pull-left"
-							onclick="itemWiseReport()">Search</button>
-						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+					
+				</div>
+
+				
+
+
+				<div class="row">
+					
+					<div class="col-md-12">
+						<button class="btn additem_btn"
+							onclick="itemWiseReport()" style="margin:15px 0 0 0;">Search</button>				
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()" style="margin:15px 0 0 0;" >PDF</button>
 					</div>
 
 				</div>

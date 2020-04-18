@@ -1,3 +1,4 @@
+
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -451,7 +452,7 @@ label:before{
 												id="b1">Add Item</button>
 										</center>
 									</div>
-									<div class="two_left" style="display: none;">
+									<div class="two_left">
 										
 										<span style="padding-top: 0px;float: left;margin-top: 7px; font-size: 16px; margin-right: 10px;">B2B:</span>
                                        <label class="switch">
@@ -860,7 +861,7 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Mo No:-</h4>
+											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter phone No." name="phoneNo2" id="phoneNo2" maxlength="10">
 										</div>
@@ -1116,7 +1117,7 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Mo No:-</h4>
+											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter phone No." name="phoneNo3" id="phoneNo3" maxlength="10">
 										</div>
@@ -1369,7 +1370,7 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Mo No:-</h4>
+											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter phone No." name="phoneNo4" id="phoneNo4" maxlength="10">
 										</div>
@@ -1612,7 +1613,7 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Mo No:-</h4>
+											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter phone No." name="phoneNo5" id="phoneNo5" maxlength="10">
 										</div>
@@ -1864,7 +1865,7 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Mo No:-</h4>
+											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter phone No." name="phoneNo6" id="phoneNo6" maxlength="10">
 										</div>
@@ -2104,7 +2105,7 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Mo No:-</h4>
+											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter phone No." name="phoneNo7" id="phoneNo7" maxlength="10">
 										</div>
@@ -2377,8 +2378,6 @@ label:before{
 								if (data == "") {
 									alert("No records found !!");
 								}
-								
-								$("#qty" + token).val(1);
 								document.getElementById("clear" + token).disabled = false;
 								var allTotal = 0;
 
@@ -3216,14 +3215,10 @@ label:before{
 		function generateSellBill(token) {
 
 			//var isValid = validation(token);
-			var grandtot = $("#grandtot" + token).val();			
+			var grandtot = $("#grandtot" + token).val();
 			// Animate loader off screen
 			
-			if (grandtot > 0) {
-				
-				 var x = confirm("Do you really want to submit the bill ?");
-				if (x == true) {
-				
+			if (validation(token) && grandtot > 0) {
 				$("#loader"+token).show();
 				var isb2b=0;
 				if(document.getElementById('is_b2b').checked && token==1) {
@@ -3318,12 +3313,7 @@ label:before{
 									}
 									
 								});
-					return true;
-				}
-			return false;
 			}
-			
-			
 			document.getElementById("clear" + token).focus();
 			
 		}

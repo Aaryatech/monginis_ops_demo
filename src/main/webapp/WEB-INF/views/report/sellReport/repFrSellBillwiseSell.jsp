@@ -94,8 +94,7 @@ table, th, td {
 
 
 						<div align="center" class="right_btn">
-							<button class="btn search_btn" onclick="searchSellBill()">HTML
-								View</button>
+							<button class="btn additem_btn" onclick="searchSellBill()" style="margin: 0;">View</button>
 
 							<%--  <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
 							<button class="btn additem_btn" value="PDF" id="PDFButton"

@@ -139,7 +139,7 @@ table, th, td {
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle">Sub-Category Wise Sell Report</h2>
+								<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Sub-Category Wise Sell Report</h2>
 							</div>
 						</div>
 
@@ -150,33 +150,19 @@ table, th, td {
 
 
 						<div class="row">
-
-
-							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal" placeholder="From Date"
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0">From Date</div>
+							<div class="col-md-2  controls date_select"><input class="texboxitemcode texboxcal" placeholder="From Date"
 										id="fromDate" name="fromDate" size="30" type="text"
-										value="${todaysDate}" />
-								</div>
-
-
-								<div class="col-sm-3 col-lg-2	">To Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal" placeholder="To Date"
+										value="${todaysDate}" /></div>
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0">To Date</div>
+							<div class="col-md-2 controls date_select"><input class="texboxitemcode texboxcal" placeholder="To Date"
 										id="toDate" name="toDate" size="30" type="text"
-										value="${todaysDate}" />
-								</div>
-							</div>
-
-						</div>
-
-						<br>
-
-						<div class="row">
-							<div class="col-md-2">Select Category</div>
-							<div class="col-md-4" style="text-align: left;">
-								<select data-placeholder="Select Group"
+										value="${todaysDate}" /></div>
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0">Select Category</div>
+							<div class="col-md-2"><select data-placeholder="Select Group"
 									class="form-control chosen" name="item_grp1" tabindex="-1"
 									onchange="getSubCategoriesByCatId()" id="item_grp1"
 									data-rule-required="true">
@@ -188,14 +174,28 @@ table, th, td {
 									</c:forEach>
 
 
-								</select>
+								</select></div>
+							
+							<div class="col-md-3" style="text-align: left;">
+								<input type="button" id="submit" class="btn additem_btn"
+									value="Search Report" onclick="searchReport()" style="margin: 0;"> 
+								<input class="btn additem_btn" value="PDF" id="PDFButton"
+									onclick="genPdf()" value="PDF" type="button"  style="margin: 0;">
+							</div>
+							
+
+							</div>
+
+						<br>
+
+						<div class="row">
+							<div class="col-md-2"></div>
+							<div class="col-md-4" style="text-align: left;">
+								
 							</div>
 
 							<div class="col-md-3" style="text-align: center;">
-								<input type="button" id="submit" class="btn btn-primary"
-									value="Search Report" onclick="searchReport()"> <input
-									class="btn btn-primary" value="PDF" id="PDFButton"
-									onclick="genPdf()" value="PDF" type="button">
+								
 							</div>
 						</div>
 

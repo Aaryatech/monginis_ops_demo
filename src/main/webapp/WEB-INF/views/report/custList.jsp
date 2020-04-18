@@ -62,36 +62,25 @@ table, th, td {
 
 
 				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">Customer List</h2>
+					<div class="col-md-7">
+						<h2 class="pageTitle"><i class="fa fa-list" aria-hidden="true"></i> Customer List</h2>
 					</div>
+					<input type="hidden" name="frId" id="frId" value="${frId}">
+					<div class="col-md-5" style="text-align:right;">
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
+									onclick="genPdf()" style="margin: 0;">PDF</button>
+
+								<input type="button" id="expExcel" class="btn additem_btn"
+									value="Excel" onclick="exportToExcel();" style="margin: 0;">
+					</div>
+					
 				</div>
 
 
-				<input type="hidden" name="frId" id="frId" value="${frId}">
+				
 				<div class="row">
-					<div class="clearfix"></div>
 
-					<div class="row">
-
-
-						<div class="form-group">
-
-							<div class="col-md-12"
-								style="margin-top: 3px; text-align: center;">
-
-
-								<button class="btn btn-primary" value="PDF" id="PDFButton"
-									onclick="genPdf()">PDF</button>
-
-								<input type="button" id="expExcel" class="btn btn-primary"
-									value="EXPORT TO Excel" onclick="exportToExcel();">
-
-							</div>
-
-						</div>
-
-					</div>
+					
 					<div id="table-scroll">
 						<div id="faux-table" class="faux-table" aria="hidden"
 							style="display: none;">

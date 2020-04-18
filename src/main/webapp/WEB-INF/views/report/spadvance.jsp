@@ -44,14 +44,14 @@
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="col-md-1">From Date</div>
+						<div class="col-md-1" style="margin: 10px 0 0 0;">From Date</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" autocomplete="off" name="from_Date" type="text"
 								placeholder="From Date">
 						</div>
 
-						<div class="col-md-1">TO</div>
+						<div class="col-md-1" style="margin: 10px 0 0 0;">To</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" autocomplete="off" name="to_Date" type="text"
@@ -59,12 +59,12 @@
 						</div>
 
 						
-						<div class="col-md-2">
-							<button type="button" class="btn search_btn pull-left"
-								onclick="searchSpAdv()">Search</button>
+						<div class="col-md-2" style="text-align: left;">
+							<button type="button" class="btn additem_btn"
+								onclick="searchSpAdv()" style="margin: 0;">Search</button>
 								
-								<button type="button" class="btn  buttonsaveorder" id='pdf'
-								onclick="genPdf()" style="float:left; margin: 0 0 0 10px;" disabled>Pdf</button>
+								<button type="button" class="btn additem_btn" id='pdf'
+								onclick="genPdf()" style="margin: 0;" disabled>Pdf</button>
 							<input type="hidden" name="frId" id="frId" value="${frId}">
 						</div>
 
@@ -211,9 +211,9 @@
 							</div>
 						</div>
 
-						<div class="col-sm-12  controls">
-							<input type="button" id="expExcel" class="btn btn-primary"
-								value="EXPORT TO Excel" onclick="exportToExcel();"
+						<div class="col-sm-12  controls" style="margin: 0;">
+							<input type="button" id="expExcel" class="btn additem_btn"
+								value="Excel" onclick="exportToExcel();"
 								disabled="disabled">
 						</div>
 

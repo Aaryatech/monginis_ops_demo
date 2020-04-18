@@ -128,11 +128,10 @@ However, delay the fade out process for 2.5 seconds */
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-					
-		<div class="sidebarright">
-		<br>
-	
-		<div class=" col-md-2">
+		
+		
+		<div class="row">
+			<div class="col-md-2">
 		    <h2 class=" pull-left flt_one">Invoice No:-  <b>
 		    ${invoiceNo}</b></h2>
 		</div>
@@ -175,7 +174,10 @@ However, delay the fade out process for 2.5 seconds */
 								<input name="" class="buttonsaveorder" value="Received"
 									type="button" id="updateStatus" onclick="updateStatus(${billNo})">
 							</div>
-    </div>
+		</div>
+		
+		
+   
 					<div id="snackbar" style="background:pink;">Order Received</div>
 
 					<!--tabNavigation-->
@@ -273,12 +275,14 @@ However, delay the fade out process for 2.5 seconds */
 						</table>
 					</div></div>
 				</div>
+				
+				<div align="center">
+								<a href="${pageContext.request.contextPath}/showBill"><input name="" class="btn additem_btn" value="Go Back"
+									  align="center" type="button" style="border: 0; border-radius:3px; font-size:14px; padding:9px 12px; cursor:pointer;"></a><!-- onclick="goBack()" -->
+							</div>
 
 					</div><br>
-					<div align="center">
-								<a href="${pageContext.request.contextPath}/showBill"><input name="" class="buttonsaveorder" value="Go Back"
-									  align="center" type="button"></a><!-- onclick="goBack()" -->
-							</div>
+					
 					 
 					<!--tabNavigation-->
 

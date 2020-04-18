@@ -67,7 +67,7 @@ table, th, td {
 
 					<div class="col-md-3">
 						<select name="view_opt" id="view_opt" class="form-control"
-							style="width: 250px; background-color: white; height: 40px" onchange="showDate()">
+							style="background-color: white;" onchange="showDate()">
 							<option value="0">Select From Bill</option>
 							<option value="1">Select From Date</option>
 
@@ -85,11 +85,16 @@ table, th, td {
 
 					<div class="col-md-2">
 
-						<button type="button" class="buttonsaveorder" style="display: none;" id='searchButton'							onclick="getViewOption()" style="width: 100px; height: 40px">Search
+						<button type="button" class="btn additem_btn" style="display: none; margin:0px;" id='searchButton'							onclick="getViewOption()" style="width: 100px; height: 40px">Search
 							</button>
 						<!--<button type="button" class="btn">Cancel</button>-->
 
 					</div>
+					
+					
+					
+					
+					
 					
 					<div class="col-md-6">
 						<!--table-->
@@ -100,7 +105,7 @@ table, th, td {
 							<div class="row" id="byBillNo">
 								<div class="col-md-6">
 									<select name="bill_no" id="bill_no" class="form-control"
-										style="width: 250px; background-color: white; height: 40px">
+										style="background-color: white;">
 									
 
 										<c:forEach items="${frBillList}" var="frBillList">
@@ -124,8 +129,8 @@ table, th, td {
 								<!-- <div class="form-group"> -->
 									<div class="col-sm-2 col-sm-offset-1 col-lg-1 col-lg-offset-0">
 
-										<button type="submit" class="buttonsaveorder"
-											style="width: 110px; height:40px">BillDetail</button>
+										<button type="submit" class="btn additem_btn"
+											style="margin:0;">Bill Detail</button>
 										<!--<button type="button" class="btn">Cancel</button>-->
 
 									</div>
@@ -134,6 +139,8 @@ table, th, td {
 							</div>
 						</form>
 					</div>
+					
+					
 
 				</div>
 
@@ -153,7 +160,7 @@ table, th, td {
 					<label for="search" class="col-md-3" id="search">
     <i class="fa fa-search" style="font-size:20px"></i>
 									<input type="text"  id="myInput" style="border-radius: 25px;" onkeyup="myFunction()" placeholder="Search items by name.." title="Type in a name">
-										</label>  
+										</label> 
 						
 
 						<div class="clearfix"></div>
@@ -245,8 +252,8 @@ table, th, td {
                         <br>
 						<div class="form-group">
 
-							<button type="button" class="buttonsaveorder" onclick="checkAnyRecordSelected()">
-								<i class="fa fa-check"></i> Proceed
+							<button type="button" class="btn additem_btn" onclick="checkAnyRecordSelected()">
+								Proceed
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->
 

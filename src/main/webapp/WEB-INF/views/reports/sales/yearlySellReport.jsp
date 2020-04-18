@@ -95,59 +95,36 @@ table, th, td {
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle">Sub-Category Month Wise Sell Report</h2>
+								<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Sub-Category Month Wise Sell Report</h2>
 							</div>
 						</div>
 
 
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 
-						<!-- <div class="row">
+						
 
-						<div align="center">
-							<button class="btn search_btn" onclick="monthWisePurchase()">HTML
-								View</button>
-							<button class="btn search_btn" onclick="showChart()">Graph</button>
-
-							<button class="btn btn-primary" value="PDF" id="PDFButton"
-								onclick="genPdf()">PDF</button>
-						</div>
-
-					</div> -->
-
-
-						<br> <br>
 						<div class="row">
 
 
 							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
+								<div class="col-md-1"style="margin: 10px 0 0 0">From Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
 										size="30" type="text" value="${fromDate}" />
 								</div>
 
-								<!-- </div>
-
-					<div class="form-group  "> -->
-
-								<div class="col-sm-3 col-lg-2	">To Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
+								
+								<div class="col-md-1"style="margin: 10px 0 0 0">To Date</div>
+								<div class="col-md-2 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
 										type="text" value="${toDate}" />
 								</div>
-							</div>
-
-						</div>
-
-						<br> <br>
-
-						<div class="row">
-							<div class="col-md-2">Select Category</div>
-							<div class="col-md-4" style="text-align: left;">
-								<select data-placeholder="Select Group" name="item_grp1"
+								
+								<div class="col-md-1"style="margin: 10px 0 0 0">Select Category</div>
+								<div class="col-md-2"><select data-placeholder="Select Group" name="item_grp1"
 									tabindex="-1" onchange="getSubCategoriesByCatId()"
 									id="item_grp1" data-rule-required="true"
 									data-placeholder="Choose Menus..." class="chosen-select"
@@ -161,33 +138,29 @@ table, th, td {
 									</c:forEach>
 
 
-								</select>
-							</div>
-
-							<div class="col-sm-2 col-lg-2 ">Sub Category</div>
-							<div class="col-md-4">
-								<select data-placeholder="Select Sub Category"
+								</select></div>
+								
+								<div class="col-md-1"style="margin: 10px 0 0 0">Sub Category</div>
+								<div class="col-md-2"><select data-placeholder="Select Sub Category"
 									class="chosen-select" name="item_grp2" id="item_grp2"
 									style="text-align: left;" required multiple="multiple">
 
 
 
-								</select>
+								</select></div>
+								
 							</div>
 
 						</div>
-						<br> <br>
-
-
-
+						
 
 						<div class="row">
 							<div class="form-group">
 
 
 
-								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submit" class="btn btn-primary"
+								<div class="col-sm-12 " style="text-align: center; margin: 15px 0 0 0;">
+									<input type="button" id="submit" class="btn additem_btn"
 										value="Search Report" onclick="searchReport()">
 								</div>
 
@@ -205,44 +178,31 @@ table, th, td {
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle">Item Month Wise Sell Report</h2>
+								<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Item Month Wise Sell Report</h2>
 							</div>
 						</div>
 
 
 
-						<br> <br>
-
+						
 
 
 						<div class="row">
-
-
-							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal"
-										placeholder="DD-MM-YYYY" id="fromDateItem" name="fromDateItem"
-										size="30" type="text" value="${fromDate}" />
-								</div>
-
-
-								<div class="col-sm-3 col-lg-2	">To Date</div>
-								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal"
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0">From Date</div>
+							<div class="col-md-2 controls date_select">
+								<input class="texboxitemcode texboxcal"
+								placeholder="DD-MM-YYYY" id="fromDateItem" name="fromDateItem"
+								size="30" type="text" value="${fromDate}" />
+							</div>
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0">To Date</div>
+							<div class="col-md-2 controls date_select"><input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDateItem" name="toDateItem"
-										size="30" type="text" value="${toDate}" />
-								</div>
-							</div>
-
-						</div>
-
-						<br> <br>
-
-						<div class="row">
-							<div class="col-md-2">Select Category</div>
-							<div class="col-md-4" style="text-align: left;">
-								<select data-placeholder="Select Group" id="item_grp1Item"
+										size="30" type="text" value="${toDate}" /></div>
+							
+							<div class="col-md-1" style="margin: 10px 0 0 0">Select Category</div>
+							<div class="col-md-2"><select data-placeholder="Select Group" id="item_grp1Item"
 									name="item_grp1Item" tabindex="-1"
 									data-placeholder="Choose Category" class="chosen-select"
 									style="text-align: left;" required multiple="multiple">
@@ -255,27 +215,13 @@ table, th, td {
 									</c:forEach>
 
 
-								</select>
-							</div>
+								</select></div>
+							
+							<div class="col-md-2"><input type="button" id="submitItem" class="btn additem_btn"
+										value="Search Report" onclick="searchItemReport()" style="margin:0;"></div>
 
-
+							
 						</div>
-
-						<br> <br>
-
-						<div class="row">
-							<div class="form-group">
-
-
-
-								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submitItem" class="btn btn-primary"
-										value="Search Report" onclick="searchItemReport()">
-								</div>
-
-							</div>
-						</div>
-
 
 					</form>
 

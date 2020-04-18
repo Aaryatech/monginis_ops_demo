@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -120,7 +122,7 @@ table, th, td {
 
 
 			<!--leftNav-->
-			<div class="colOuter">
+		<%-- 	<div class="colOuter">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
 					<c:if test="${not empty message}">
@@ -131,7 +133,7 @@ table, th, td {
 						</div>
 					</c:if>
 				</div>
-			</div>
+			</div> --%>
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
@@ -144,10 +146,10 @@ table, th, td {
 				
 					</div>
 					<div class="col-md-8">
-						<div class="col-md-4">
+						<div class="col-md-2">
 						<div class="col1title">Select View Option</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<select name="selectStock" class="form-control chosen"
 							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
 
@@ -160,15 +162,15 @@ table, th, td {
 					</div>
 					<div id="crnt_stk_btn">
 					<div class="col-md-1">
-						<input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()">
+						<input name="search_stock" class="btn additem_btn" value="Search"
+							type="button" onclick="searchStock()" style="margin: 0 5px;">
 					</div>
 
 					<div class="col-md-1">
-						<button type="button" class="buttonsaveorder" id='pdf'
-							onclick="genPdf()" disabled>PDF</button>
+						<button type="button" class="btn additem_btn" id='pdf'
+							onclick="genPdf()" disabled  style="margin: 0 ;">PDF</button>
 					</div>
-					 <div class="col-md-2" style="margin:10px 0 0 0;">
+					 <div class="col-md-2" style="margin:7px 0 0 0;">
 						<b>Month: ${monthName}/${year}</b>
 			     	</div>
 					</div>
@@ -242,7 +244,7 @@ table, th, td {
 
 
 				<div class="colOuter" style="display: none" id=select_date>
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<div class="col1title">From Date:</div>
 					</div>
 					<div class="col-md-2" align="left">
@@ -257,7 +259,7 @@ table, th, td {
 
 
 
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<div class="col1title">To Date:</div>
 					</div>
 					<div class="col-md-2" align="left">
@@ -266,14 +268,16 @@ table, th, td {
 							type="text">
 					</div>
 					
-					<div class="col-md-1">
-						<input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()">
+					<div class="col-md-2">
+						<input name="search_stock" class="btn additem_btn" value="Search"
+							type="button" onclick="searchStock()" style="margin:0 10px; float: left;">
+							
+							<button type="button" class="btn additem_btn" id='date_pdf'
+							onclick="genPdf()" disabled style="margin:0; float: left;">PDF</button>
 					</div>
 
 					<div class="col-md-1">
-						<button type="button" class="buttonsaveorder" id='date_pdf'
-							onclick="genPdf()" disabled>PDF</button>
+						
 					</div>
                    
 				</div>
@@ -283,7 +287,7 @@ table, th, td {
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
-						<form action="otherItemMonthEndProcess" method="POST" id="otherItemStock">
+						<form action="otherItemMonthEndProcess" method="POST">
 							<div class="clearfix"></div>
 							<div class="col-md-10" id="loader" style="display: none">
 				
@@ -394,14 +398,7 @@ table, th, td {
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
-<script>
 
-var form = document.getElementById('otherItemStock');
-form.onsubmit = function () {
-    // this method is cancelled if window.confirm returns false
-    return window.confirm('Are you sure that you want to submit this form?');
-}
-</script>
 <!-- Select Only Month and Year -->
 <script>
 	$(document)
@@ -531,7 +528,7 @@ form.onsubmit = function () {
 <script type="text/javascript">
 	function searchStock() {
 
-		
+		$('#loader').show();
 
 		var isMonthClose = ${isMonthEndAppli};
 		//alert("close " +isMonthClose);
@@ -542,8 +539,7 @@ form.onsubmit = function () {
 		var selectedToDate = $("#todatepicker").val();
 
 		//document.getElementById('monthEnd').style.display = "block";
-	if(selectedStockOption>0){
-		$('#loader').show();
+
 		$
 				.getJSON(
 						'${getOtherStock}',
@@ -651,10 +647,6 @@ form.onsubmit = function () {
 
 											})
 						});
-		}else{
-			alert("Please select a option");
-			 
-		}
 	}
 </script>
 

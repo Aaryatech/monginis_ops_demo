@@ -61,42 +61,39 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">View GRN Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> View GRN Report</h2>
 					</div>
 				</div>
 
 				<div class="colOuter">
 					<div align="center">
-						<div class="col1">
-							<div class="col1title">
-								<b><span class="frm_txt">From</span></b> <input
-									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal float_l"
+					
+						<div class="col-md-1" style="margin:10px 0 0 0;">From</div>
+						<div class="col-md-2"><input
+									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal "
 									placeholder="From Date" name="from_Date" type="text"
-									size="35">
-							</div>
-						</div>
-						<div class="col2">
-							<div class="col1title">
-								<b><span class="frm_txt">To</span></b> <input id="todatepicker" class="texboxitemcode texboxcal float_l"
+									></div>
+						
+						<div class="col-md-1" style="margin:10px 0 0 0;">To</div>
+						<div class="col-md-2"><input id="todatepicker" class="texboxitemcode texboxcal "
 									autocomplete="off" placeholder="To Date" name="to_Date"
-									type="text" size="35">
-							</div>
-						</div>
+									type="text" ></div>
+						
+							
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 						<input type="hidden" name="frName" id="frName" value="${frName}">
 
+						<div class="col-md-2" style="text-align: left;">
+							<button class="btn additem_btn" onclick="searchSellBill()" style="margin: 0;">View</button>
+							
+							<button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()" style="margin: 0;">PDF</button>
+						</div>
+			
 					</div>
 
 
-					<div align="center" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
-							View</button>
-						<%--   &nbsp;&nbsp;&nbsp;
-		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-						<br>
-					</div>
+					
 				</div>
 				<div class="row">
 					<div class="col-md-12">

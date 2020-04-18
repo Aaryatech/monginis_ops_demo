@@ -108,7 +108,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Month wise Purchase Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Month wise Purchase Report</h2>
 					</div>
 				</div>
 
@@ -118,7 +118,7 @@ jQuery(document).ready(function(){
 					<div class="col-md-1">
 						<h4 class="pull-left">From :-</h4>
 					</div>
-					<div class="col-md-2 ">
+					<div class="col-md-2">
 						<input type='text' placeholder="Select From Month" id='txtDate' class="texboxitemcode texboxcal"
 							autocomplete="off" name="from_stockdate" required size="25" />
 					</div>
@@ -129,7 +129,7 @@ jQuery(document).ready(function(){
 						<input type='text' placeholder="Select To Month" id='txtDateto' class="texboxitemcode texboxcal"
 							autocomplete="off" name="to_stockdate" required size="25" />
 					</div>
-					<div class="col-md-1 ">Select :</div>
+					<div class="col-md-1 "><h4 class="pull-left">Select :</h4></div>
 					<div class="col-md-2 ">
 						<select id="typeId" name="typeId" class="form-control">
 							<option value="">Select</option>
@@ -138,18 +138,16 @@ jQuery(document).ready(function(){
 							<option value="3">Cumulative</option>
 						</select>
 					</div>
-					<!-- <div class="col-md-2">
-		    <button class="btn search_btn pull-left" onclick="monthWisePurchase()">Search </button>
-		</div> -->
-					<div align="center" style="margin-top:3px;">
-						<button class="btn search_btn" onclick="monthWisePurchase()">HTML
+					
+					<div class="col-md-3" align="left" style="margin-top:3px;">
+						<button class="btn additem_btn" onclick="monthWisePurchase()" style="margin: 0;">
 							View</button>
-						<button class="btn search_btn" onclick="showChart()">Graph</button>
+						<button class="btn additem_btn" onclick="showChart()" style="margin: 0;">Graph</button>
 
 						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseMonthwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()" style="margin: 0;">PDF</button>
 					</div>
 
 				</div>

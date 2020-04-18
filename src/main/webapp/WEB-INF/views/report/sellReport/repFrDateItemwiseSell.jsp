@@ -109,19 +109,19 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Datewise-Itemwise Sale Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i> Datewise-Itemwise Sale Report</h2>
 					</div>
 				</div>
 				<br>
 				<div class="row">
 
 					<div class="col-sm-1">
-						<div class="pull-left">
-							<b>Group&nbsp;</b>
+						<div class="pull-left" style="margin: 10px 0 0 0">
+							<b>Group</b>
 						</div>
 					</div>
-					<div class="col-md-3">
-						<select id="category" class="form-control" style="width: 230px"
+					<div class="col-md-2">
+						<select id="category" class="form-control" style="""
 							placeholder="Select Category" name="category" tabindex="4">
 							<option value="-1">Select Option</option>
 
@@ -135,27 +135,36 @@ jQuery(document).ready(function(){
 						</select>
 					</div>
 					<div class="col-sm-1">
-						<div class="pull-left">
-							<b>From&nbsp;&nbsp;&nbsp;&nbsp;</b>
+						<div class="pull-left" style="margin: 10px 0 0 0">
+							<b>From</b>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<input id="fromdatepicker" placeholder="From Date"
 							name="from_Date" type="text"
-							style="margin-top: 3px; width: 230px; text-align: left;"
+							style="margin-top: 3px; text-align: left;"
 							size="30" class="form-control" autocomplete="off">
 					</div>
 					<div class="col-sm-1">
-						<div class="pull-left">
-							<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+						<div class="pull-left" style="margin: 10px 0 0 0">
+							<b>TO</b>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<input id="todatepicker" placeholder="To Date" name="to_Date"
 							type="text" size="30"
-							style="margin-top: 3px; width: 230px; text-align: left;"
+							style="margin-top: 3px; text-align: left;"
 							class="form-control" autocomplete="off">
 					</div>
+					
+					<div class="col-md-3">
+						<div align="left">
+						<button class="btn additem_btn" onclick="searchSellBill()" style="margin: 0;">View</button>						
+						<button class="btn additem_btn" value="PDF" id="PDFButton" onclick="genPdf()" style="margin: 0;">PDF</button>
+
+					</div>
+					</div>
+					
 				</div>
 				<input type="hidden" name="frId" id="frId" value="${frId}">
 
@@ -171,16 +180,7 @@ jQuery(document).ready(function(){
     </div> -->
 				<!-- </div> -->
 				<div class="row">
-					<div align="center">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
-							View</button>
-						<!-- <button class="btn search_btn" onclick="showChart()">Graph</button> -->
-						<%-- 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDateItemwisewiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-
-					</div>
+					
 				</div>
 
 				 

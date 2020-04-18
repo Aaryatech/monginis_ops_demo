@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -41,41 +43,43 @@
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
+			
+				<div class="row">
+					<div class="col-md-5"><h2 class="pageTitle"><i class="fa fa-file-pdf-o" ></i> Other Purchase Bills </h2></div>
+					<div class="col-md-7" style="text-align: right;">
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="btn additem_btn"
+						style="margin:0; ">
+										</a>
+					</div>
+				</div>
+			
 				<div class="order-left">
-					<h2 class="pageTitle">Other Purchase Bills</h2>
+					
 					
 
 				</div>
-				<div class="col1title" align="right"> 
-						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="btn additem_btn">
-										</a>
-										</div>
+				<!-- <div class="col1title" align="right"> 
+						
+										</div> -->
 				<form id="validation-form">
 
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="col-md-2" align="left">From:</div>
+						<div class="col-md-1" align="left" style="margin: 7px 0 0 0;">From:</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal" autocomplete="off"
 								value="${cDate}" name="from_Date" type="text">
 						</div>
-						<div class="col-md-1" align="left"></div>
+						
 						 
-						<div class="col-md-1" align="left">TO:</div>
+						<div class="col-md-1" style="margin: 7px 0 0 0;">TO:</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal" autocomplete="off"
 								value="${cDate}" name="to_Date" type="text">
 						</div>
 						
-					 
-
-					</div>
-					
-					<div class="colOuter">
-						 
-						
-						<div class="col-md-2" align="left">Select Supplier: </div>
+						<div class="col-md-1" style="margin: 7px 0 0 0;">Select Supplier: </div>
 						<div class="col-md-2">
 							<select class="form-control" data-live-search="true" title="Please Select Item" name="suppId" id="suppId"
 																			data-rule-required="true">
@@ -86,15 +90,17 @@
 
 																		</select>
 						</div>
-
- 
-<div class="col-md-1" align="left"></div>
+						
 						<div class="col-md-1">
-							<button type="button" class="btn  buttonsaveorder"
+							<button type="button" class="btn additem_btn" style="margin: 0;"
 								onclick="serchOtherBill()">Search</button>
 						</div>
+						
+					 
 
 					</div>
+					
+					
 
 
 
@@ -109,7 +115,7 @@
 						<div id="table-scroll" ><!-- class="table-scroll" -->
 							<div ></div><!-- class="id="faux-table"  aria="hidden" faux-table" -->
 							<div class="table-wrap"><!--   -->
-								<table id="table_grid" class="responsive-table" ><!-- class="main-table" -->
+								<table id="table_grid" class="responsive-table" style="margin-top: 0;"><!-- class="main-table" -->
 									<thead>
 										<tr class="bgpink">
 										<th class="col-md-1">Sr No</th>
@@ -220,9 +226,7 @@ function serchOtherBill()
 
 			},
 			function(data) {
-				if (data == "") {					
-					alert("No records found !!");
-				}
+				
 				$
 				.getJSON(
 						'${frSupplierList}',

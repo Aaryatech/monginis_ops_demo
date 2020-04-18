@@ -235,29 +235,28 @@ body {
 				<div class="sidebarright">
 					<form name="frm_search" id="frm_search" method="post"
 						action="${pageContext.request.contextPath}/insertOtherStockBill">
-						<div class="order-left">
-							<h2 class="pageTitle">Other Item Opening Stock</h2>
-
-						</div>
-						<br>
-						<div class="order-right" align="right">
-
-							<a href="${pageContext.request.contextPath}/addSupplier"><input
-								type="button" value="Add Supplier" class="btn additem_btn">
+						
+						<div class="row">
+					<div class="col-md-5"><h2 class="pageTitle"><i class="fa fa-plus-circle" aria-hidden="true"></i> Other Item Opening Stock</h2></div>
+					<div class="col-md-7" style="text-align: right;">
+					
+					<a href="${pageContext.request.contextPath}/addSupplier"><input
+								type="button" value="Add Supplier" class="btn additem_btn" style="margin: 0;">
 							</a> <a href="${pageContext.request.contextPath}/viewOtherItemBill"><input
 								type="button" value="List Of Other Purchase Bill"
-								class="btn additem_btn"> </a>
-						</div>
-						<div class="col-md-2">
-							<div class="col1title">
-								<b>${monthName}</b> <b>${year}</b>
-							</div>
-						</div>
+								class="btn additem_btn"  style="margin: 0;"> </a>
+					</div>
+				</div>
+						
+						
+						
+						
+			
 
 
 
 						<!--tabNavigation-->
-						<div class="cd-tabs">
+						<div class="cd-tabs" style="margin:0;">
 							<!--tabMenu-->
 						<!-- 	<nav>
 								<ul class="cd-tabs-navigation">
@@ -267,7 +266,7 @@ body {
 							<!--tabMenu-->
 							<ul class="cd-tabs-content">
 								<!--tab1-->
-								<li data-content="tab1" class="selected" onshow="onloadTab(1)" style="padding: 1px 26px 4px 27px;">
+								<li data-content="tab1" class="selected" onshow="onloadTab(1)" style="padding: 10px;">
 									<!-- <div class="row"> -->
 									<!-- 	<div class="col-md-9"> -->
 									<!-- 		<div class="control-label"> -->
@@ -331,14 +330,14 @@ body {
 									<!-- </div> -->
 
 
-									<div class="clearfix"></div> <br /> <!-- Form End -->
+									<div class="clearfix"></div> <!-- Form End -->
 
 
 
 									<div id="table-scroll" ><!-- class="table-scroll" -->
 										<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
 										<div ><!-- class="table-wrap table-wrap-custbill" -->
-											<table id="table_grid1" class="responsive-table"><!--  class="main-table small-td" -->
+											<table id="table_grid1" style="margin:0;" class="responsive-table"><!--  class="main-table small-td" -->
 												<thead>
 													<tr class="bgpink">
 														<th class="col-sm-1">Sr no.</th>
@@ -371,11 +370,11 @@ body {
 
 
                                      <div  style="text-align: center;">
-										<input type="submit" class="btn buttonsaveorder" id="insert"
+										<input type="submit" class="btn additem_btn" id="insert"
 											value="Submit">
-										<button type="button" class="btn  btn btn-primary" id='pdf'
+										<button type="button" class="btn additem_btn" id='pdf'
 											onclick="genPdf()">Generate Pdf</button>
-									 <input type="button" id="expExcel" class="btn btn-primary"
+									 <input type="button" id="expExcel" class="btn additem_btn"
 									value="EXPORT TO Excel" onclick="exportToExcel();">
                                     </div>
 								</li>
