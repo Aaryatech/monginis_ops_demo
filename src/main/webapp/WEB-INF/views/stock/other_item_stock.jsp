@@ -283,7 +283,7 @@ table, th, td {
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
-						<form action="otherItemMonthEndProcess" method="POST">
+						<form action="otherItemMonthEndProcess" method="POST" id="otherItemStock">
 							<div class="clearfix"></div>
 							<div class="col-md-10" id="loader" style="display: none">
 				
@@ -394,7 +394,14 @@ table, th, td {
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
+<script>
 
+var form = document.getElementById('otherItemStock');
+form.onsubmit = function () {
+    // this method is cancelled if window.confirm returns false
+    return window.confirm('Are you sure that you want to submit this form?');
+}
+</script>
 <!-- Select Only Month and Year -->
 <script>
 	$(document)
@@ -524,7 +531,7 @@ table, th, td {
 <script type="text/javascript">
 	function searchStock() {
 
-		$('#loader').show();
+		
 
 		var isMonthClose = ${isMonthEndAppli};
 		//alert("close " +isMonthClose);
@@ -535,7 +542,8 @@ table, th, td {
 		var selectedToDate = $("#todatepicker").val();
 
 		//document.getElementById('monthEnd').style.display = "block";
-
+	if(selectedStockOption>0){
+		$('#loader').show();
 		$
 				.getJSON(
 						'${getOtherStock}',
@@ -643,6 +651,10 @@ table, th, td {
 
 											})
 						});
+		}else{
+			alert("Please select a option");
+			 
+		}
 	}
 </script>
 

@@ -102,11 +102,11 @@
 </form> -->
 
 			
-				<c:if test="${not empty message && message!=''}">
+				<%-- <c:if test="${not empty message && message!=''}">
 					<!-- here would be a message with a result of processing -->
 					<div class="messages messagesErr">${message}</div><!-- messagesErr -->
 
-				</c:if>
+				</c:if> --%>
 				
 				<!-- <div class="a">
 					<div class="login_new">
@@ -167,6 +167,16 @@
 										<input id="check1" type="checkbox" name="check" value="check1">
 										<label for="check1">Remember me</label>
 									</div> -->
+									<br>
+									 
+										<c:if test="${not empty message && message!=''}">
+											<!-- here would be a message with a result of processing -->
+											<div class="messages" style="color: white;">${message}</div>
+						
+										</c:if>
+										<%
+											session.removeAttribute("message");										
+										%>
 								</div>
 							</form>
 						</div>

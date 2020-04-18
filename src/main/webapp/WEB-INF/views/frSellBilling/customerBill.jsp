@@ -451,7 +451,7 @@ label:before{
 												id="b1">Add Item</button>
 										</center>
 									</div>
-									<div class="two_left">
+									<div class="two_left" style="display: none;">
 										
 										<span style="padding-top: 0px;float: left;margin-top: 7px; font-size: 16px; margin-right: 10px;">B2B:</span>
                                        <label class="switch">
@@ -2377,6 +2377,8 @@ label:before{
 								if (data == "") {
 									alert("No records found !!");
 								}
+								
+								$("#qty" + token).val(1);
 								document.getElementById("clear" + token).disabled = false;
 								var allTotal = 0;
 
@@ -3214,10 +3216,14 @@ label:before{
 		function generateSellBill(token) {
 
 			//var isValid = validation(token);
-			var grandtot = $("#grandtot" + token).val();
+			var grandtot = $("#grandtot" + token).val();			
 			// Animate loader off screen
 			
-			if (validation(token) && grandtot > 0) {
+			if (grandtot > 0) {
+				
+				 var x = confirm("Do you really want to submit the bill ?");
+				if (x == true) {
+				
 				$("#loader"+token).show();
 				var isb2b=0;
 				if(document.getElementById('is_b2b').checked && token==1) {
@@ -3312,7 +3318,12 @@ label:before{
 									}
 									
 								});
+					return true;
+				}
+			return false;
 			}
+			
+			
 			document.getElementById("clear" + token).focus();
 			
 		}

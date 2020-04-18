@@ -976,22 +976,28 @@ function myFunction1() {
 
 	<script type="text/javascript">
 	function todaysDayClose(){
-			//alert("Hi ");
+		//	alert("Hi ");
+			var isError = false;
 			 document.getElementById("dayClose1").disabled = true;
 			 $('#loader11').show();
-
-							$.getJSON('${dayClose}',{
-
-								ajax : 'true',
-							 },
-							 function(data) {
-								 //alert(data);
-								 
-								 window.location.reload();
-								 
-			});
-			$('#loader11').hide();
-		//	alert("Hi End  ");
+			 
+			 var x = confirm("Do you really want to submit the bill (Day Close) ?");
+					if (x == true) {
+						$.getJSON('${dayClose}',{
+	
+							ajax : 'true',
+						 },
+						 function(data) {
+						//	 alert("Data------"+JSON.stringify(data));
+									 
+							 window.location.reload();
+									 
+					});
+				$('#loader11').hide();
+				return true;
+			}
+			
+			return false; 
 	}
 	
 	</script>

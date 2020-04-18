@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -682,6 +683,8 @@ public class OtherBillController {
 			FrSupplier[] list = rest.postForObject(Constant.URL + "/getAllFrSupplierListByFrId",map,
 					FrSupplier[].class);
 			ArrayList<FrSupplier> supplierList = new ArrayList<>(Arrays.asList(list)); 
+			String dateInString = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+			model.addObject("cDate", dateInString);
 			model.addObject("supplierList",supplierList);
 		}catch(Exception e)
 		{
