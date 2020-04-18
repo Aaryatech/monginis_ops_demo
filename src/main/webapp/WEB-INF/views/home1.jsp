@@ -465,8 +465,45 @@
 
 						<div class="charts_bx">
 							<div class="chart_l">
-								<!-- <div id="donutchart" style="width: 900px; height: 500px;"></div> -->
-								<!-- style="width: 900px; height: 500px;" -->
+								<h3 class="bx_title">Customers</h3>
+
+
+
+
+								<div class="scrollbars" id="scrollbarsmodaldiv">
+									<table id="customertable" width="100%">
+
+										<thead>
+											<tr>
+												<th class="sr_no" style="text-align: center;">Sr</th>
+												<th class="sr_no" style="text-align: center;">Customer
+													Name</th>
+												<th class="sr_no" style="text-align: center;">Total</th>
+												<th class="sr_no" style="text-align: center;">Status</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<c:forEach items="${customerListForDashlist}" var="custList"
+												varStatus="count">
+
+												<tr>
+													<td style="text-align: center">${count.index+1}</td>
+													<td style="text-align: left"><c:out
+															value="${custList.spCustName}" /></td>
+													<td style="text-align: right"><c:out
+															value="${custList.spGrandTotal}" /></td>
+													<td style="text-align: center;"><c:choose>
+															<c:when test="${custList.spBookForMobNo eq '0'}">Pending</c:when>
+															<c:otherwise>Paid</c:otherwise>
+														</c:choose></td>
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 							<div class="chart_r">
 								<h3 class="bx_title">Top Products</h3>
@@ -495,6 +532,7 @@
 											<tr>
 												<th class="sr_no" style="text-align: center;">Sr</th>
 												<th class="sr_no" style="text-align: center;">Item Name</th>
+												<th class="sr_no" style="text-align: center;">QTY/WT</th>
 												<th class="sr_no" style="text-align: center;">Amount</th>
 											</tr>
 										</thead>
@@ -804,8 +842,10 @@
 
 					tr.append($('<td ></td>').html(key + 1));
 					tr.append($('<td ></td>').html(data.itemName));
-					tr.append($('<td ></td>').html(
-							parseFloat(data.itemTotal).toFixed(2)));
+					tr.append($('<td style="text-align: right;"></td>').html(
+							data.qty));
+					tr.append($('<td style="text-align: right;"></td>').html(
+							parseFloat(data.total).toFixed(2)));
 
 					$('#custCreditTable tbody').append(tr);
 				});
@@ -839,8 +879,10 @@
 
 					tr.append($('<td ></td>').html(key + 1));
 					tr.append($('<td ></td>').html(data.itemName));
-					tr.append($('<td ></td>').html(
-							parseFloat(data.itemTotal).toFixed(2)));
+					tr.append($('<td style="text-align: right;"></td>').html(
+							data.qty));
+					tr.append($('<td style="text-align: right;"></td>').html(
+							parseFloat(data.total).toFixed(2)));
 
 					$('#custCreditTable tbody').append(tr);
 				});

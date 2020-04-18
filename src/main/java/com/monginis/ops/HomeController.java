@@ -45,6 +45,7 @@ import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CatWiseDashboardQuery;
 import com.monginis.ops.model.ConfiguredSpDayCkResponse;
+import com.monginis.ops.model.CustomerListForDash;
 import com.monginis.ops.model.DashboardData;
 import com.monginis.ops.model.DateWiseDashboardGraphQuery;
 import com.monginis.ops.model.DummyItems;
@@ -56,6 +57,7 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetFrMenus;
+import com.monginis.ops.model.GetItemListForDashboardByCatId;
 import com.monginis.ops.model.LatestNewsResponse;
 import com.monginis.ops.model.Menu;
 import com.monginis.ops.model.Message;
@@ -600,7 +602,7 @@ public class HomeController {
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 			cal.setTime(my);
 			int year = cal.get(Calendar.YEAR);
-			int month = cal.get(Calendar.MONTH); 
+			int month = cal.get(Calendar.MONTH);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
@@ -608,7 +610,7 @@ public class HomeController {
 			map.add("toDate", toDate);
 			map.add("year", year);
 			map.add("month", month);
-			
+
 			RestTemplate restTemplate = new RestTemplate();
 
 			System.out.println(map);
@@ -632,6 +634,11 @@ public class HomeController {
 			model.addObject("frmd", fromDate);
 			model.addObject("tod", toDate);
 
+			CustomerListForDash[] customerListForDash = restTemplate
+					.postForObject(Constant.URL + "/getListOfCustomer", map, CustomerListForDash[].class);
+			List<CustomerListForDash> customerListForDashlist = new ArrayList<>(Arrays.asList(customerListForDash));
+			model.addObject("customerListForDashlist", customerListForDashlist);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -667,7 +674,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/getItemSellBill", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CatWiseDashboardQuery> getItemSellBill(HttpServletRequest request, HttpServletResponse responsel) {
+	public List<GetItemListForDashboardByCatId> getItemSellBill(HttpServletRequest request,
+			HttpServletResponse responsel) {
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		String fromDate = request.getParameter("frmd");
@@ -675,7 +683,7 @@ public class HomeController {
 		int flag = Integer.parseInt(request.getParameter("flag"));
 		String toDate = request.getParameter("tod");
 		RestTemplate restTemplate = new RestTemplate();
-		List<CatWiseDashboardQuery> sectionList = new ArrayList<>();
+		List<GetItemListForDashboardByCatId> list = new ArrayList<>();
 		try {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -685,12 +693,14 @@ public class HomeController {
 			map.add("catId", catId);
 			map.add("flag", flag);
 
-			System.out.println("sdfdsfdsf");
+			GetItemListForDashboardByCatId[] detItemListForDashboardByCatId = restTemplate.postForObject(
+					Constant.URL + "/getItemListForDashboardByCatId", map, GetItemListForDashboardByCatId[].class);
+			list = new ArrayList<>(Arrays.asList(detItemListForDashboardByCatId));
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return sectionList;
+		return list;
 	}
 
 	@RequestMapping(value = "/getDatewiseSellList", method = RequestMethod.POST)
