@@ -536,6 +536,7 @@
 												<th class="sr_no" style="text-align: center;">Item Name</th>
 												<th class="sr_no" style="text-align: center;">QTY/WT</th>
 												<th class="sr_no" style="text-align: center;">Amount</th>
+												<th class="sr_no" style="text-align: center;">Contribution</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -842,7 +843,7 @@
 				ajax : 'true'
 			}, function(chartsBardata) {
 
-				 //alert(JSON.stringify(chartsBardata));
+				//alert(JSON.stringify(chartsBardata));
 				$.each(chartsBardata, function(key, chartsBardata) {
 
 					dataTable.addRows([ [ chartsBardata.billDate,
@@ -915,6 +916,12 @@
 				//alert(JSON.stringify(data));
 				$('#custCreditTable td').remove();
 
+				var itemtotal = 0;
+
+				for (var i = 0; i < data.length; i++) {
+					itemtotal = itemtotal + parseFloat(data[i].total);
+				}
+
 				$.each(data, function(key, data) {
 
 					var tr = $('<tr></tr>');
@@ -925,7 +932,10 @@
 							data.qty));
 					tr.append($('<td style="text-align: right;"></td>').html(
 							parseFloat(data.total).toFixed(2)));
+					var contri = (data.total / itemtotal) * 100;
 
+					tr.append($('<td style="text-align: right;"></td>').html(
+							contri.toFixed(2) + '%'));
 					$('#custCreditTable tbody').append(tr);
 				});
 
@@ -952,6 +962,12 @@
 				//	alert(JSON.stringify(data));
 				$('#custCreditTable td').remove();
 
+				var itemtotal = 0;
+
+				for (var i = 0; i < data.length; i++) {
+					itemtotal = itemtotal + parseFloat(data[i].total);
+				}
+
 				$.each(data, function(key, data) {
 
 					var tr = $('<tr></tr>');
@@ -962,6 +978,11 @@
 							data.qty));
 					tr.append($('<td style="text-align: right;"></td>').html(
 							parseFloat(data.total).toFixed(2)));
+
+					var contri = (data.total / itemtotal) * 100;
+
+					tr.append($('<td style="text-align: right;"></td>').html(
+							contri.toFixed(2) + '%'));
 
 					$('#custCreditTable tbody').append(tr);
 				});
