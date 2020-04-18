@@ -138,6 +138,8 @@ public class HomeController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
+		
+		
 		ModelAndView model = new ModelAndView("home");
 		HttpSession session = request.getSession();
 		RestTemplate restTemplate = new RestTemplate();
@@ -619,7 +621,7 @@ public class HomeController {
 			 * CatWiseDashboardQuery[].class); List<CatWiseDashboardQuery> catwiselist = new
 			 * ArrayList<>(Arrays.asList(catWiseDashboardQuery));
 			 */
-
+			model.addObject("dashboardData", dashboardData);
 			model.addObject("frmd", fromDate);
 			model.addObject("tod", toDate);
 
