@@ -119,6 +119,8 @@
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
+				
+					<h2 class="pageTitle"><i class="fa fa-bar-chart-o" aria-hidden="true"></i> Dashboard</h2>
 
 					<div class="row">
 						<div class="col-md-12">
@@ -131,25 +133,26 @@
 									<input type="hidden" name="catId" id="catId" value="${tod}">
 									<input type="hidden" name="typesele" id="typesele"
 										value="${type}">
-									<div class="colOuter">
-
+									<div style="text-align: left; margin: 0 0 20px 0;">
+									
+										<div class="row">
 										<c:choose>
 											<c:when test="${type==1}">
 												<div class="col-md-1 radio_align_1"
-													style="margin: 7px 0 0 0px;">
+													style="margin: 10px 0 0 0px;">
 													<input type="radio" name="type" value="1"
 														class="radio-align" onclick="showDiv(this.value)"
 														style="vertical-align: sub; margin: 0 5px 0 0;" checked>Today
 												</div>
 												<div class="col-md-1 radio_align_1"
-													style="margin: 7px 0 0 0px;">
+													style="margin: 10px 0 0 0px;">
 													<input type="radio" name="type" value="2"
 														class="radio-align" onclick="showDiv(this.value)"
 														style="vertical-align: sub; margin: 0 5px 0 0;">
 													Week
 												</div>
 												<div class="col-md-1 radio_align_1"
-													style="margin: 7px 0 0 0px;">
+													style="margin: 10px 0 0 0px;">
 													<input type="radio" name="type" value="3"
 														class="radio-align" onclick="showDiv(this.value)"
 														style="vertical-align: sub; margin: 0 5px 0 0;">
@@ -282,10 +285,13 @@
 
 
 										<div class="sub_right">
-											<input name="submit" class="buttonsaveorder" value="Submit"
-												type="submit" id="submtbtn">
+											<input name="submit" class="btn additem_btn" value="Submit"
+												type="submit" id="submtbtn" style="margin:0;">
 										</div>
+										
+										
 										<div class="sub_right"></div>
+										</div>
 									</div>
 								</form>
 							</div>
@@ -441,7 +447,7 @@
 
 							<div class="col-md-6">
 								<div class="one_graph ">
-									<div class="graph_one two" style="background-color: white;">
+									<div class="graph_one two" style="background-color: white; padding:10px;">
 										<div id="line_chart_div" style="width: 100%; height: 100%;"></div>
 									</div>
 									<!-- <div class="daily_sale">
@@ -451,7 +457,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="one_graph ">
-									<div class="graph_one one" style="background-color: white;">
+									<div class="graph_one one" style="background-color: white; padding:10px;">
 										<div id="donutchart" style="width: 100%; height: 100%;"></div>
 									</div>
 									<!-- <div class="daily_sale">
@@ -463,16 +469,70 @@
 
 
 						</div>
+						
+						<div class="row">
+							<div class="col-md-6">
+								<div class="one_graph padd_bx">
+									
+									<h3 class="bx_title">Customers</h3>
+									
+									
+									<div id="scrollbarsmodaldiv" class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
+
+									<div id="scrollbarsmodaldiv" class="faux-table" aria="hidden"><!-- style="display:none" -->
+										<table id="customertable" class="main-table">
+											<thead>
+												<tr class="bgpink">												
+												<th width="10%" class="sr_no" style="text-align: left;">Sr</th>
+												<th width="60%" class="sr_no" style="text-align: left;">Customer Name</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Total</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Status</th>
+												</tr>
+											</thead>
+										</table>
+
+									</div>
+									<div class="table-wrap inner_height">
+
+										<table id="customertable" class="responsive-table" style="margin:0px;"><!--   class="main-table" -->
+											<thead>
+												<tr class="bgpink">
+												<th width="10%" class="sr_no" style="text-align: left;">Sr</th>
+												<th width="60%" class="sr_no" style="text-align: left;">Customer Name</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Total</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Status</th>
+												</tr>
+											</thead>
+											<tbody style="jtext-align:left !important">
+												
+												<c:forEach items="${customerListForDashlist}" var="custList"
+												varStatus="count">
+
+												<tr>
+													<td style="text-align: center">${count.index+1}</td>
+													<td style="text-align: left"><c:out
+															value="${custList.spCustName}" /></td>
+													<td style="text-align: right"><c:out
+															value="${custList.spGrandTotal}" /></td>
+													<td style="text-align: center;"><c:choose>
+															<c:when test="${custList.spBookForMobNo eq '0'}">Pending</c:when>
+															<c:otherwise>Paid</c:otherwise>
+														</c:choose></td>
 
 
-						<div class="charts_bx">
-							<div class="chart_l">
-								<h3 class="bx_title">Customers</h3>
+												</tr>
+											</c:forEach>
+											
+											</tbody>
 
-
-
-
-								<div class="scrollbars" id="scrollbarsmodaldiv">
+										</table>
+									</div>
+								</div>
+									
+									
+									
+									
+									<%-- <div class="scrollbars" id="scrollbarsmodaldiv">
 									<table id="customertable" width="100%">
 
 										<thead>
@@ -505,10 +565,14 @@
 											</c:forEach>
 										</tbody>
 									</table>
+								</div> --%>
+									
 								</div>
 							</div>
-							<div class="chart_r">
-								<h3 class="bx_title">Top Products</h3>
+							<div class="col-md-6">
+								<div class="one_graph padd_bx">
+
+									<h3 class="bx_title">Top Products</h3>
 								<div class="right_btns">
 									<input name="submit" class="sub_btn" value="All" type="submit"
 										onclick="itemSellBillCal2(0)" id="submtbtn">
@@ -525,9 +589,49 @@
 
 								</div>
 
+								
+								<div id="table-scroll" class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
 
+									<div id="scrollbarsmodaldiv" class="faux-table" aria="hidden"><!-- style="display:none" -->
+										<table id="custCreditTable" class="main-table">
+											<thead>
+												<tr class="bgpink">
+												<th width="10%" class="sr_no" style="text-align: left;">Sr</th>
+												<th width="60%" class="sr_no" style="text-align: left;">Item Name</th>
+												<th width="10%" class="sr_no" style="text-align: left;">QTY/WT</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Amount</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Contribution</th>
+													
+														
+													
+												</tr>
+											</thead>
+										</table>
 
-								<div class="scrollbars" id="scrollbarsmodaldiv">
+									</div>
+									<div class="table-wrap inner_height">
+
+										<table id="custCreditTable" class="responsive-table" style="margin:0px;"><!--   class="main-table" -->
+											<thead>
+												<tr class="bgpink">
+												<th width="10%" class="sr_no" style="text-align: left;">Sr</th>
+												<th width="60%" class="sr_no" style="text-align: left;">Item Name</th>
+												<th width="10%" class="sr_no" style="text-align: left;">QTY/WT</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Amount</th>
+												<th width="10%" class="sr_no" style="text-align: left;">Contribution</th>
+													
+														
+													
+												</tr>
+											</thead>
+											<tbody style="jtext-align:left !important"></tbody>
+
+										</table>
+									</div>
+								</div>
+					
+					
+								<!-- <div class="scrollbars" id="scrollbarsmodaldiv">
 									<table id="custCreditTable" width="100%">
 
 										<thead>
@@ -543,18 +647,29 @@
 
 										</tbody>
 									</table>
+								</div> -->
+					
+
+								
+									
 								</div>
-
-
 							</div>
-							<div class="clr"></div>
+						</div>
 
 
+						<div class="row">
+							<div class="col-md-12">
+							<c:if test="${type!=1}">
+							<div class="one_graph padd_bx">
+								<div id="chart_div"></div>
+							</div>
+							</c:if>
+							</div>
 						</div>
 
 
 
-						<div class="charts_bx">
+						<%-- <div class="charts_bx">
 							<c:if test="${type!=1}">
 								<div class="chart_l">
 									<div id="chart_div"></div>
@@ -601,7 +716,7 @@
 							<div class="clr"></div>
 
 
-						</div>
+						</div> --%>
 
 
 

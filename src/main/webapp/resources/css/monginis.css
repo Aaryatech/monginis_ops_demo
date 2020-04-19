@@ -568,20 +568,20 @@ background: linear-gradient(45deg,#ffb430,#ffb430)!important;
 box-shadow: 0 6px 20px 0 rgba(244,143,177,.5)!important;
 }
 
-.sale_l{vertical-align:middle; width:25%; font-size:40px; text-align:center; color: #FFF; display: table-cell;}
-.sale_r{vertical-align:middle;  width:71%; display: table-cell; color: #FFF; text-align: left;}
+.sale_l{vertical-align:middle; width:21%; font-size:40px; text-align:center; color: #FFF; display: table-cell;}
+.sale_r{vertical-align:middle;  width:75%; display: table-cell; color: #FFF; text-align: left;}
 .sale_head{font-size: 16px; letter-spacing:0.5px; font-weight: 700; margin: 0 0 10px 0; text-transform: uppercase;}
 .range{margin: 0 0 10px 0; width: 100%; border: none; background:rgba(255, 255, 255, 0.5); border-radius: 5px;}
 .percen_one{width:25%; padding: 5px; background: #FFF; display: block; border-radius: 5px;}
 .percen_two{width:50%; padding: 5px; background: #FFF; display: block; border-radius: 5px;}
 .percen_three{width:75%; padding: 5px; background: #FFF; display: block; border-radius: 5px;}
-.price_sale{margin: 0px; padding: 0px; font-size:30px; font-weight: 700; }
+.price_sale{margin: 0px; padding: 0px; font-size:26px /* 30px */; font-weight: 700; }
 .sale-list{display: table-cell; vertical-align: middle; padding: 0 20px;}
 .sale_epay{color: #FFF; text-align:left; font-size:14px; margin: 3px 0; font-weight: 600; text-transform: uppercase;}
 .sale_epay span{float: right; font-weight: 400; text-transform: capitalize; font-size: 15px;}
 
 .chart_r{ position:relative; min-height: 530px;}
-.right_btns{position: absolute; right: 12px; top: 12px;}
+.right_btns{position: absolute; right: 14px; top: 12px;}
 .sub_btn{background:#4655be ; font-size: 12px; font-weight: 600; color: #FFF; border:none; padding: 5px 10px; 
     height: 24px; line-height: 17px; border-radius:3px;
 -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
@@ -649,17 +649,22 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
     font-size: 18px;
     display: inline-block;
     width: 100%;
-    margin: 0 0 15px 0;
+    margin: 3px 0 15px 0;
     color: #333; text-align:left;
 }
+.table-wrap.inner_height{max-height: 430px;}
 
 
 .sale_r{position: relative;}
 .sale_divide{display: inline-block; margin:5px 0; position: absolute; right:10px; top:8px;}
 .sales_l{text-align:right;  line-height: 24px; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
-.sales_l span{display: block; font-size: 25px; margin:10px 0;}
+.sales_l span{display: block; font-size: 22px /* 25px */; margin:10px 0;}
 
-.one_graph{box-shadow: 0 0px 6px 0 rgba(0,0,0,.2); background: #FFF; /* padding: 10px; */ margin: 5px 0 20px 0;}
+.one_graph{box-shadow: 0 0px 6px 0 rgba(0,0,0,.2); background: #FFF; /* padding: 10px; */ margin: 5px 0 20px 0;
+min-height:500px;}
+
+.one_graph.padd_bx{min-height: 500px; padding: 10px; position: relative;}
+
 .graph_one{height: 305px; /* margin: 0 0 15px 0; */}
 .daily_sale{display: block; text-align: left; padding: 15px 15px 10px 15px;}
 .daily_sale h2{color:#3c4858; font-size: 18px; margin: 0 0 5px 0; font-weight: 400;}
