@@ -113,22 +113,22 @@
 											<th class="col-md-1" style="text-align: center;">Grn Gvn
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Item_Name</th>
-											<th class="col-md-1" style="text-align: center;">Tax
+											<!-- <th class="col-md-1" style="text-align: center;">Tax
 												Rate</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Total
-												Tax</th>
+												Tax</th> -->
 											<th class="col-md-1" style="text-align: center;">Grn Gvn
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												Taxable Amt</th>
-											<th class="col-md-1" style="text-align: center;">Aprv.
+											<!-- <th class="col-md-1" style="text-align: center;">Aprv.
 												CGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												SGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
-												IGST Amt</th>
+												IGST Amt</th> -->
 											<th class="col-md-1" style="text-align: center;">Total</th>
 										</tr>
 									</thead>
@@ -150,22 +150,22 @@
 											<th class="col-md-1" style="text-align: center;">Grn Gvn
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Item_Name</th>
-											<th class="col-md-1" style="text-align: center;">Tax
+											<!-- <th class="col-md-1" style="text-align: center;">Tax
 												Rate</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Total
-												Tax</th>
+												Tax</th> -->
 											<th class="col-md-1" style="text-align: center;">Grn Gvn
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												Taxable Amt</th>
-											<th class="col-md-1" style="text-align: center;">Aprv.
+											<!-- <th class="col-md-1" style="text-align: center;">Aprv.
 												CGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												SGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
-												IGST Amt</th>
+												IGST Amt</th> -->
 											<th class="col-md-1" style="text-align: center;">Total</th>
 										</tr>
 									</thead>
@@ -277,7 +277,7 @@
 																	'<td class="col-md-1"></td>')
 																	.html(
 																			list.itemName));
-													tr
+													/* tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
 																	.html(
@@ -295,7 +295,7 @@
 																	'<td class="col-md-1" style="text-align:right"></td>')
 																	.html(
 																			list.totalTax
-																					.toFixed(2)));
+																					.toFixed(2))); */
 													taxTotal = taxTotal
 															+ list.totalTax;
 													tr
@@ -314,7 +314,7 @@
 																					.toFixed(2)));
 													aprTaxableTotal = aprTaxableTotal
 															+ list.aprTaxableAmt;
-													tr
+												/* 	tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
 																	.html(
@@ -337,7 +337,7 @@
 																			list.aprIgstRs
 																					.toFixed(2)));
 													igstTotal = igstTotal
-															+ list.aprIgstRs;
+															+ list.aprIgstRs; */
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
@@ -352,7 +352,7 @@
 												})
 
 								var tr = "<tr>";
-								var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 
 								var totalAmt = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ taxableTotal.toFixed(2);
@@ -387,14 +387,14 @@
 								$('#table_grid tbody').append(tr);
 								$('#table_grid tbody').append(total);
 
-								$('#table_grid tbody').append(totalAmt);
-								$('#table_grid tbody').append(totalTax)
+								/* $('#table_grid tbody').append(totalAmt);
+								$('#table_grid tbody').append(totalTax) */
 								$('#table_grid tbody').append(totalGrnGvn);
 								$('#table_grid tbody').append(
 										totalAprTaxableTotal);
-								$('#table_grid tbody').append(cgst);
+							/* 	$('#table_grid tbody').append(cgst);
 								$('#table_grid tbody').append(sgst);
-								$('#table_grid tbody').append(igst);
+								$('#table_grid tbody').append(igst); */
 
 								$('#table_grid tbody').append(grand);
 								$('#table_grid tbody').append(trclosed);
