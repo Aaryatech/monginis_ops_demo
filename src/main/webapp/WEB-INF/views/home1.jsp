@@ -142,27 +142,27 @@
 													style="margin: 10px 0 0 0px;">
 													<input type="radio" name="type" value="1"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;" checked>Today
+														style="vertical-align: sub; margin: 0 2px 0 0;" checked>Today
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 10px 0 0 0px;">
 													<input type="radio" name="type" value="2"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Week
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 10px 0 0 0px;">
 													<input type="radio" name="type" value="3"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Month
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="4"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Custom
 												</div>
 											</c:when>
@@ -171,27 +171,27 @@
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="1"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">Today
+														style="vertical-align: sub; margin: 0 2px 0 0;">Today
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="2"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;" checked>
+														style="vertical-align: sub; margin: 0 2px 0 0;" checked>
 													Week
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="3"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Month
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="4"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Custom
 												</div>
 											</c:when>
@@ -201,27 +201,27 @@
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="1"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">Today
+														style="vertical-align: sub; margin: 0 2px 0 0;">Today
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="2"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Week
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="3"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;" checked>
+														style="vertical-align: sub; margin: 0 2px 0 0;" checked>
 													Month
 												</div>
-												<div class="col-md-1 radio_align_1"
+												<div class="col-md-2 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="4"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Custom
 												</div>
 											</c:when>
