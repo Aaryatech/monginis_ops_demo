@@ -231,27 +231,27 @@
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="1"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">Today
+														style="vertical-align: sub; margin: 0 2px 0 0;">Today
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="2"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Week
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="3"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;">
+														style="vertical-align: sub; margin: 0 2px 0 0;">
 													Month
 												</div>
 												<div class="col-md-1 radio_align_1"
 													style="margin: 7px 0 0 0px;">
 													<input type="radio" name="type" value="4"
 														class="radio-align" onclick="showDiv(this.value)"
-														style="vertical-align: sub; margin: 0 5px 0 0;" checked>
+														style="vertical-align: sub; margin: 0 2px 0 0;" checked>
 													Custom
 												</div>
 											</c:when>
@@ -314,18 +314,18 @@
 
 											<div class="sale_divide">
 												<div class="sales_l">
-													<span> ${dashboardData.totalSell} </span>
+													<span> <fmt:formatNumber value="${dashboardData.totalSell}" minFractionDigits="0" maxFractionDigits="0"/></span>
 												</div>
 												<div class="sales_l">
-													<span> ${dashboardData.spCakeTotalBill} </span>
+													<span> <fmt:formatNumber value="${dashboardData.spCakeTotalBill}" minFractionDigits="0" maxFractionDigits="0"/> </span>
 												</div>
 												<div class="clr"></div>
 											</div>
 
 
 											<h1 class="price_sale">
-
-												${dashboardData.totalSell+dashboardData.spCakeTotalBill}</h1>
+<span> <fmt:formatNumber value="${dashboardData.totalSell+dashboardData.spCakeTotalBill}" minFractionDigits="0" maxFractionDigits="0"/>
+												</h1>
 										</div>
 										<div class="clr"></div>
 									</div>
@@ -352,22 +352,23 @@
 											<i class="fa fa-inr" aria-hidden="true"></i>
 										</div>
 										<div class="sale_r">
-											<h3 class="sale_head">Approved Return</h3>
+											<h3 class="sale_head">Return</h3>
 
 											<div class="sale_divide">
 												<div class="sales_l">
-													<span> ${dashboardData.grnAprAmt} </span>
+													<span><fmt:formatNumber value="${dashboardData.grnAprAmt}" minFractionDigits="0" maxFractionDigits="0"/>   </span>
 												</div>
 												<div class="sales_l">
-													<span> ${dashboardData.grnAprAmmt} </span>
+													<span> <fmt:formatNumber value="${dashboardData.grnAprAmmt}" minFractionDigits="0" maxFractionDigits="0"/> </span>
 												</div>
 												<div class="clr"></div>
 											</div>
 
 
 											<h1 class="price_sale">
+											 <fmt:formatNumber value="${dashboardData.grnAprAmt+dashboardData.grnAprAmmt}" minFractionDigits="0" maxFractionDigits="0"/> 
 
-												${dashboardData.grnAprAmt+dashboardData.grnAprAmmt}</h1>
+												</h1>
 										</div>
 										<div class="clr"></div>
 									</div>
@@ -383,8 +384,9 @@
 											<h3 class="sale_head">Contribution</h3>
 
 											<h5 class="price_sale">
-												${(dashboardData.totalSell+dashboardData.spCakeTotalBill)-
-													(dashboardData.grnAprAmt+dashboardData.grnAprAmmt+dashboardData.purchaseBill)}
+											<fmt:formatNumber value="${(dashboardData.totalSell+dashboardData.spCakeTotalBill)-
+													(dashboardData.grnAprAmt+dashboardData.grnAprAmmt+dashboardData.purchaseBill)} 	" minFractionDigits="0" maxFractionDigits="0"/>
+												
 											</h5>
 
 
@@ -402,7 +404,8 @@
 										</div>
 										<div class="sale_r">
 											<h3 class="sale_head">Target</h3>
-											<h5 class="price_sale">${dashboardData.target}</h5>
+											<h5 class="price_sale"><fmt:formatNumber value="${((dashboardData.totalSell+dashboardData.spCakeTotalBill) * 100)/1000000}"  minFractionDigits="0" maxFractionDigits="0"/>%</h5>
+										
 										</div>
 										<div class="clr"></div>
 									</div>
