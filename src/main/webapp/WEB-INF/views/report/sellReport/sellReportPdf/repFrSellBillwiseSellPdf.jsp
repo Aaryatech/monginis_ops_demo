@@ -42,8 +42,8 @@ th {
 				<th style="text-align: center; width: 100px">Invoice No</th>
 				<th style="text-align: center; width: 100px">Bill Date</th>
 				<th style="text-align: center; width: 100px">Disc%</th>
-				<th style="text-align: center; width: 100px">Taxable</th>
-				<th style="text-align: center; width: 100px">Total Tax</th>
+				<!-- <th style="text-align: center; width: 100px">Taxable</th>
+				<th style="text-align: center; width: 100px">Total Tax</th> -->
 				<th style="text-align: center; width: 100px">Grand Total</th>
 				<th style="text-align: center; width: 100px">Payable AMT</th>
 				<th style="text-align: center; width: 100px">Paid AMT</th>
@@ -75,12 +75,12 @@ th {
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.discountPer}" /></td>
-					<td style="text-align: right;"><fmt:formatNumber type="number"
+					<%-- <td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.taxableAmt}" /></td>
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
-							value="${reportList.totalTax}" /></td>
+							value="${reportList.totalTax}" /></td> --%>
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.grandTotal}" /></td>
@@ -145,6 +145,10 @@ th {
 						<c:when test="${reportList.billType.toString()=='G'}">
 							<c:set var="billType" value="Against GRN" />
 						</c:when>
+						
+						<c:when test="${reportList.billType.toString()=='P'}">
+							<c:set var="billType" value="Bill As Per Phy Stock" />
+						</c:when>
 
 					</c:choose>
 
@@ -156,12 +160,12 @@ th {
 			<tr>
 				<td colspan='4'><b>Total</b></td>
 
-				<td style="text-align: right;"><b><fmt:formatNumber
+				<%-- <td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalTaxable}" /></b></td>
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
-							value="${totalTax}" /></b></td>
+							value="${totalTax}" /></b></td> --%>
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalAmount}" /></b></td>
@@ -174,8 +178,9 @@ th {
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalRemaining}" /></b></td>
-				<td></td>
-				<td></td>
+							<td></td>
+							<td></td>
+		
 			</tr>
 		</tbody>
 	</table>

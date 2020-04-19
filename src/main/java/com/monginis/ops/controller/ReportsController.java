@@ -2192,8 +2192,8 @@ public class ReportsController {
 		// rowData.add("Franchisee Name");
 		rowData.add("Bill Date");
 		rowData.add("Discount Per");
-		rowData.add("Taxable Amt");
-		rowData.add("Total Tax");
+//		rowData.add("Taxable Amt");
+//		rowData.add("Total Tax");
 		rowData.add("Grand Total");
 		rowData.add("Payable Amt");
 		rowData.add("Paid Amt");
@@ -2204,6 +2204,12 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float grndTtl = 0; 
+		float payableTtl = 0; 
+		float paidAmtTtl = 0; 
+		float remainingTtl = 0; 
+		
 		for (int i = 0; i < getSellBillHeaderList.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
@@ -2213,8 +2219,8 @@ public class ReportsController {
 			// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
 			rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
 			rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+//			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+//			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
 			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
 			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
 			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
@@ -2246,12 +2252,38 @@ public class ReportsController {
 
 			} else if (getSellBillHeaderList.get(i).getBillType() == 'G') {
 				rowData.add("Against GRN");
+				
+			} else if (getSellBillHeaderList.get(i).getBillType() == 'P') {
+				rowData.add("Bill As Per Phy Stock");
 			}
-
+			
+			grndTtl = grndTtl + roundUp(getSellBillHeaderList.get(i).getGrandTotal());
+			payableTtl = payableTtl + roundUp(getSellBillHeaderList.get(i).getGrandTotal());
+			paidAmtTtl = paidAmtTtl + roundUp(getSellBillHeaderList.get(i).getPaidAmt());
+			remainingTtl = remainingTtl +  roundUp(getSellBillHeaderList.get(i).getRemainingAmt());
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
 		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		rowData.add("Total");		
+		rowData.add("" );
+		rowData.add("" );		
+		rowData.add("" + grndTtl);		
+		rowData.add("" + payableTtl);
+		rowData.add("" + paidAmtTtl);		
+		rowData.add("" + remainingTtl);
+		rowData.add("" );
+		rowData.add("" );
+		rowData.add("" );
+		
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);

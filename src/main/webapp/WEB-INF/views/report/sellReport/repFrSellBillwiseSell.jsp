@@ -146,8 +146,8 @@ table, th, td {
 												<th style="text-align: center;">Invoice No</th>
 												<th style="text-align: center;">Bill Date</th>
 												<th style="text-align: center;">Disc%</th>
-												<th style="text-align: center;">Taxable</th>
-												<th style="text-align: center;">Tax Amt</th>
+												<!-- <th style="text-align: center;">Taxable</th>
+												<th style="text-align: center;">Tax Amt</th> -->
 												<th style="text-align: center;">Total</th>
 												<th style="text-align: center;">Payable Amt</th>
 												<th style="text-align: center;">Paid Amt</th>
@@ -275,7 +275,7 @@ table, th, td {
 																		.html(
 																				sellBillData.discountPer
 																						.toFixed(2)));
-														tr
+														/* tr
 																.append($(
 																		'<td style="text-align:right;"></td>')
 																		.html(
@@ -286,7 +286,7 @@ table, th, td {
 																		'<td style="text-align:right;"></td>')
 																		.html(
 																				sellBillData.totalTax
-																						.toFixed(2)));
+																						.toFixed(2))); */
 
 														tr
 																.append($(
@@ -408,8 +408,8 @@ table, th, td {
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(total);
-									$('#table_grid tbody').append(taxable);
-									$('#table_grid tbody').append(tax);
+									/* $('#table_grid tbody').append(taxable);
+									$('#table_grid tbody').append(tax); */
 									$('#table_grid tbody').append(totalAmt);
 									$('#table_grid tbody').append(payable);
 									$('#table_grid tbody').append(paid);

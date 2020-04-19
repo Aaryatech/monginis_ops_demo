@@ -592,6 +592,7 @@ jQuery(document).ready(function(){
 				<div class="col-md-12">
 					<input type="button" id="expExcel" class="btn additem_btn"
 						value="EXPORT TO Excel" onclick="exportToExcel();">
+					
 					<button class="btn additem_btn" value="PDF" id="PDFButton"
 						onclick="genPdf()">PDF</button>
 				</div>
