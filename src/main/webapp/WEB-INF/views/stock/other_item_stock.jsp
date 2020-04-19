@@ -287,7 +287,7 @@ table, th, td {
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
-						<form action="otherItemMonthEndProcess" method="POST">
+						<form action="otherItemMonthEndProcess" method="POST" id="otherItemStock">
 							<div class="clearfix"></div>
 							<div class="col-md-10" id="loader" style="display: none">
 				
@@ -399,6 +399,13 @@ table, th, td {
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
 
+<script>
+var form = document.getElementById('otherItemStock');
+form.onsubmit = function () {
+    // this method is cancelled if window.confirm returns false
+    return window.confirm('Are you sure that you want to submit this form?');
+}
+</script>
 <!-- Select Only Month and Year -->
 <script>
 	$(document)

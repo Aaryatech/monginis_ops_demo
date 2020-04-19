@@ -226,7 +226,9 @@ function serchOtherBill()
 
 			},
 			function(data) {
-				
+				if (data == "") {					
+					alert("No records found !");
+				}
 				$
 				.getJSON(
 						'${frSupplierList}',
