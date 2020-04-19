@@ -222,6 +222,9 @@ public class HistoryController {
 																//orderList.spGrandTotal-orderList.spTotalAddRate					
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
+				
+				float ttl = 0;
+				float ttlAdv = 0;
 				for (int i = 0; i < spOrderHistory.size(); i++) {
 					expoExcel = new ExportToExcel();
 					rowData = new ArrayList<String>();
@@ -235,10 +238,29 @@ public class HistoryController {
 					rowData.add("" + spOrderHistory.get(i).getSpTotalAddRate());
 					rowData.add("" + spOrderHistory.get(i).getSpGrandTotal());
 					rowData.add("" + spOrderHistory.get(i).getSpAdvance());
+					
+					ttl = ttl+spOrderHistory.get(i).getSpGrandTotal();
+					ttlAdv = ttlAdv+spOrderHistory.get(i).getSpAdvance();
+					
 					expoExcel.setRowData(rowData);
 					exportToExcelList.add(expoExcel);
 
 				}
+				
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add("");
+				rowData.add("Total");
+				rowData.add("");
+				rowData.add("");
+				rowData.add("");
+				rowData.add("" + ttl);
+				rowData.add("" + ttlAdv);
+				
+				
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+				
                 //HttpSession session = request.getSession();
 				session.setAttribute("exportExcelList", exportToExcelList);
 				session.setAttribute("excelName", "SpOrderHistory");
@@ -269,21 +291,44 @@ public class HistoryController {
 																//orderList.spGrandTotal-orderList.spTotalAddRate					
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
+				
+				double ttlQty = 0;
+				double ttlMrp = 0;
+				double ttlRate = 0;
+				double grndTtl = 0;
 				for (int i = 0; i < itemOrderHistory.size(); i++) {
 					expoExcel = new ExportToExcel();
 					rowData = new ArrayList<String>();
 					double total = itemOrderHistory.get(i).getOrderQty()*itemOrderHistory.get(i).getOrderRate();
 					rowData.add("" + itemOrderHistory.get(i).getItemName());
-					rowData.add("" + itemOrderHistory.get(i).getOrderMrp() );
+					rowData.add("" + itemOrderHistory.get(i).getOrderMrp());
 					rowData.add("" + itemOrderHistory.get(i).getOrderQty());
 				
 					rowData.add("" + itemOrderHistory.get(i).getOrderRate());
 					rowData.add("" + total);
 					
+					ttlQty = ttlQty+itemOrderHistory.get(i).getOrderQty();
+					ttlMrp = ttlMrp + itemOrderHistory.get(i).getOrderMrp();
+					ttlRate = ttlRate + itemOrderHistory.get(i).getOrderRate();
+					grndTtl = grndTtl + total;
+					
 					expoExcel.setRowData(rowData);
 					exportToExcelList.add(expoExcel);
 
 				}
+				
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>(); 
+				
+				rowData.add("Total");	
+				rowData.add("" + ttlMrp);
+				rowData.add("" + ttlQty);
+				rowData.add("" + ttlRate);
+				rowData.add("" + grndTtl);		
+				
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
 
 				//HttpSession session = request.getSession();
 				session.setAttribute("exportExcelList", exportToExcelList);
@@ -602,411 +647,453 @@ public class HistoryController {
 	}
 	
 	@RequestMapping(value = "pdf/showOrderHistoryPdf/{delDate}", method = RequestMethod.GET)
-	public void showOrderHistoryPdf(HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView showOrderHistoryPdf(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("delDate") String delDate) throws FileNotFoundException {
+		ModelAndView model = new ModelAndView("history/spCakeOrderHistoryPdf");
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		int frId = frDetails.getFrId();
+		
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		
+		map = new LinkedMultiValueMap<String, Object>();
 
-		if(flag==1) {
+		map.add("frId", frId);
+		Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+				Franchisee.class, frId);
 		
-		Document doc=new Document();
-		
-		String FILE_PATH=Constant.REPORT_SAVE;
-		File file=new File(FILE_PATH);
-		
-		PdfWriter writer = null;
-		
-		
-		 FileOutputStream out = null;
+	if(flag==1) {		
+		//model = new ModelAndView("history/spCakeOrderHistoryPdf");
 		try {
-			out = new FileOutputStream(FILE_PATH);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		   try {
-			    writer=PdfWriter.getInstance(doc,out);
-		} catch (DocumentException e) {
-			
+			System.out.println("Sell Sp Item------------"+spOrderHistory);			
+			model.addObject("frName", franchisee.getFrName());
+			model.addObject("reportList", spOrderHistory);
+			model.addObject("fromDate", delDate);
+			model.addObject("orderTyp", 1);
+		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
-		 PdfPTable table = new PdfPTable(8);
-		 try {
-		 System.out.println("Inside PDF Table try");
-		 table.setWidthPercentage(100);
-	     table.setWidths(new float[]{ 1.0f, 6.2f, 2.2f, 2.2f, 2.2f, 2.2f, 2.2f,2.2f});
-	     Font headFont = new Font(FontFamily.TIMES_ROMAN,12, Font.NORMAL, BaseColor.BLACK);
-	     Font headFont1 = new Font(FontFamily.TIMES_ROMAN,12, Font.BOLD, BaseColor.BLACK);
-	     Font f=new Font(FontFamily.TIMES_ROMAN,12.0f,Font.UNDERLINE,BaseColor.BLUE);
-	     
-	     PdfPCell hcell;
-	     hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-
-	     hcell = new PdfPCell(new Phrase("Item Name", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-	    
-	     
-	     hcell = new PdfPCell(new Phrase("Flavour", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-	     
-	     hcell = new PdfPCell(new Phrase("Delivery Date", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-	    
-	     hcell = new PdfPCell(new Phrase("Rate", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-	 
-	     hcell = new PdfPCell(new Phrase("Add On Rate", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-	     
-	     hcell = new PdfPCell(new Phrase("Total", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-	     
-	     hcell = new PdfPCell(new Phrase("Advance", headFont1));
-	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	     table.addCell(hcell);
-	     
-	     int index=0;
-	     
-	     
-	     for (SpOrderHis work : spOrderHistory) {
-		       index++;
-		         PdfPCell cell;
-		         float price = work.getSpGrandTotal()-work.getSpTotalAddRate(); 
-		         
-		         cell = new PdfPCell(new Phrase(String.valueOf(index),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		         table.addCell(cell);
-
-		        
-		         cell = new PdfPCell(new Phrase( work.getSpName(),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-		         cell.setPaddingRight(5);
-		         table.addCell(cell);
-		         
-		         
-		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpfName()),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-		         cell.setPaddingRight(5);
-		         table.addCell(cell);
-		         
-		         
-		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpDeliveryDate()),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		         cell.setPaddingRight(5);
-		         table.addCell(cell);
-		         
-		         
-		         cell = new PdfPCell(new Phrase(String.valueOf(price),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		         cell.setPaddingRight(5);
-		         table.addCell(cell);
-		         
-		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpTotalAddRate()),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		         cell.setPaddingRight(5);
-		         table.addCell(cell);
-		         
-		         cell = new PdfPCell(new Phrase(String.valueOf( work.getSpGrandTotal()),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		         cell.setPaddingRight(5);
-		         table.addCell(cell);
-		         
-		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpAdvance()),headFont));
-		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		         cell.setPaddingRight(5);
-		         table.addCell(cell);
-		         
-		         
-	     }  
-	     doc.open();
-	     
-	     Paragraph heading = new Paragraph("Special Cake Order History");
-	     heading.setAlignment(Element.ALIGN_CENTER);
-	     doc.add(heading);
-	     DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
-			String reportDate = DF.format(new java.util.Date());
+	
+//		
+//		Document doc=new Document();
+//		
+//		String FILE_PATH=Constant.REPORT_SAVE;
+//		File file=new File(FILE_PATH);
+//		
+//		PdfWriter writer = null;
+//		
+//		
+//		 FileOutputStream out = null;
+//		try {
+//			out = new FileOutputStream(FILE_PATH);
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		   try {
+//			    writer=PdfWriter.getInstance(doc,out);
+//		} catch (DocumentException e) {
+//			
+//			e.printStackTrace();
+//		}
+//		
+//		 PdfPTable table = new PdfPTable(8);
+//		 try {
+//		 System.out.println("Inside PDF Table try");
+//		 table.setWidthPercentage(100);
+//	     table.setWidths(new float[]{ 1.0f, 6.2f, 2.2f, 2.2f, 2.2f, 2.2f, 2.2f,2.2f});
+//	     Font headFont = new Font(FontFamily.TIMES_ROMAN,12, Font.NORMAL, BaseColor.BLACK);
+//	     Font headFont1 = new Font(FontFamily.TIMES_ROMAN,12, Font.BOLD, BaseColor.BLACK);
+//	     Font f=new Font(FontFamily.TIMES_ROMAN,12.0f,Font.UNDERLINE,BaseColor.BLUE);
+//	     
+//	     PdfPCell hcell;
+//	     hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//
+//	     hcell = new PdfPCell(new Phrase("Item Name", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//	    
+//	     
+//	     hcell = new PdfPCell(new Phrase("Flavour", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//	     
+//	     hcell = new PdfPCell(new Phrase("Delivery Date", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//	    
+//	     hcell = new PdfPCell(new Phrase("Rate", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//	 
+//	     hcell = new PdfPCell(new Phrase("Add On Rate", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//	     
+//	     hcell = new PdfPCell(new Phrase("Total", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//	     
+//	     hcell = new PdfPCell(new Phrase("Advance", headFont1));
+//	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	     table.addCell(hcell);
+//	     
+//	     int index=0;
+//	     
+//	     
+//	     for (SpOrderHis work : spOrderHistory) {
+//		       index++;
+//		         PdfPCell cell;
+//		         float price = work.getSpGrandTotal()-work.getSpTotalAddRate(); 
+//		         
+//		         cell = new PdfPCell(new Phrase(String.valueOf(index),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		         table.addCell(cell);
+//
+//		        
+//		         cell = new PdfPCell(new Phrase( work.getSpName(),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+//		         cell.setPaddingRight(5);
+//		         table.addCell(cell);
+//		         
+//		         
+//		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpfName()),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+//		         cell.setPaddingRight(5);
+//		         table.addCell(cell);
+//		         
+//		         
+//		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpDeliveryDate()),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		         cell.setPaddingRight(5);
+//		         table.addCell(cell);
+//		         
+//		         
+//		         cell = new PdfPCell(new Phrase(String.valueOf(price),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//		         cell.setPaddingRight(5);
+//		         table.addCell(cell);
+//		         
+//		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpTotalAddRate()),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//		         cell.setPaddingRight(5);
+//		         table.addCell(cell);
+//		         
+//		         cell = new PdfPCell(new Phrase(String.valueOf( work.getSpGrandTotal()),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//		         cell.setPaddingRight(5);
+//		         table.addCell(cell);
+//		         
+//		         cell = new PdfPCell(new Phrase(String.valueOf(work.getSpAdvance()),headFont));
+//		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//		         cell.setPaddingRight(5);
+//		         table.addCell(cell);
+//		         
+//		         
+//	     }  
+//	     doc.open();
+//	     
+//	     Paragraph heading = new Paragraph("Special Cake Order History");
+//	     heading.setAlignment(Element.ALIGN_CENTER);
+//	     doc.add(heading);
+//	     DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+//			String reportDate = DF.format(new java.util.Date());
+//			
+//			doc.add(new Paragraph("Delivery Date : "+ delDate));
+//			doc.add(new Paragraph("\n"));
+//	     //document.add(new Paragraph(" "));
+//	     doc.add(table);
+//	     
+//	     doc.close();
+//	     
+//		   //Atul Sir code to open a Pdf File 
+//				if (file != null) {
+//
+//					String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+//
+//					if (mimeType == null) {
+//
+//						mimeType = "application/pdf";
+//
+//					}
+//
+//					response.setContentType(mimeType);
+//
+//					response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+//
+//					// response.setHeader("Content-Disposition", String.format("attachment;
+//					// filename=\"%s\"", file.getName()));
+//
+//					response.setContentLength((int) file.length());
+//
+//					InputStream inputStream = null;
+//					try {
+//						inputStream = new BufferedInputStream(new FileInputStream(file));
+//					} catch (FileNotFoundException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//
+//					try {
+//						FileCopyUtils.copy(inputStream, response.getOutputStream());
+//					} catch (IOException e) {
+//						System.out.println("Excep in Opening a Pdf File for Mixing");
+//						e.printStackTrace();
+//					}
+//				}
+//		     
+//		 } catch (DocumentException ex) {
+//		 
+//			 System.out.println("Pdf Generation Error: Prod From Orders"+ex.getMessage());
+//			 
+//			 ex.printStackTrace();
+//		   
+//		 }
+	}
+		else if(flag==2){			
 			
-			doc.add(new Paragraph("Delivery Date : "+ delDate));
-			doc.add(new Paragraph("\n"));
-	     //document.add(new Paragraph(" "));
-	     doc.add(table);
-	     
-	     doc.close();
-	     
-		   //Atul Sir code to open a Pdf File 
-				if (file != null) {
-
-					String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-
-					if (mimeType == null) {
-
-						mimeType = "application/pdf";
-
-					}
-
-					response.setContentType(mimeType);
-
-					response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
-
-					// response.setHeader("Content-Disposition", String.format("attachment;
-					// filename=\"%s\"", file.getName()));
-
-					response.setContentLength((int) file.length());
-
-					InputStream inputStream = null;
-					try {
-						inputStream = new BufferedInputStream(new FileInputStream(file));
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					try {
-						FileCopyUtils.copy(inputStream, response.getOutputStream());
-					} catch (IOException e) {
-						System.out.println("Excep in Opening a Pdf File for Mixing");
-						e.printStackTrace();
-					}
-				}
-		     
-		 } catch (DocumentException ex) {
-		 
-			 System.out.println("Pdf Generation Error: Prod From Orders"+ex.getMessage());
-			 
-			 ex.printStackTrace();
-		   
-		 }
-		}
-		else if(flag==2){
-			System.out.println(itemOrderHistory);
-
-			
-			Document doc=new Document();
-			
-			String FILE_PATH=Constant.REPORT_SAVE;
-			File file=new File(FILE_PATH);
-			
-			PdfWriter writer = null;
-			
-			
-			 FileOutputStream out = null;
-			try {
-				out = new FileOutputStream(FILE_PATH);
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			   try {
-				    writer=PdfWriter.getInstance(doc,out);
-			} catch (DocumentException e) {
+			try {				
+				System.out.println("Sell Item2------------"+itemOrderHistory);			
 				
+				model.addObject("frName", franchisee.getFrName());
+				model.addObject("reportList", itemOrderHistory);
+				model.addObject("fromDate", delDate);
+				model.addObject("orderTyp", 2);
+				
+			} catch (Exception e) {
 				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
-			
-			 PdfPTable table = new PdfPTable(6);
-			 try {
-			 System.out.println("Inside PDF Table try");
-			 table.setWidthPercentage(100);
-		     table.setWidths(new float[]{1.0f,6.2f, 2.2f, 2.2f, 2.2f,2.2f});
-		     Font headFont = new Font(FontFamily.TIMES_ROMAN, 8, Font.NORMAL, BaseColor.BLACK);
-		     Font headFont1 = new Font(FontFamily.TIMES_ROMAN, 8, Font.BOLD, BaseColor.BLACK);
-		     Font f=new Font(FontFamily.TIMES_ROMAN,12.0f,Font.UNDERLINE,BaseColor.BLUE);
-		     
-		     PdfPCell hcell;
-		     hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
-		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		     table.addCell(hcell);
-
-		     hcell = new PdfPCell(new Phrase("Item Name", headFont1));
-		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		     table.addCell(hcell);
-		    
-		     
-		     hcell = new PdfPCell(new Phrase("MRP", headFont1));
-		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		     table.addCell(hcell);
-		     
-		     hcell = new PdfPCell(new Phrase("Qty", headFont1));
-		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		     table.addCell(hcell);
-		    
-		     hcell = new PdfPCell(new Phrase("Rate", headFont1));
-		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		     table.addCell(hcell);
-		 
-		    
-		     hcell = new PdfPCell(new Phrase("Total", headFont1));
-		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		     table.addCell(hcell);
-		     
-		   
-		     
-		     int index=0;
-		     double qtyTotal=0; double allTotal=0;
-		     double mrpTl=0;
-		     double qtyTtl=0;
-		     double rateTtl=0;
-		     double finalTtl=0;
-
-		     for (ItemOrderHis work : itemOrderHistory) {
-			       index++;
-			         PdfPCell cell;
-			         
-			         double total = work.getOrderQty()*work.getOrderRate();
-			         //double mrp = mrpTl+work.getOrderMrp();
-			         allTotal=allTotal+total;
-			         qtyTotal=qtyTotal+work.getOrderQty();
-			         cell = new PdfPCell(new Phrase(String.valueOf(index),headFont));
-			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			         table.addCell(cell);
-
-			        
-			         cell = new PdfPCell(new Phrase( work.getItemName(),headFont));
-			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			         cell.setPaddingRight(5);
-			         table.addCell(cell);
-			         
-			         
-			         cell = new PdfPCell(new Phrase(String.valueOf(work.getOrderMrp()),headFont));
-			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			         cell.setPaddingRight(5);
-			         table.addCell(cell);
-			         
-			         
-			         cell = new PdfPCell(new Phrase(String.valueOf(work.getOrderQty()),headFont));
-			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			         cell.setPaddingRight(5);
-			         table.addCell(cell);
-			         
-			         cell = new PdfPCell(new Phrase(String.valueOf(work.getOrderRate()),headFont));
-			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			         cell.setPaddingRight(5);
-			         table.addCell(cell);
-			         
-			         cell = new PdfPCell(new Phrase(roundUp(total)+"",headFont));
-			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			         cell.setPaddingRight(5);
-			         table.addCell(cell);
-			         
-			        
-			         
-			         
-		     }  
-		     
-		     PdfPCell cell;
-	       
-	         cell = new PdfPCell(new Phrase(String.valueOf(""),headFont));
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         table.addCell(cell);
-	         
-	         cell = new PdfPCell(new Phrase(String.valueOf("Total"),headFont));
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-	         table.addCell(cell);
-	         
-	         cell = new PdfPCell(new Phrase(String.valueOf(""),headFont));
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         table.addCell(cell);
-	         
-	         cell = new PdfPCell(new Phrase(String.valueOf(""+qtyTotal),headFont));
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	         table.addCell(cell);
-	         
-	         cell = new PdfPCell(new Phrase(String.valueOf(""),headFont));
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         table.addCell(cell);
-	         
-	         cell = new PdfPCell(new Phrase(roundUp(allTotal)+"",headFont));
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	         table.addCell(cell);
-	         
-		     doc.open();
-		     
-		     Paragraph heading = new Paragraph("Regular Cake Order History");
-		     heading.setAlignment(Element.ALIGN_CENTER);
-		     doc.add(heading);
-		     DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
-				String reportDate = DF.format(new java.util.Date());
-				
-				doc.add(new Paragraph("Delivery Date : "+ delDate));
-				doc.add(new Paragraph("\n"));
-		     //document.add(new Paragraph(" "));
-		     doc.add(table);
-		     
-		     doc.close();
-		     
-			   //Atul Sir code to open a Pdf File 
-					if (file != null) {
-
-						String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-
-						if (mimeType == null) {
-
-							mimeType = "application/pdf";
-
-						}
-
-						response.setContentType(mimeType);
-
-						response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
-
-						// response.setHeader("Content-Disposition", String.format("attachment;
-						// filename=\"%s\"", file.getName()));
-
-						response.setContentLength((int) file.length());
-
-						InputStream inputStream = null;
-						try {
-							inputStream = new BufferedInputStream(new FileInputStream(file));
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-
-						try {
-							FileCopyUtils.copy(inputStream, response.getOutputStream());
-						} catch (IOException e) {
-							System.out.println("Excep in Opening a Pdf File for Mixing");
-							e.printStackTrace();
-						}
-					}
-			     
-			 } catch (DocumentException ex) {
-			 
-				 System.out.println("Pdf Generation Error: Prod From Orders"+ex.getMessage());
-				 
-				 ex.printStackTrace();
-			   
-			 }
+//			System.out.println(itemOrderHistory);
+//
+//			
+//			Document doc=new Document();
+//			
+//			String FILE_PATH=Constant.REPORT_SAVE;
+//			File file=new File(FILE_PATH);
+//			
+//			PdfWriter writer = null;
+//			
+//			
+//			 FileOutputStream out = null;
+//			try {
+//				out = new FileOutputStream(FILE_PATH);
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			   try {
+//				    writer=PdfWriter.getInstance(doc,out);
+//			} catch (DocumentException e) {
+//				
+//				e.printStackTrace();
+//			}
+//			
+//			 PdfPTable table = new PdfPTable(6);
+//			 try {
+//			 System.out.println("Inside PDF Table try");
+//			 table.setWidthPercentage(100);
+//		     table.setWidths(new float[]{1.0f,6.2f, 2.2f, 2.2f, 2.2f,2.2f});
+//		     Font headFont = new Font(FontFamily.TIMES_ROMAN, 8, Font.NORMAL, BaseColor.BLACK);
+//		     Font headFont1 = new Font(FontFamily.TIMES_ROMAN, 8, Font.BOLD, BaseColor.BLACK);
+//		     Font f=new Font(FontFamily.TIMES_ROMAN,12.0f,Font.UNDERLINE,BaseColor.BLUE);
+//		     
+//		     PdfPCell hcell;
+//		     hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+//		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		     table.addCell(hcell);
+//
+//		     hcell = new PdfPCell(new Phrase("Item Name", headFont1));
+//		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		     table.addCell(hcell);
+//		    
+//		     
+//		     hcell = new PdfPCell(new Phrase("MRP", headFont1));
+//		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		     table.addCell(hcell);
+//		     
+//		     hcell = new PdfPCell(new Phrase("Qty", headFont1));
+//		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		     table.addCell(hcell);
+//		    
+//		     hcell = new PdfPCell(new Phrase("Rate", headFont1));
+//		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		     table.addCell(hcell);
+//		 
+//		    
+//		     hcell = new PdfPCell(new Phrase("Total", headFont1));
+//		     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//		     table.addCell(hcell);
+//		     
+//		   
+//		     
+//		     int index=0;
+//		     double qtyTotal=0; double allTotal=0;
+//		     double mrpTl=0;
+//		     double qtyTtl=0;
+//		     double rateTtl=0;
+//		     double finalTtl=0;
+//
+//		     for (ItemOrderHis work : itemOrderHistory) {
+//			       index++;
+//			         PdfPCell cell;
+//			         
+//			         double total = work.getOrderQty()*work.getOrderRate();
+//			         //double mrp = mrpTl+work.getOrderMrp();
+//			         allTotal=allTotal+total;
+//			         qtyTotal=qtyTotal+work.getOrderQty();
+//			         cell = new PdfPCell(new Phrase(String.valueOf(index),headFont));
+//			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//			         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//			         table.addCell(cell);
+//
+//			        
+//			         cell = new PdfPCell(new Phrase( work.getItemName(),headFont));
+//			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//			         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+//			         cell.setPaddingRight(5);
+//			         table.addCell(cell);
+//			         
+//			         
+//			         cell = new PdfPCell(new Phrase(String.valueOf(work.getOrderMrp()),headFont));
+//			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//			         cell.setPaddingRight(5);
+//			         table.addCell(cell);
+//			         
+//			         
+//			         cell = new PdfPCell(new Phrase(String.valueOf(work.getOrderQty()),headFont));
+//			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//			         cell.setPaddingRight(5);
+//			         table.addCell(cell);
+//			         
+//			         cell = new PdfPCell(new Phrase(String.valueOf(work.getOrderRate()),headFont));
+//			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//			         cell.setPaddingRight(5);
+//			         table.addCell(cell);
+//			         
+//			         cell = new PdfPCell(new Phrase(roundUp(total)+"",headFont));
+//			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//			         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//			         cell.setPaddingRight(5);
+//			         table.addCell(cell);
+//			         
+//			        
+//			         
+//			         
+//		     }  
+//		     
+//		     PdfPCell cell;
+//	       
+//	         cell = new PdfPCell(new Phrase(String.valueOf(""),headFont));
+//	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//	         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	         table.addCell(cell);
+//	         
+//	         cell = new PdfPCell(new Phrase(String.valueOf("Total"),headFont));
+//	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//	         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+//	         table.addCell(cell);
+//	         
+//	         cell = new PdfPCell(new Phrase(String.valueOf(""),headFont));
+//	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//	         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	         table.addCell(cell);
+//	         
+//	         cell = new PdfPCell(new Phrase(String.valueOf(""+qtyTotal),headFont));
+//	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//	         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//	         table.addCell(cell);
+//	         
+//	         cell = new PdfPCell(new Phrase(String.valueOf(""),headFont));
+//	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//	         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	         table.addCell(cell);
+//	         
+//	         cell = new PdfPCell(new Phrase(roundUp(allTotal)+"",headFont));
+//	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//	         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//	         table.addCell(cell);
+//	         
+//		     doc.open();
+//		     
+//		     Paragraph heading = new Paragraph("Regular Cake Order History");
+//		     heading.setAlignment(Element.ALIGN_CENTER);
+//		     doc.add(heading);
+//		     DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+//				String reportDate = DF.format(new java.util.Date());
+//				
+//				doc.add(new Paragraph("Delivery Date : "+ delDate));
+//				doc.add(new Paragraph("\n"));
+//		     //document.add(new Paragraph(" "));
+//		     doc.add(table);
+//		     
+//		     doc.close();
+//		     
+//			   //Atul Sir code to open a Pdf File 
+//					if (file != null) {
+//
+//						String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+//
+//						if (mimeType == null) {
+//
+//							mimeType = "application/pdf";
+//
+//						}
+//
+//						response.setContentType(mimeType);
+//
+//						response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+//
+//						// response.setHeader("Content-Disposition", String.format("attachment;
+//						// filename=\"%s\"", file.getName()));
+//
+//						response.setContentLength((int) file.length());
+//
+//						InputStream inputStream = null;
+//						try {
+//							inputStream = new BufferedInputStream(new FileInputStream(file));
+//						} catch (FileNotFoundException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						}
+//
+//						try {
+//							FileCopyUtils.copy(inputStream, response.getOutputStream());
+//						} catch (IOException e) {
+//							System.out.println("Excep in Opening a Pdf File for Mixing");
+//							e.printStackTrace();
+//						}
+//					}
+//			     
+//			 } catch (DocumentException ex) {
+//			 
+//				 System.out.println("Pdf Generation Error: Prod From Orders"+ex.getMessage());
+//				 
+//				 ex.printStackTrace();
+//			   
+//			 }
+//			
 			
 		}
-		
+	return model;
+	
 	}
 	public static float roundUp(double d) {
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
