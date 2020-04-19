@@ -107,7 +107,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Credit Note Tax Percentage Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i>Credit Note Tax Percentage Report</h2>
 					</div>
 				</div>
 
@@ -115,7 +115,7 @@ jQuery(document).ready(function(){
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 
 					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From Date:-</h4>
+						<h4 class="pull-left">From Date</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="fromdatepicker" autocomplete="off"
@@ -131,8 +131,8 @@ jQuery(document).ready(function(){
 							name="toDate" type="text" value="${todaysDate}">
 					</div>
 					<div class="col-md-2">
-						<button class="btn search_btn pull-left" onclick="searchReport()">Search</button>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
+						<button class="btn additem_btn" onclick="searchReport()">Search</button>
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
 							onclick="genPdf()" disabled="disabled">PDF</button>
 						<%-- 		  &nbsp;&nbsp;&nbsp;   <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
@@ -152,21 +152,21 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th>Sr</th>
-										<th>CRN No</th>
-										<th>CRN Date</th>
-										<th>Invoice No</th>
-										<th>Invoice Date</th>
-										<th>Party Name</th>
+										<th style="text-align: center;">Sr No.</th>
+										<th style="text-align: center;">CRN No.</th>
+										<th style="text-align: center;">CRN Date</th>
+										<th style="text-align: center;">Invoice No</th>
+										<th style="text-align: center;">Invoice Date</th>
+										<!-- <th>Party Name</th>
 										<th>GST No</th>
-										<th>HSN Code</th>
-										<th>Crn Qty</th>
-										<th>Taxable Amt</th>
-										<th>Cgst %</th>
-										<th>Cgst Amt</th>
-										<th>Sgst %</th>
-										<th>Sgst Amt</th>
-										<th>Crn Amt</th>
+										<th>HSN Code</th> -->
+										<th style="text-align: center;">CRN Qty</th>
+										<th style="text-align: center;">Taxable Amt</th>
+										<th style="text-align: center;">Cgst %</th>
+										<th style="text-align: center;">Cgst Amt</th>
+										<th style="text-align: center;">Sgst %</th>
+										<th style="text-align: center;">Sgst Amt</th>
+										<th style="text-align: center;">CRN Amt</th>
 									</tr>
 
 
@@ -179,21 +179,21 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th>Sr</th>
-										<th>CRN No</th>
-										<th>CRN Date</th>
-										<th>Invoice No</th>
-										<th>Invoice Date</th>
-										<th>Party Name</th>
+										<th style="text-align: center;">Sr No.</th>
+										<th style="text-align: center;">CRN No.</th>
+										<th style="text-align: center;">CRN Date</th>
+										<th style="text-align: center;">Invoice No</th>
+										<th style="text-align: center;">Invoice Date</th>
+										<!-- <th>Party Name</th>
 										<th>GST No</th>
-										<th>HSN Code</th>
-										<th>Crn Qty</th>
-										<th>Taxable Amt</th>
-										<th>Cgst %</th>
-										<th>Cgst Amt</th>
-										<th>Sgst %</th>
-										<th>Sgst Amt</th>
-										<th>Crn Amt</th>
+										<th>HSN Code</th> -->
+										<th style="text-align: center;">CRN Qty.</th>
+										<th style="text-align: center;">Taxable Amt</th>
+										<th style="text-align: center;">CGST %</th>
+										<th style="text-align: center;">CGST Amt</th>
+										<th style="text-align: center;">SGST %</th>
+										<th style="text-align: center;">SGST Amt</th>
+										<th style="text-align: center;">CRN Amt</th>
 									</tr>
 
 
@@ -209,7 +209,7 @@ jQuery(document).ready(function(){
 					<br>
 					<div class="form-group" id="range">
 						<div class="col-sm-3  controls">
-							<input type="button" id="expExcel" class="btn btn-primary"
+							<input type="button" id="expExcel" class="btn additem_btn"
 								value="EXPORT TO Excel" onclick="exportToExcel();">
 						</div>
 					</div>
@@ -283,17 +283,17 @@ jQuery(document).ready(function(){
 				tr.append($('<td></td>').html(report.crnDate));
 				tr.append($('<td></td>').html(report.invoiceNo));
 				tr.append($('<td></td>').html(report.billDate));
-				tr.append($('<td style="text-align:left;"></td>').html(
+				/* tr.append($('<td style="text-align:left;"></td>').html(
 						report.frName));
 				tr.append($('<td style="text-align:left;"></td>').html(
-						report.frGstNo));
+						report.frGstNo)); */
 				crnQty = crnQty + report.crnQty;
 				crnTaxable = crnTaxable + report.crnTaxable;
 				cgstAmt = cgstAmt + report.cgstAmt;
 				sgstAmt = sgstAmt + report.sgstAmt;
 				crnAmt = crnAmt + report.crnAmt;
-				tr.append($('<td style="text-align:left;"></td>').html(
-						report.hsnCode));
+				/* tr.append($('<td style="text-align:left;"></td>').html(
+						report.hsnCode)); */
 				tr.append($('<td style="text-align:center;"></td>').html(
 						(report.crnQty)));
 				tr.append($('<td style="text-align:right;"></td>').html(
@@ -314,25 +314,25 @@ jQuery(document).ready(function(){
 
 			})
 			var tr = $('<tr></tr>');
+			/* tr.append($('<td></td>').html(""));
 			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td></td>').html(""));
-			tr.append($('<td style="font-weight:12px;"></td>').html(""));
+			tr.append($('<td></td>').html("")); */
 			tr.append($('<td></td>').html("Total"));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td></td>').html(""));
+			tr.append($('<td></td>').html(""));
+			tr.append($('<td></td>').html(""));
+			tr.append($('<td style="font-weight:12px; text-align:right;"></td>').html(""));		
+			tr.append($('<td style="font-weight:12px; text-align:right;"></td>').html(
 					"" + crnQty.toFixed(2)));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px; text-align:right;"></td>').html(
 					"" + crnTaxable.toFixed(2)));
 			tr.append($('<td></td>').html(""));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px; text-align:right;"></td>').html(
 					"" + cgstAmt.toFixed(2)));
 			tr.append($('<td></td>').html(""));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px; text-align:right;"></td>').html(
 					"" + sgstAmt.toFixed(2)));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px; text-align:right;"></td>').html(
 					"" + crnAmt.toFixed(0)));
 			$('#table_grid tbody').append(tr);
 

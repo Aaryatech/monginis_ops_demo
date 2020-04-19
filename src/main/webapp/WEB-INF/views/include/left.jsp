@@ -788,18 +788,20 @@ abbr:hover {cursor: pointer;}
 							</div>
 
 							<a href="${pageContext.request.contextPath}/showTaxReport"><i
-								class="fa fa-files-o icon"></i>Billwiise Tax Percentage Report </a>
-							<a href="${pageContext.request.contextPath}/showTax2Report"><i
-								class="fa fa-files-o icon"></i>Billwiise Tax Percentage Report</a> <a
+								class="fa fa-files-o icon"></i>Billwise Tax Percentage Report </a>
+							<%-- <a href="${pageContext.request.contextPath}/showTax2Report"><i
+								class="fa fa-files-o icon"></i>Billwiise Tax Percentage Report</a> --%> <a
 								href="${pageContext.request.contextPath}/showCRNoteRegister"><i
 								class="fa fa-files-o icon"></i>Credit Note Tax Percentage Report</a>
+								
 							<a
-								href="${pageContext.request.contextPath}/showCRNoteRegisterDone"><i
-								class="fa fa-files-o icon"></i>Credit Note HSNwise Report</a> <a
-								href="${pageContext.request.contextPath}/showHSNwiseReportBetDate"><i
-								class="fa fa-files-o icon"></i>HSN wise Summery Report</a> <a
 								href="${pageContext.request.contextPath}/showGstRegister"><i
 								class="fa fa-files-o icon"></i>Billwise HSN Register Report</a>
+							<a
+								href="${pageContext.request.contextPath}/showCRNoteRegisterDone"><i
+								class="fa fa-files-o icon"></i>Credit Note HSN wise Report</a> <a
+								href="${pageContext.request.contextPath}/showHSNwiseReportBetDate"><i
+								class="fa fa-files-o icon"></i>HSN wise Summery Report</a> 
 							<%-- <a
 								href="${pageContext.request.contextPath}/viewItemWiseReport"><i
 								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> --%>

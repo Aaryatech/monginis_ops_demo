@@ -108,7 +108,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Billwiise Tax Percentage Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i>Billwise Tax Percentage Report</h2>
 					</div>
 				</div>
 
@@ -120,7 +120,7 @@ jQuery(document).ready(function(){
 								<input type="hidden" name="frId" id="frId" value="${frId}">
 
 								<div class="col-md-2 from_date">
-									<h4 class="pull-left">From Date:-</h4>
+									<h4 class="pull-left">From Date</h4>
 								</div>
 								<div class="col-md-2 ">
 									<input id="fromdatepicker" autocomplete="off"
@@ -128,7 +128,7 @@ jQuery(document).ready(function(){
 										placeholder="DD-MM-YYYY" name="fromDate" type="text">
 								</div>
 								<div class="col-md-1">
-									<h4 class="pull-left">To Date:-</h4>
+									<h4 class="pull-left">To Date</h4>
 								</div>
 								<div class="col-md-2 ">
 									<input id="todatepicker" autocomplete="off" value="${toDate}"
@@ -136,7 +136,7 @@ jQuery(document).ready(function(){
 										name="toDate" type="text">
 								</div>
 								<div class="col-md-2">
-									<button class="btn search_btn pull-left"
+									<button class="btn additem_btn"
 										onclick="searchReport()">Search</button>
 
 								</div>
@@ -155,19 +155,19 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th>Sr.No.</th>
-											<th>Invoice No</th>
-											<th>Bill No.</th>
-											<th>Bill Date</th>
-											<th>Franchise</th>
-											<th>GSTIN</th>
-											<th>CGST %</th>
-											<th>SGST %</th>
-											<th>CGST Amt</th>
-											<th>SGST Amt</th>
-											<th>Taxable Amt</th>
-											<th>Total Tax</th>
-											<th>Grand Total</th>
+											<th style="text-align: center;">Sr.No.</th>
+											<th style="text-align: center;">Invoice No</th>
+											<th style="text-align: center;">Bill No.</th>
+											<th style="text-align: center;">Bill Date</th>
+											<!-- <th>Franchise</th>
+											<th>GSTIN</th> -->
+											<th style="text-align: center;">CGST %</th>
+											<th style="text-align: center;">SGST %</th>
+											<th style="text-align: center;">CGST Amt</th>
+											<th style="text-align: center;">SGST Amt</th>
+											<th style="text-align: center;">Taxable Amt</th>
+											<th style="text-align: center;">Total Tax</th>
+											<th style="text-align: center;">Grand Total</th>
 										</tr>
 
 									</thead>
@@ -179,19 +179,19 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th>Sr.No.</th>
-											<th>Invoice No</th>
-											<th>Bill No.</th>
-											<th>Bill Date</th>
-											<th>Franchise</th>
-											<th>GSTIN</th>
-											<th>CGST %</th>
-											<th>SGST %</th>
-											<th>CGST Amt</th>
-											<th>SGST Amt</th>
-											<th>Taxable Amt</th>
-											<th>Total Tax</th>
-											<th>Grand Total</th>
+											<th style="text-align: center;">Sr.No.</th>
+											<th style="text-align: center;">Invoice No</th>
+											<th style="text-align: center;">Bill No.</th>
+											<th style="text-align: center;">Bill Date</th>
+											<!-- <th>Franchise</th>
+											<th>GSTIN</th> -->
+											<th style="text-align: center;">CGST %</th>
+											<th style="text-align: center;">SGST %</th>
+											<th style="text-align: center;">CGST Amt</th>
+											<th style="text-align: center;">SGST Amt</th>
+											<th style="text-align: center;">Taxable Amt</th>
+											<th style="text-align: center;">Total Tax</th>
+											<th style="text-align: center;">Grand Total</th>
 										</tr>
 
 
@@ -220,9 +220,9 @@ jQuery(document).ready(function(){
 												<td><c:out value="${taxList.invoiceNo}" /></td>
 												<td><c:out value="${taxList.billNo}" /></td>
 												<td><c:out value="${taxList.billDate}" /></td>
-												<td><c:out value="${taxList.frName}" /></td>
+											<%-- 	<td><c:out value="${taxList.frName}" /></td>
 
-												<td><c:out value="${taxList.frGstNo}" /></td>
+												<td><c:out value="${taxList.frGstNo}" /></td> --%>
 												<td style="text-align: right;"><c:out
 														value="${taxList.cgstPer}" /></td>
 												<td style="text-align: right;"><c:out
@@ -243,15 +243,11 @@ jQuery(document).ready(function(){
 
 										<tr>
 											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-
 											<td style="text-align: left;">Total</td>
-
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>											
 
 											<td style="text-align: right;"><fmt:formatNumber
 													type="number" maxFractionDigits="2" minFractionDigits="2"
@@ -287,7 +283,7 @@ jQuery(document).ready(function(){
 						<br>
 						<div class="form-group" id="range">
 							<div class="col-sm-3  controls">
-								<input type="button" id="expExcel" class="btn btn-primary"
+								<input type="button" id="expExcel" class="btn additem_btn"
 									value="EXPORT TO Excel" onclick="exportToExcel();">
 							</div>
 						</div>
