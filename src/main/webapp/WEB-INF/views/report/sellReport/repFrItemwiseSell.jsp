@@ -94,15 +94,34 @@ table, th, td {
 					</div>
 
 
-					<div align="left" class="right_btn">
+					<!-- <div align="left" class="right_btn">
 						<button class="btn additem_btn" onclick="searchSellBill()" style="margin: 0;">
 							View</button>
 						<button class="btn additem_btn" onclick="showChart()" style="margin: 0;">Graph</button>
 						<button id="btn_pdf" class="btn additem_btn" onclick="genPdf()" style="margin: 0;">PDF
 						</button>
-					</div>
+						
+						<button id="btn_item_pdf" class="btn additem_btn" onclick="genItemPdf()" style="margin: 0; display: none;">Item PDF
+						</button>
+						
+						
+					</div> -->
 				</div>
+				
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn additem_btn" onclick="searchSellBill()">
+							View</button>
+						<button class="btn additem_btn" onclick="showChart()" >Graph</button>
+						<button id="btn_pdf" class="btn additem_btn" onclick="genPdf()" >PDF
+						</button>
+						
+						<button id="btn_item_pdf" class="btn additem_btn" onclick="genItemPdf()" style=" display: none; float: left;">Item PDF
+						</button>
 
+					</div>
+			</div>
+	<br>
 
 
 				<div class="row" id="table" style="display: none">
@@ -245,6 +264,8 @@ table, th, td {
 		document.getElementById('table').style = "display:none";
 		document.getElementById('chart').style = "display:none";
 		// document.getElementById('showchart').style.display = "block";
+		document.getElementById('btn_pdf').style.display = "block";
+		document.getElementById('btn_item_pdf').style.display = "none";
 		$('#table_menu td').remove();
 
 		var isValid = validate();
@@ -357,7 +378,8 @@ table, th, td {
 		document.getElementById('table').style.display = "block";
 		document.getElementById('chart').style = "display:none";
 		document.getElementById('menuTable').style = "display:none";
-		// document.getElementById('showchart').style.display = "block";
+		document.getElementById('btn_pdf').style.display = "none";
+		document.getElementById('btn_item_pdf').style.display = "block";
 		$('#table_grid td').remove();
 
 		var isValid = validate();
@@ -773,6 +795,20 @@ table, th, td {
 							+ fromDate + '/' + toDate + '/' + frId);
 		}
 	}
+	
+	function genItemPdf() {
+		var isValid = validate();
+		if (isValid == true) {
+			var fromDate = document.getElementById("fromdatepicker").value;
+			var toDate = document.getElementById("todatepicker").value;
+			var frId = document.getElementById("frId").value;
+			window
+					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellItemWiseReportpPdf/'
+							+ fromDate + '/' + toDate + '/' + frId);
+		}
+	}
+	
+	
 </script>
 </body>
 </html>

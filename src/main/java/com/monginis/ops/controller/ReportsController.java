@@ -2842,38 +2842,71 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float ttl = 0;
+		float ttlQty = 0;
 		for (int i = 0; i < getRepFrItemwiseSellResponseList.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
-			rowData.add("" + (i + 1));
-			/*
-			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getSellBillNo());
-			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrId());
-			 */
-			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrName());
-			/*
-			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getBillDate());
-			 */
-			/*
-			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemId());
-			 */ rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName());
-			/*
-			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatId());
-			 */ rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatName());
+			rowData.add("" + (i + 1));			
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrName());			
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName());
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatName());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getQty());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getAmount());
-
+			ttl = ttl+ getRepFrItemwiseSellResponseList.get(i).getAmount();
+			ttlQty = ttlQty + getRepFrItemwiseSellResponseList.get(i).getQty();
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
 		}
-
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");	
+		rowData.add("Total");	
+		rowData.add("");	
+		rowData.add("");	
+		rowData.add("" + ttlQty);	
+		rowData.add("" + ttl);
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
+		
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "ItemWiseSummarySell");
 
 		return getRepFrItemwiseSellResponseList;
 
+	}
+	
+	
+	@RequestMapping(value = "pdf/showSellItemWiseReportpPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView showSellItemWiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
+			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/sellItemReportPdf");
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+			System.out.println("Sell Item------------"+getRepFrItemwiseSellResponseList);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frId);
+			Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+					Franchisee.class, frId);
+			model.addObject("frName", franchisee.getFrName());
+			model.addObject("reportList", getRepFrItemwiseSellResponseList);
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return model;
 	}
 
 	@RequestMapping(value = "/viewDateItemwiseSellBill", method = RequestMethod.GET)
