@@ -120,7 +120,7 @@ jQuery(document).ready(function(){
 								<input type="hidden" name="frId" id="frId" value="${frId}">
 
 								<div class="col-md-2 from_date">
-									<h4 class="pull-left">From Date</h4>
+									<h4 class="pull-left">From</h4>
 								</div>
 								<div class="col-md-2 ">
 									<input id="fromdatepicker" autocomplete="off"
@@ -128,7 +128,7 @@ jQuery(document).ready(function(){
 										placeholder="DD-MM-YYYY" name="fromDate" type="text">
 								</div>
 								<div class="col-md-1">
-									<h4 class="pull-left">To Date</h4>
+									<h4 class="pull-left">To</h4>
 								</div>
 								<div class="col-md-2 ">
 									<input id="todatepicker" autocomplete="off" value="${toDate}"

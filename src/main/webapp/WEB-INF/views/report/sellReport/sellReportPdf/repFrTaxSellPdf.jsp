@@ -58,8 +58,8 @@ th {
 													<td><c:out value="${reportList.tax_per}" /> %</td>
 													<td style="text-align: right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.tax_amount}"/></td>
 													 <c:set var="taxAmount" value="${taxAmount + reportList.tax_amount}"/>
-													<td style="text-align: right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.igst}"/></td>
-														<c:set var="igst"  value="${igst + reportList.igst}"/>
+													<td style="text-align: right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="0"/></td>
+														<c:set var="igst"  value="0"/><%-- ${igst + reportList.igst} --%>
 													<td style="text-align: right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.cgst}"/></td>
 														<c:set var="cgst"  value="${cgst+reportList.cgst}"/>
 													<td style="text-align: right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.sgst}"/></td>

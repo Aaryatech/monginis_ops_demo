@@ -106,7 +106,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Billwise HSN Register Report</h2>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i>Billwise HSN Register Report</h2>
 					</div>
 				</div>
 
@@ -114,7 +114,7 @@ jQuery(document).ready(function(){
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 
 					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From Date:-</h4>
+						<h4 class="pull-left">From</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="fromdatepicker" autocomplete="off"
@@ -130,10 +130,10 @@ jQuery(document).ready(function(){
 							name="toDate" type="text">
 					</div>
 					<div class="col-md-2">
-						<button class="btn search_btn pull-left" onclick="searchReport()">Search</button>
+						<button class="btn additem_btn" onclick="searchReport()">Search</button>
 						<%-- 		  &nbsp;&nbsp;&nbsp;   <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
 
 					</div>
@@ -213,7 +213,7 @@ jQuery(document).ready(function(){
 					<br>
 					<div class="form-group" style="display: none;" id="range">
 						<div class="col-sm-3  controls">
-							<input type="button" id="expExcel" class="btn btn-primary"
+							<input type="button" id="expExcel" class="btn additem_btn"
 								value="EXPORT TO Excel" onclick="exportToExcel();"
 								disabled="disabled">
 						</div>

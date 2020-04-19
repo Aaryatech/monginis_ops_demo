@@ -106,7 +106,7 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="pageTitle">View Sell Tax Report Summary</h3>
+						<h2 class="pageTitle"><i class="fa fa-pie-chart" aria-hidden="true"></i>View Sell Tax Report Summary</h2>
 					</div>
 				</div>
 				<div class="colOuter">
@@ -132,12 +132,11 @@ table, th, td {
 
 
 					<div align="center" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
-							View</button>
-						<button class="btn search_btn" onclick="showChart()">Graph</button>
+						<button class="btn additem_btn" onclick="searchSellBill()">Search</button>
+						<button class="btn additem_btn" onclick="showChart()">Graph</button>
 						<%-- 		    	    <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
+						<button class="btn additem_btn" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
 
 						<br>
@@ -179,7 +178,7 @@ table, th, td {
 
 
 								<div class="col-sm-3  controls">
-									<input type="button" id="expExcel" class="btn btn-primary"
+									<input type="button" id="expExcel" class="btn additem_btn"
 										value="EXPORT TO Excel" onclick="exportToExcel();"
 										disabled="disabled">
 								</div>
@@ -307,9 +306,7 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html(
-																			(sellTaxData.igst)
-																					.toFixed(2)));
+																	.html(0));
 													igstTotal = igstTotal
 															+ sellTaxData.igst;
 
@@ -352,7 +349,7 @@ table, th, td {
 										+ taxTotal + "</b></td>";
 
 								var igst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
-										+ igstTotal.toFixed(2);
+										+ 0;
 								+"</b></td>";
 								var cgst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
 										+ cgstTotal.toFixed(2);
