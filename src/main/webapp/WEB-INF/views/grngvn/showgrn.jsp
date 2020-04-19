@@ -60,7 +60,7 @@ table, th, td {
 				</c:if>
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> View GRN <!-- Request GRN --></h2>
+						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Stock</h2>
 					</div>
 				</div>
 
@@ -112,10 +112,10 @@ table, th, td {
 											<!-- 	<th class="col-md-1">Grn Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Edit
 												Qty</th>
-											<th class="col-md-1" style="text-align: center;">Tax %</th>
+											<!-- <th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+											<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
 											<th class="col-md-1" style="text-align: center;">Amount</th>
 											<th class="col-md-1" style="text-align: center;">Remark</th>
 										</tr>
@@ -190,7 +190,7 @@ table, th, td {
 
 												</td>
 
-												<td class="col-md-1" style="text-align: center;"
+												<%-- <td class="col-md-1" style="text-align: center;"
 													id="tax_per${grnConfList.billDetailNo}"><c:out
 														value="${grnConfList.taxPer+grnConfList.cessPer}"></c:out></td>
 
@@ -208,7 +208,7 @@ table, th, td {
 													id='tax_amt${grnConfList.billDetailNo}' class="col-md-1">
 													<fmt:formatNumber type="number" minFractionDigits="2"
 														maxFractionDigits="2" value="${grnConfList.taxAmt}" />
-												</td>
+												</td> --%>
 
 												<fmt:formatNumber var="grnAmt" type="number"
 													minFractionDigits="2" maxFractionDigits="2"

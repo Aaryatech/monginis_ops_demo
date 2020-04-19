@@ -61,7 +61,7 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-2">
-						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> View GVN <!-- Request GVN --></h2>
+						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i> Request GVN <!-- Request GVN --></h2>
 					</div>
                    
 

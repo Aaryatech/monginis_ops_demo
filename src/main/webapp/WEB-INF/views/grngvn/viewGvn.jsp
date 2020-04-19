@@ -46,7 +46,7 @@ table, th, td {
 			<!--rightSidebar-->
 			<div class="sidebarright">
 				<div class="order-left">
-					<h2 class="pageTitle">GVN Headers</h2>
+					<h2 class="pageTitle">Vies GVN</h2>
 
 				</div>
 				<form id="validation-form">
@@ -68,14 +68,14 @@ table, th, td {
 
 
 
-						<div class="col-sm-2">
+					<!-- 	<div class="col-sm-2">
 							<label>OR Gvn Sr No</label>
-							<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
+							<input type="checkbox" class="form-control" id="headerCheckBox"
 						 name="headerCheckBox" id="headerCheckBox"
-							/> -->
-						</div>
+							/>
+						</div> -->
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="headeIdText"
+							<input type="hidden" class="form-control" id="headeIdText"
 								name="headeIdText" value="0" style="width: 120px;" />
 						</div>
 						<div class="col-md-1"></div>
