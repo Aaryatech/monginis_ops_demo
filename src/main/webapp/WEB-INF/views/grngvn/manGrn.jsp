@@ -77,7 +77,7 @@ table, th, td {
 						name="grn_add" id="grn_add" method="post">
 
 						<div class="col-md-9">
-							<h6 class="pageTitle" style="margin: 0; padding:0;"><i class="fa fa-refresh" aria-hidden="true"></i> Request GRN</h6>
+							<h6 class="pageTitle" style="margin: 0; padding:0;"><i class="fa fa-refresh" aria-hidden="true"></i>GRN Based on Expiry of Product</h6>
 						</div>
 						<label for="search" class="col-md-3" id="search" style="margin:-10px 0 0 0 ;"> <i
 							class="fa fa-search" style="font-size: 20px"></i> <input
@@ -141,10 +141,10 @@ table, th, td {
 											<th class="col-md-1" style="text-align: center;">Rate</th>
 											<!-- 	<th class="col-md-1">Grn Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Qty</th>
-											<th class="col-md-1" style="text-align: center;">Tax %</th>
+											<!-- <th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-2" style="text-align: center;">Taxable
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+											<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
 											<th class="col-md-2" style="text-align: center;">Amount</th>
 											<th class="col-md-1" style="text-align: center;">Remark</th>
 
@@ -163,10 +163,15 @@ table, th, td {
 													type="checkbox" name="select_to_grn"
 													id="${grnConfList.billDetailNo}"
 													value="${grnConfList.billDetailNo}" /></td>
-												<td class="col-md-2" style="text-align: center;font-size: 16px;"><fmt:formatDate
-														pattern="dd-MM-yyyy" value="${grnConfList.billDate}" /></td>
+													
 												<td class="col-md-1" style="text-align: center;font-size: 16px;"><c:out
 														value="${grnConfList.invoiceNo}"></c:out></td>
+													
+												<td class="col-md-2" style="text-align: center;font-size: 16px;"><fmt:formatDate
+														pattern="dd-MM-yyyy" value="${grnConfList.billDate}" /></td>
+												
+												
+														
 												<td class="col-md-2" style="text-align: center;font-size: 16px;"><c:out
 														value="${grnConfList.itemName}"></c:out></td>
 												<c:choose>
@@ -217,7 +222,7 @@ table, th, td {
 
 
 												</td>
-
+<%-- 
 												<td class="col-md-1" style="text-align: center;font-size: 16px;"
 													id="tax_per${grnConfList.billDetailNo}"><c:out
 														value="${grnConfList.taxPer}"></c:out></td>
@@ -234,7 +239,7 @@ table, th, td {
 
 
 												<td style="font-size: 16px;" id='tax_amt${grnConfList.billDetailNo}' class="col-md-1"><c:out
-														value="${grnConfList.taxAmt}"></c:out></td>
+														value="${grnConfList.taxAmt}"></c:out></td> --%>
 
 												<fmt:formatNumber var="grnAmt" type="number"
 													minFractionDigits="2" maxFractionDigits="2"
