@@ -56,7 +56,7 @@ th {
 												<tr>
 													<td style="text-align:left;"><c:out value="${count.index+1}" /></td>
 													<td><c:out value="${reportList.day}" /></td>
-													<td><c:out value="${reportList.billDate}" /></td>
+													<td style="text-align:center;"><c:out value="${reportList.billDate}" /></td>
 													<c:set var="amt"  value="${reportList.cash + reportList.card + reportList.other }"/>
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${amt}" /></td>
 													 <c:set var="totalAmount" value="${totalAmount + amt}"/>
