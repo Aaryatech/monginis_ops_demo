@@ -74,7 +74,7 @@ th {
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan='2'><b>Total</b></td>
+				<td colspan='3'><b>Total</b></td>
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalQty}" /></b></td>

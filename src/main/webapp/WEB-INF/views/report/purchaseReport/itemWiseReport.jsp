@@ -78,7 +78,7 @@ table, th, td {
 
 
 					<div class="col-md-1 from_date">
-						<h4 class="pull-left">Group:-</h4>
+						<h4 class="pull-left">Group</h4>
 					</div>
 					<div class="col-md-2">
 						<select name="catId" id="catId" class="form-control chosen"
@@ -91,7 +91,7 @@ table, th, td {
 						</select>
 					</div>
 					<div class="col-md-1 from_date">
-						<h4 class="pull-left">Select:-</h4>
+						<h4 class="pull-left">Select</h4>
 					</div>
 
 					<div class="col-md-2 ">
@@ -109,7 +109,7 @@ table, th, td {
 						value="${Constant.FACTORYNAME}">
 
 					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From Date:-</h4>
+						<h4 class="pull-left">From</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="fromdatepicker" class="texboxitemcode texboxcal"
@@ -117,7 +117,7 @@ table, th, td {
 							type="text">
 					</div>
 					<div class="col-md-1">
-						<h4 class="pull-left">To Date:-</h4>
+						<h4 class="pull-left">To</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="todatepicker" class="texboxitemcode texboxcal"

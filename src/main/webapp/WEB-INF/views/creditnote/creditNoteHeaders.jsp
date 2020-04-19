@@ -72,7 +72,7 @@ table, th, td {
 						id="validation-form">
 
 						<div class="col-md-1 from_date">
-							<h4 class="pull-left">From Date:-</h4>
+							<h4 class="pull-left">From</h4>
 						</div>
 						<div class="col-md-2 ">
 							<input id="fromdatepicker" autocomplete="off"
@@ -133,18 +133,18 @@ table, th, td {
 								<thead>
 									<tr class="bgpink">
 
-										<th><input type="checkbox" onClick="selectBillNo(this)" /></th>
-										<th class="col-sm-1">Sr No.</th>
-										<th class="col-sm-1" style="text-align: center;">Date</th>
-										<th class="col-sm-1" style="text-align: center;">CRN Id</th>
-										<th class="col-md-2" style="text-align: center;">Inv. No
+										<th class="col-sm-1"><input type="checkbox" onClick="selectBillNo(this)" /></th>
+										<th class="col-sm-1" style="text-align: center;">Sr No.</th>
+										<th class="col-md-2" style="text-align: center;">Date</th>
+										<th class="col-md-2" style="text-align: center;">CRN No.</th>
+										<th class="col-md-2" style="text-align: center;">Invoice No.
 										</th>
-										<th class="col-md-3" style="text-align: center;">Franchise</th>
+										<!-- <th class="col-md-3" style="text-align: center;">Franchise</th>
 										<th class="col-md-1" style="text-align: center;">Taxable
 											Amt</th>
-										<th class="col-md-1" style="text-align: center;">Tax Amt</th>
-										<th class="col-md-1" style="text-align: center;">Amount</th>
-										<th class="col-sm-1">Action</th>
+										<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
+										<th class="col-md-2" style="text-align: center;">Amount</th>
+										<th class="col-sm-1" style="text-align: center;">Action</th>
 									</tr>
 
 								</thead>
@@ -157,7 +157,7 @@ table, th, td {
 					<!--table end-->
 					<br>
 					<div class="col-md-12 controls">
-						<input type="button" value="Generate PDF For Fr"
+						<input type="button" value="PDF"
 							onclick="genPdf()" class="btn additem_btn">
 					</div>
 				</div>
@@ -277,7 +277,7 @@ function selectBillNo(source) {
 													var tr = $('<tr></tr>');
 
 													tr
-															.append($('<td><input class="chk" type=checkbox name="select_to_agree" id="select_to_agree'+key+'"  value='+headers.crnId+'></td>'));
+															.append($('<td class="col-sm-1"><input class="chk" type=checkbox name="select_to_agree" id="select_to_agree'+key+'"  value='+headers.crnId+'></td>'));
 													tr
 															.append($(
 																	'<td class="col-sm-1"></td>')
@@ -285,22 +285,22 @@ function selectBillNo(source) {
 																			key + 1));
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:center"></td>')
+																	'<td class="col-md-2" style="text-align:center"></td>')
 																	.html(
 																			headers.crnDate));
 
 													tr
 															.append($(
-																	'<td  class="col-md-1" style="text-align:center"></td>')
+																	'<td  class="col-md-2" style="text-align:center"></td>')
 																	.html(
 																			headers.crnNo));
 													tr
 															.append($(
-																	'<td class="col-md-2" style="text-align:center"></td>')
+																	'<td class="col-md-1" style="text-align:center"></td>')
 																	.html(
 																			headers.exVarchar1));//inv no
 
-													tr
+													/* tr
 															.append($(
 																	'<td class="col-md-3" style="text-align:center"></td>')
 																	.html(
@@ -318,7 +318,7 @@ function selectBillNo(source) {
 																	'<td class="col-md-1"  style="text-align:right"></td>')
 																	.html(
 																			(headers.crnTotalTax)
-																					.toFixed(2)));
+																					.toFixed(2))); */
 
 													tr
 															.append($(

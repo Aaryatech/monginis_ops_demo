@@ -116,7 +116,7 @@ jQuery(document).ready(function(){
 					<input type="hidden" name="factoryName" id="factoryName"
 						value="${Constant.FACTORYNAME}">
 					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From Date:-</h4>
+						<h4 class="pull-left">From</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="fromdatepicker" autocomplete="off"
@@ -133,8 +133,8 @@ jQuery(document).ready(function(){
 					</div>
 					<div class="col-md-2" style="text-align: left;">
 						<button class="btn additem_btn" onclick="getHeader()" style="margin:0">Search</button>						
-						<button class="btn additem_btn" value="PDF" id="PDFButton"
-							onclick="genPdf()"  style="margin:0">PDF</button>
+						<!-- <button class="btn additem_btn" value="PDF" id="PDFButton"
+							onclick="genPdf()"  style="margin:0">PDF</button> -->
 
 					</div>
 
@@ -169,14 +169,14 @@ jQuery(document).ready(function(){
 								<thead>
 									<tr class="bgpink">
 
-										<th>Sr No <!-- <input type="checkbox"
+										<th class="col-sm-1" style="text-align: center;">Sr No <!-- <input type="checkbox"
 															onClick="selectBillNo(this)" /> --></th>
-										<th class="col-md-1">Date</th>
-										<th class="col-md-2">Franchise Name</th>
-										<th class="col-md-2">Taxable Amt</th>
-										<th class="col-md-2">Tax Amt</th>
-										<th class="col-md-2">Grand Amount</th>
-										<th class="col-md-2">Action</th>
+										<th class="col-md-2" style="text-align: center;">Date</th>
+										<!-- <th class="col-md-2" style="text-align: center;">Franchise Name</th> -->
+										<th class="col-md-2" style="text-align: center;">Taxable Amt</th>
+										<th class="col-md-2" style="text-align: center;">Tax Amt</th>
+										<th class="col-md-2" style="text-align: center;">Grand Amount</th>
+										<th class="col-md-2" style="text-align: center;">Action</th>
 
 									</tr>
 
@@ -254,8 +254,8 @@ jQuery(document).ready(function(){
 												tr.append($('<td></td>').html(
 														headers.crnDate));
 
-												tr.append($('<td></td>').html(
-														headers.frName));
+												/* tr.append($('<td></td>').html(
+														headers.frName)); */
 
 												tr.append($('<td></td>').html(
 														headers.crnTaxableAmt));
