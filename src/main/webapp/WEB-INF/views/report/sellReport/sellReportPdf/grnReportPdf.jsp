@@ -42,11 +42,11 @@ th {
 									<th style="text-align:center;">Taxable Amt</th>
 								 	<th style="text-align:center;">Total Tax</th> -->
 									<th style="text-align:center;">GRN Amt</th>   
-									<th style="text-align:center;">Apr Taxable Amt</th>
+									<th style="text-align:center;">Aprv. Taxable Amt</th>
 									<!-- <th style="text-align:center;">Apr CGST</th>
 									<th style="text-align:center;">Apr SGST</th>
 									<th style="text-align:center;">Apr IGST</th> -->
-									<th style="text-align:center;">Apr Total</th> 
+									<th style="text-align:center;">Aprv. GRN Total</th> 
 									<!-- <th align="center">CESS</th>  -->
 								  </tr>
 								</thead>

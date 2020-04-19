@@ -147,16 +147,16 @@
 
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-1" style="text-align: center;">Grn Gvn
+											<th class="col-md-1" style="text-align: center;">GRN
 												Date</th>
-											<th class="col-md-1" style="text-align: center;">Item_Name</th>
+											<th class="col-md-1" style="text-align: center;">Item Name</th>
 											<!-- <th class="col-md-1" style="text-align: center;">Tax
 												Rate</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Total
 												Tax</th> -->
-											<th class="col-md-1" style="text-align: center;">Grn Gvn
+											<th class="col-md-1" style="text-align: center;">GRN
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												Taxable Amt</th>
@@ -166,7 +166,8 @@
 												SGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												IGST Amt</th> -->
-											<th class="col-md-1" style="text-align: center;">Total</th>
+											<th class="col-md-1" style="text-align: center;">Aprv. GRN  
+											Total</th>
 										</tr>
 									</thead>
 
