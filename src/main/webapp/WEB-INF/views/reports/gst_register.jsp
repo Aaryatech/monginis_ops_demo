@@ -68,7 +68,7 @@ jQuery(document).ready(function(){
 </script>
 <!--datepicker-->
 
-<c:url var="getGstRegister" value="/getGstRegister"></c:url>
+<c:url var="getGstHSNRegister" value="/getGstHSNRegister"></c:url>
 
 
 <div class="sidebarOuter"></div>
@@ -154,11 +154,11 @@ jQuery(document).ready(function(){
 
 										<th class="col-sm-1" style="text-align: center;">Invoice
 											No</th>
-										<th class="col-sm-1" style="text-align: center;">Invoice
+										<th class="col-md-2" style="text-align: center;">Invoice
 											Date</th>
-										<th class="col-sm-1" style="text-align: center;">Party
+										<!-- <th class="col-sm-1" style="text-align: center;">Party
 											Name</th>
-										<th class="col-md-1" style="text-align: center;">GST No</th>
+										<th class="col-md-1" style="text-align: center;">GST No</th> -->
 										<th class="col-md-1" style="text-align: center;">HSN Code</th>
 										<th class="col-md-1" style="text-align: center;">Billed
 											Qty</th>
@@ -184,20 +184,20 @@ jQuery(document).ready(function(){
 
 										<th class="col-sm-1" style="text-align: center;">Invoice
 											No</th>
-										<th class="col-sm-1" style="text-align: center;">Invoice
+										<th class="col-md-2" style="text-align: center;">Invoice
 											Date</th>
-										<th class="col-sm-1" style="text-align: center;">Party
+										<!-- <th class="col-sm-1" style="text-align: center;">Party
 											Name</th>
-										<th class="col-md-1" style="text-align: center;">GST No</th>
+										<th class="col-md-1" style="text-align: center;">GST No</th> -->
 										<th class="col-md-1" style="text-align: center;">HSN Code</th>
 										<th class="col-md-1" style="text-align: center;">Billed
 											Qty</th>
 										<th class="col-md-1" style="text-align: center;">Taxable
 											Amt</th>
-										<th class="col-md-1" style="text-align: center;">Cgst %</th>
-										<th class="col-md-1" style="text-align: center;">Cgst Amt</th>
-										<th class="col-md-1" style="text-align: center;">Sgst %</th>
-										<th class="col-md-1" style="text-align: center;">Sgst Amt</th>
+										<th class="col-md-1" style="text-align: center;">CGST %</th>
+										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
+										<th class="col-md-1" style="text-align: center;">SGST %</th>
+										<th class="col-md-1" style="text-align: center;">SGST Amt</th>
 										<th class="col-md-1" style="text-align: center;">Bill Amt</th>
 									</tr>
 
@@ -253,7 +253,7 @@ jQuery(document).ready(function(){
 
 			$('#loader').show();
 
-			$.getJSON('${getGstRegister}',
+			$.getJSON('${getGstHSNRegister}',
 
 			{
 				//fr_id_list : JSON.stringify(selectedFr),
@@ -282,12 +282,13 @@ jQuery(document).ready(function(){
 					var index = key + 1;
 					//var tr = "<tr>";
 					var tr = $('<tr></tr>');
+					tr.append($('<td></td>').html(index));
 					tr.append($('<td></td>').html(report.invoiceNo));
 					tr.append($('<td></td>').html(report.billDate));
-					tr.append($('<td style="text-align:left;"></td>').html(
+					/* tr.append($('<td style="text-align:left;"></td>').html(
 							report.frName));
 					tr.append($('<td style="text-align:left;"></td>').html(
-							report.frGstNo));
+							report.frGstNo)); */
 					tr.append($('<td style="text-align:left;"></td>').html(
 							report.hsnCode));
 					tr.append($('<td style="text-align:right;"></td>').html(

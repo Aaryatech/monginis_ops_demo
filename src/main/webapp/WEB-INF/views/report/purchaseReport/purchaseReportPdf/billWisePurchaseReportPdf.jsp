@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bill wise Purchase Report</title>
+<title>Billwise HSN Register Report</title>
 
 <style type="text/css">
 table {
@@ -28,7 +28,7 @@ th {
 </style>
 </head>
 <body onload="myFunction()">
-	<h4 align="center">Billwise Purchase Report</h4>
+	<h4 align="center">Billwise HSN Register Report</h4>
 	<div align="center">
 		<h6>${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}
 			&nbsp;To &nbsp; ${toDate}</h6>

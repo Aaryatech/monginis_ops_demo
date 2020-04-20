@@ -1247,6 +1247,199 @@ public class ReportControllerV2 {
 	 * 
 	 * } return gstRegItemList; }
 	 */
+	
+	@RequestMapping(value = "/getGstHSNRegister", method = RequestMethod.GET)
+	  public @ResponseBody List<GstRegisterItem> getGstRegister(HttpServletRequest
+	request, HttpServletResponse response) throws FileNotFoundException {
+
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+		
+
+		String fromDate = "";
+		String toDate = "";
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		System.out.println("inside getSalesReport ajax call");
+
+		
+		fromDate = request.getParameter("fromDate");
+		toDate = request.getParameter("toDate");
+		try {
+
+			map.add("frIdList", frDetails.getFrId());
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+			GstRegisterList gstArray = restTemplate.postForObject(Constant.URL + "getGstRegister", map,
+					GstRegisterList.class);
+
+			List<GstRegisterSp> gstRegSpList = new ArrayList<>();
+
+			gstRegItemList = gstArray.getGstRegItemList();
+			gstRegSpList = gstArray.getGstRegSpList();
+			for (int j = 0; j < gstRegSpList.size(); j++) {
+				int flag = 0;
+
+				for (int i = 0; i < gstRegItemList.size(); i++) {
+
+					if (gstRegItemList.get(i).getBillNo() == gstRegSpList.get(j).getBillNo()
+							&& gstRegItemList.get(i).getHsnCode().equals(gstRegSpList.get(j).getHsnCode())) {
+						flag = 1;
+						gstRegItemList.get(i)
+								.setBillQty(gstRegItemList.get(i).getBillQty() + gstRegSpList.get(j).getBillQty());
+
+						gstRegItemList.get(i).setTaxableAmt(
+								(gstRegItemList.get(i).getTaxableAmt() + gstRegSpList.get(j).getTaxableAmt()));
+
+						gstRegItemList.get(i)
+								.setCgstAmt((gstRegItemList.get(i).getCgstAmt() + gstRegSpList.get(j).getCgstAmt()));
+						gstRegItemList.get(i)
+								.setSgstAmt((gstRegItemList.get(i).getSgstAmt() + gstRegSpList.get(j).getSgstAmt()));
+						gstRegItemList.get(i).setGrandTotal(
+								(gstRegItemList.get(i).getGrandTotal() + gstRegSpList.get(j).getGrandTotal()));
+
+					}
+
+				}
+
+				if (flag == 0) {
+
+					System.err.println("New hsn code item found ");
+
+					GstRegisterItem regItem = new GstRegisterItem();
+
+					regItem.setBillDate(gstRegSpList.get(j).getBillDate());
+					regItem.setBillDetailNo(gstRegSpList.get(j).getBillDetailNo());
+					regItem.setBillNo(gstRegSpList.get(j).getBillNo());
+					regItem.setBillQty(gstRegSpList.get(j).getBillQty());
+					regItem.setCgstAmt(gstRegSpList.get(j).getCgstAmt());
+					regItem.setCgstPer(gstRegSpList.get(j).getCgstPer());
+					regItem.setFrGstNo(gstRegSpList.get(j).getFrGstNo());
+					regItem.setFrName(gstRegSpList.get(j).getFrName());
+					regItem.setGrandTotal(gstRegSpList.get(j).getGrandTotal());
+					regItem.setHsnCode(gstRegSpList.get(j).getHsnCode());
+					regItem.setInvoiceNo(gstRegSpList.get(j).getInvoiceNo());
+					regItem.setSgstAmt(gstRegSpList.get(j).getSgstAmt());
+					regItem.setSgstPer(gstRegSpList.get(j).getSgstPer());
+					regItem.setTaxableAmt(gstRegSpList.get(j).getTaxableAmt());
+					regItem.setTaxPer(gstRegSpList.get(j).getTaxPer());
+					regItem.setTotalTax(gstRegSpList.get(j).getTotalTax());
+
+					gstRegItemList.add(regItem);
+				}
+			}
+
+			System.err.println("gstRegItemList combined  " + gstRegItemList.toString());
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No.");
+			rowData.add("Invoice No");
+			rowData.add("Invoice Date");
+			rowData.add("Party Name");
+			rowData.add("GST No");
+			rowData.add("HSN Code");
+			rowData.add("Bill Qty");
+			rowData.add("Taxable Amt");
+			rowData.add("CGST %");
+			rowData.add("CGST Amt");
+			rowData.add("SGST %");
+			rowData.add("SGST Amt");
+			rowData.add("Total Amt");
+			rowData.add("Bill Amt");
+
+			float billQty = 0.0f;
+			float taxableAmt = 0.0f;
+			float cgstSum = 0.0f;
+			float sgstSum = 0.0f;
+			float grandTotal = 0.0f;
+			float totalFinal = 0.0f;
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			for (int i = 0; i < gstRegItemList.size(); i++) {
+				float totalAmt = 0.0f;
+				for (int j = 0; j < gstRegItemList.size(); j++) {
+					if (gstRegItemList.get(i).getBillNo() == gstRegItemList.get(j).getBillNo()) {
+						totalAmt = totalAmt + roundUp(gstRegItemList.get(j).getGrandTotal());
+					}
+
+				}
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add("" + (i + 1));
+				rowData.add("" + gstRegItemList.get(i).getInvoiceNo());
+				rowData.add("" + gstRegItemList.get(i).getBillDate());
+				rowData.add("" + gstRegItemList.get(i).getFrName());
+				rowData.add("" + gstRegItemList.get(i).getFrGstNo());
+
+				rowData.add("" + gstRegItemList.get(i).getHsnCode());
+				rowData.add("" + roundUp(gstRegItemList.get(i).getBillQty()));
+				rowData.add("" + roundUp(gstRegItemList.get(i).getTaxableAmt()));
+				rowData.add("" + gstRegItemList.get(i).getCgstPer());
+				rowData.add("" + roundUp(gstRegItemList.get(i).getCgstAmt()));
+				rowData.add("" + gstRegItemList.get(i).getSgstPer());
+				rowData.add("" + roundUp(gstRegItemList.get(i).getSgstAmt()));
+
+				rowData.add("" + roundUp(gstRegItemList.get(i).getGrandTotal()));
+				rowData.add("" + roundUp(totalAmt));
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				billQty = billQty + gstRegItemList.get(i).getBillQty();
+				taxableAmt = taxableAmt + gstRegItemList.get(i).getTaxableAmt();
+				cgstSum = cgstSum + gstRegItemList.get(i).getCgstAmt();
+				sgstSum = sgstSum + gstRegItemList.get(i).getSgstAmt();
+				grandTotal = grandTotal + gstRegItemList.get(i).getGrandTotal();
+				totalFinal = totalFinal + totalAmt;
+
+			}
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("");
+			rowData.add("Total");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("" + roundUp(billQty));
+			rowData.add("" + roundUp(taxableAmt));
+			rowData.add("" + roundUp(cgstSum));
+			rowData.add("" + roundUp(sgstSum));
+			rowData.add("" + roundUp(grandTotal));
+			rowData.add("" + roundUp(totalFinal));
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelListNew", exportToExcelList);
+			session.setAttribute("excelName", "Sales_Report");
+			session.setAttribute("reportNameNew", "GST Register Report By Franchise");
+			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+			session.setAttribute("mergeUpto1", "$A$1:$L$1");
+			session.setAttribute("mergeUpto2", "$A$2:$L$2");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return gstRegItemList;
+	}
+	 
+	
 	@RequestMapping(value = "/showTaxReport", method = RequestMethod.GET)
 	public ModelAndView showTaxReport(HttpServletRequest request, HttpServletResponse response) {
 
