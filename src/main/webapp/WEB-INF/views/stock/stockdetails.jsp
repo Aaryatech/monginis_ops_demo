@@ -155,7 +155,7 @@ table, th, td {
 
 
 			<!--leftNav-->
-			<div class="colOuter">
+			<%-- <div class="colOuter">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
 					<c:if test="${not empty message}">
@@ -166,10 +166,10 @@ table, th, td {
 						</div>
 					</c:if>
 				</div>
-			</div>
+			</div> --%>
 
 			<!--rightSidebar-->
-			<div class="sidebarright">
+			<div class="sidebarright" style="padding-top: 0px;">
 			<div class="col-md-4"><div class="order-left">
 					<h2 class="pageTitle"><i class="fa fa-bar-chart-o" aria-hidden="true" ></i> Stock Details </h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
@@ -249,7 +249,7 @@ table, th, td {
 						</c:forEach>
 					</div>
 				</div>
-				<div class="colOuter" style="margin: 10px 0 ;">
+				<div class="colOuter" style="margin: 10px 0;">
 					<div class="col-md-1">
 						<div class="col1title">Category</div>
 					</div>
@@ -312,7 +312,41 @@ table, th, td {
 
 						</select>
 					</div>
+					<div class="col-md-1">
+						<input name="search_stock" class="btn additem_btn" value="Search"
+							type="button" onclick="searchStock()" style="margin:0;">
+					</div>
+					
+					<!-- <div class="col2">
+						<input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()">
 
+						<div align="center" id="loader" style="display: none">
+
+							<span>
+								<h4>
+									<font color="#343690">Loading</font>
+								</h4>
+							</span> <span class="l-1"></span> <span class="l-2"></span> <span
+								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+							<span class="l-6"></span>
+						</div>
+					</div> -->
+					
+					
+				</div>
+				
+				<div class="row">
+					<div align="center" id="loader" style="display: none">
+
+							<span>
+								<h4>
+									<font color="#343690">Loading</font>
+								</h4>
+							</span> <span class="l-1"></span> <span class="l-2"></span> <span
+								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+							<span class="l-6"></span>
+						</div>
 				</div>
 
 
@@ -373,7 +407,7 @@ table, th, td {
 
 
 
-				<div class="colOuter" style="margin: 15px 0 0 0;"> 
+				<!-- <div class="colOuter" style="margin: 15px 0 0 0;"> 
 					<div class="col1">
 						<div class="col1title"></div>
 					</div>
@@ -395,7 +429,7 @@ table, th, td {
 
 
 
-				</div>
+				</div> -->
 
 
 

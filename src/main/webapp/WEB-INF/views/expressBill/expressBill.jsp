@@ -283,8 +283,8 @@ input:checked+.slider:before {
 										autocomplete="off">
 								</div>
 								<div class="col-md-2">
-									<input name="" class="buttonsaveorder" value="Search"
-										type="button" onclick="searchOrders()">
+									<input name="" class="btn additem_btn" value="Search"
+										type="button" onclick="searchOrders()" style="margin:0;">
 								</div>
 							</form>
 						</div>	
@@ -354,7 +354,10 @@ input:checked+.slider:before {
 							</div>
 						</div>
 					</div>
-					<div class="table">
+					
+					
+					<div class="row">
+					<div class="table" style="margin: 20px 0 0 0;">
 						<div class="shInnerwidth">
 							<table width="100%" border="0" cellspacing="0" cellpadding="0"
 								class="table">
@@ -362,7 +365,7 @@ input:checked+.slider:before {
 									<td align="center" valign="middle" style="padding: 0px;">
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr class="bgpink">
-												<td>Barcode</td>
+												<td>Barcode </td>
 												<td>Qty</td>
 												<td>Item Name</td>
 												<td>Rate</td>
@@ -403,9 +406,11 @@ input:checked+.slider:before {
 							</table>
 						</div>
 					</div>
+					
+					</div>
 					<input name="rate1" id="rate1" type="hidden" value="00" />
 					<div class="row">
-						<div class="col-md-12">
+						<div >
 						<%-- 	<center> --%>
 								
 
@@ -429,10 +434,13 @@ input:checked+.slider:before {
 								Loading....</div>
 						</div>
 
-						<hr></hr>
+						
 
 					</div>
 					<!-- Form End -->
+					
+					<div class="row">
+					
 					<div class="table-responsive">
 						<div class="shInnerwidth">
 
@@ -501,6 +509,8 @@ input:checked+.slider:before {
 						</div>
 
 						<!--End of  Loader Div -->
+					</div>
+					
 					</div>
 					<c:set var="dayCloseStyleDisplay" value="disabled" />
 					<c:choose>

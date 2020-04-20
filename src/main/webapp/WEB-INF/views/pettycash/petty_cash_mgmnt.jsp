@@ -143,10 +143,10 @@ table, th, td {
 			
 				<div class="row" style="margin: 0 0 20px 0;">
 					<div class="col-md-6">
-						<div class="order-left">
+						
 					<h2 class="pageTitle"><i class="fa fa-suitcase" aria-hidden="true"></i> Petty Cash Management</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
+				
 					</div>
 					<div class="col-md-6">
 						<div align="right" >
@@ -166,28 +166,30 @@ table, th, td {
 				
 				<div class="row">
 					<div class="col-md-1" style="margin: 10px 0 0 0;">Date</div>
-					<div class="col-md-2"><input id="fromdatepicker" class="texboxitemcode texboxcal"
+					<div class="col-md-3"><input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="Date" name="cash_date"
 							type="text" value="${pettycash.date}" onchange="compareDate()"></div>
 					
 					<div class="col-md-1" style="margin: 10px 0 0 0;">Opening Amt</div>
-					<div class="col-md-2"><input id="opening_amt"  class="form-control" readonly="readonly" value="${pettycash.openingAmt}"
+					<div class="col-md-3"><input id="opening_amt"  class="form-control" readonly="readonly" value="${pettycash.openingAmt}"
 							autocomplete="off" placeholder="Opening Amt" name="opening_amt"  
 							type="text"></div>
 					
 					<div class="col-md-1" style="margin: 10px 0 0 0;">Cash Amt</div>
-					<div class="col-md-2"><input id="cash_amt"  class="form-control" value="${pettycash.cashAmt}"
+					<div class="col-md-3"><input id="cash_amt"  class="form-control" value="${pettycash.cashAmt}"
 							autocomplete="off" placeholder="Cash Amt" name="cash_amt" onchange="calClosingAmt()"
 							type="text"></div>
+							
+					<div style="clear:both;"></div>		
 					
-					<div class="col-md-1" style="margin: 10px 0 0 0;">Withdrawal Amt</div>
-					<div class="col-md-2"><input id="withdrawal_amt"  class="form-control" value="${pettycash.withdrawalAmt}"
+					<div class="col-md-1" style="margin: 30px 0 0 0;">Withdrawal Amt</div>
+					<div class="col-md-3" style="margin: 30px 0 0 0;"><input id="withdrawal_amt"  class="form-control" value="${pettycash.withdrawalAmt}"
 							autocomplete="off" placeholder="Withdrawal Amt" name="withdrawal_amt"
 							type="text" onchange="calClosingAmt()"></div>
 							
 							
 					<div class="col-md-1" style="margin: 30px 0 0 0;">Closing Amt</div>
-					<div class="col-md-2" style="margin: 30px 0 0 0;"><input id="closing_amt"  class="form-control" value="${pettycash.closingAmt}" readonly="readonly"
+					<div class="col-md-3" style="margin: 30px 0 0 0;"><input id="closing_amt"  class="form-control" value="${pettycash.closingAmt}" readonly="readonly"
 							autocomplete="off" placeholder="Closing Amt" name="closing_amt"
 							type="text"></div>	
 							

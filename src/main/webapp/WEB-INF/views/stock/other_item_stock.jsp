@@ -146,7 +146,7 @@ table, th, td {
 				
 					</div>
 					<div class="col-md-8">
-						<div class="col-md-2">
+						<div class="col-md-3">
 						<div class="col1title">Select View Option</div>
 					</div>
 					<div class="col-md-3">
@@ -160,20 +160,21 @@ table, th, td {
 
 						</select>
 					</div>
+					<div class="col-md-6">
 					<div id="crnt_stk_btn">
-					<div class="col-md-1">
+					<div class="col-md-2">
 						<input name="search_stock" class="btn additem_btn" value="Search"
 							type="button" onclick="searchStock()" style="margin: 0 5px;">
 					</div>
 
-					<div class="col-md-1">
+					<div class="col-md-5">
 						<button type="button" class="btn additem_btn" id='pdf'
 							onclick="genPdf()" disabled  style="margin: 0 ;">PDF</button>
 					</div>
-					 <div class="col-md-2" style="margin:7px 0 0 0;">
+					 <div class="col-md-5" style="margin:7px 0 0 0;">
 						<b>Month: ${monthName}/${year}</b>
 			     	</div>
-					</div>
+					</div></div>
 					</div>
 				</div>
 				
@@ -244,10 +245,11 @@ table, th, td {
 
 
 				<div class="colOuter" style="display: none" id=select_date>
+					<div class="row">
 					<div class="col-md-1">
 						<div class="col1title">From Date:</div>
 					</div>
-					<div class="col-md-2" align="left">
+					<div class="col-md-3" align="left">
 
 						<input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="From Date" name="from_datepicker"
@@ -255,20 +257,18 @@ table, th, td {
 
 					</div>
 
-					<div class="col3"></div>
-
 
 
 					<div class="col-md-1">
 						<div class="col1title">To Date:</div>
 					</div>
-					<div class="col-md-2" align="left">
+					<div class="col-md-3" align="left">
 						<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="To Date" name="to_datepicker"
 							type="text">
 					</div>
 					
-					<div class="col-md-2">
+					<div class="col-md-4">
 						<input name="search_stock" class="btn additem_btn" value="Search"
 							type="button" onclick="searchStock()" style="margin:0 10px; float: left;">
 							
@@ -280,7 +280,7 @@ table, th, td {
 						
 					</div>
                    
-				</div>
+				</div></div>
 
 
 

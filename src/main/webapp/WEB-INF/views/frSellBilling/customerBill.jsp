@@ -3001,7 +3001,7 @@ label:before{
 
 	<script type="text/javascript">
 		function calTotal(allTotal, token) {
-			document.getElementById("li"+token).style.backgroundColor ="skyblue";
+			document.getElementById("li"+token)/* .style.backgroundColor ="skyblue" */;
 			$("#total" + token).html(allTotal);
 			document.getElementById("tot" + token).setAttribute('value',
 					allTotal);
