@@ -247,6 +247,15 @@ abbr:hover {cursor: pointer;}
 							<span>Reports</span>
 						</div></a></li>
 			</c:if>
+			
+			
+			<li><a
+					href="${pageContext.request.contextPath}/dashboarddemo"><div
+							class="img">
+							<i class="fa fa-dashboard"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">Dashboard</div></a></li>
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">

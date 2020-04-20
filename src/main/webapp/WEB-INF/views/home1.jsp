@@ -307,7 +307,7 @@
 								<li>
 									<div class="sale_one bg_one">
 										<div class="sale_l">
-											<i class="fa fa-birthday-cake" aria-hidden="true"></i>
+											<i class="fa fa-inr" aria-hidden="true"></i>
 										</div>
 										<div class="sale_r">
 											<h3 class="sale_head">Sale</h3>
@@ -896,6 +896,7 @@
 				//alert(11);
 
 				var materialOptions = {
+						height:500,
 					chart : {
 						title : 'Sell Amount per Day',
 						subtitle : ' '
@@ -999,12 +1000,12 @@
 					}
 				};
 
-				var materialChart = new google.charts.Line(chartDiv);
+				var materialChart = new google.charts.Bar(chartDiv);
 
 				function drawMaterialChart1() {
 					// var materialChart = new google.charts.Bar(chartDiv);
 					// google.visualization.events.addListener(materialChart, 'select', selectHandler);    
-					materialChart.draw(dataTable, google.charts.Line
+					materialChart.draw(dataTable, google.charts.Bar
 							.convertOptions(materialOptions));
 					// button.innerText = 'Change to Classic';
 					// button.onclick = drawClassicChart;
