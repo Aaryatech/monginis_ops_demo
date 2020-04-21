@@ -477,7 +477,7 @@
 							<div class="col-md-6">
 								<div class="one_graph padd_bx">
 									
-									<h3 class="bx_title">Customers</h3>
+									<h3 class="bx_title">Today's Special Cakes Customer List</h3>
 									
 									
 									<div id="scrollbarsmodaldiv" class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
@@ -514,7 +514,7 @@
 												<tr>
 													<td style="text-align: center">${count.index+1}</td>
 													<td style="text-align: left"><c:out
-															value="${custList.spCustName}" /></td>
+															value="${custList.spCustName} - ${custList.spCustMobNo}" /></td>
 													<td style="text-align: right"><c:out
 															value="${custList.spGrandTotal}" /></td>
 													<td style="text-align: center;"><c:choose>
