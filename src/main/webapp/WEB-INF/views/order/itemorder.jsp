@@ -18,10 +18,31 @@ jQuery(document).ready(function(){
 });
 </script>-->
 
+<!--datepicker-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script>
+	
+	$(function() {
+		
+		var today = new Date();
+		today.setDate(today.getDate() -1);
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+		
+		today = dd + '-' + mm + '-' + yyyy;
+		
+		$("#prevdatepicker").datepicker({
+			dateFormat : 'dd-mm-yy',
+			maxDate : today
+		});
+	});
+</script>
+<!--datepicker-->
 
 
 <style>
-
 .myInput1 {
 	margin-top: 10px;
 	margin-bottom: 0px;
@@ -65,7 +86,6 @@ a:link {
 a:hover {
 	color: black;
 }
-
 </style>
 
 
@@ -117,11 +137,31 @@ a:hover {
 					</c:when>
 				</c:choose>
 				<div class="order-left">
-					<h2 class="pageTitle"><i class="fa fa-birthday-cake" aria-hidden="true"></i> ${menuTitle}</h2>
+					<h2 class="pageTitle">
+						<i class="fa fa-birthday-cake" aria-hidden="true"></i>
+						${menuTitle}
+					</h2>
 					<h3 class="pageTitle2">Order Date :
 						${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
 						${deliveryDate}</h3>
+
+
+					<form
+						action="${pageContext.request.contextPath}/showSavouries/${con_index}"
+						name="form2" method="get">
+						<h3 class="pageTitle2">
+							Previous Order : <input id="prevdatepicker" autocomplete="off"
+								style="width: 30%" placeholder="Previous Order Date"
+								name="prevdatepicker" type="text"
+								class="texboxitemcode texboxcal" value="${prevDate}"
+								onchange="onChangePrevOrderDate(this.value,${con_index});" min="${prevDate}">
+							<input type="submit" vlaue="submit">
+						</h3>
+
+
+					</form>
+
 
 					<input type="hidden" name="menuId" value="${menuId}"> <input
 						type="hidden" name="rateCat" value="${frDetails.frRateCat}">
@@ -143,7 +183,7 @@ a:hover {
 					<div class="ordermto20px">
 						<div class="order-price">Total Amount :</div>
 						<div class="order-amount">
-							
+
 							<fmt:formatNumber type="number" minFractionDigits="2"
 								maxFractionDigits="2" value="${grandTotal}" />
 						</div>
@@ -168,7 +208,7 @@ a:hover {
 
 
 				<form action="${pageContext.request.contextPath}/saveOrder"
-					name="form1" method="post"  >
+					name="form1" method="post">
 					<!-- <div class="col-md-9"></div>
 					<label for="search" class="col-md-3" id="search"> <i
 						class="fa fa-search" style="font-size: 20px"></i> <input
@@ -228,19 +268,28 @@ a:hover {
 
 								<div class="col-md-9"></div>
 								<label for="search" class="col-md-3" id="search"> <i
-									class="fa fa-search" style="font-size: 20px"></i> <input class="myInput1"
-									type="text" id="myInput${loop.index}" onkeyup="myFunction1(${loop.index})"
+									class="fa fa-search" style="font-size: 20px"></i> <input
+									class="myInput1" type="text" id="myInput${loop.index}"
+									onkeyup="myFunction1(${loop.index})"
 									style="border-radius: 25px;" placeholder="Search items by name"
 									title="Type item name">
 								</label>
-								<div id="table-scroll" class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
+								<div id="table-scroll" class="table-scroll responsive-table-one">
+									<!-- class="table-scroll" -->
 
-									<div id="faux-table" class="faux-table" aria="hidden"><!-- style="display:none" -->
+									<div id="faux-table" class="faux-table" aria="hidden">
+										<!-- style="display:none" -->
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-2" style="text-align: center;">Item Name</th>
-													<th class="col-md-1" style="text-align: center;">Min Quantity</th>
+													<th class="col-md-2" style="text-align: center;">Item
+														Name</th>
+													<th class="col-md-1" style="text-align: center;">Shelf
+														Life</th>
+													<th class="col-md-1" style="text-align: center;">Min
+														Quantity</th>
+													<th class="col-md-1" style="text-align: right;">Current
+														Stock</th>
 													<th class="col-md-1" style="text-align: center;">Quantity</th>
 													<th class="col-md-1" style="text-align: center;">MRP</th>
 													<th class="col-md-1" style="text-align: center;">Rate</th>
@@ -257,11 +306,19 @@ a:hover {
 									</div>
 									<div class="table-wrap">
 
-										<table id="table_grid${loop.index}" class="responsive-table" style="margin:0px;"><!--   class="main-table" -->
+										<table id="table_grid${loop.index}" class="responsive-table"
+											style="margin: 0px;">
+											<!--   class="main-table" -->
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-2" style="text-align: center;">Item Name</th>
-													<th class="col-md-1" style="text-align: center;">Min Quantity</th>
+													<th class="col-md-2" style="text-align: center;">Item
+														Name</th>
+													<th class="col-md-1" style="text-align: center;">Shelf
+														Life</th>
+													<th class="col-md-1" style="text-align: center;">Min
+														Quantity</th>
+													<th class="col-md-1" style="text-align: right;">Current
+														Stock</th>
 													<th class="col-md-1" style="text-align: center;">Quantity</th>
 													<th class="col-md-1" style="text-align: center;">MRP</th>
 													<th class="col-md-1" style="text-align: center;">Rate</th>
@@ -283,25 +340,52 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='1'}">
 																<tr>
 
-																	<td class="col-md-2" style="text-align: left;">
-																	<c:choose>
-																	<c:when test="${items.itemImage!=''}">
-																	<a
-																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1" style="color:#000000;"   >${items.itemName}</a>
-																	</c:when>	
-																	<c:otherwise>
+																	<td class="col-md-2" style="text-align: left;"><c:choose>
+																			<c:when test="${items.itemImage!=''}">
+																				<a href="${url}${items.itemImage}"
+																					data-lightbox="image-1" tabindex="-1"
+																					style="color: #000000;">${items.itemName}</a>
+																			</c:when>
+																			<c:otherwise>
 																	${items.itemName}
 																	</c:otherwise>
-																	</c:choose>
-																		</td>
+																		</c:choose></td>
+
+																	<td class="col-md-1" style="text-align: center;"><c:set
+																			value="0" var="temp"></c:set> <c:forEach var="shelf"
+																			items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${shelf.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${shelf.itemShelfLife}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
-																		id='${items.id}' value='${items.itemQty}'
-																		class="tableInput" type="text"
-																		onkeydown="myFunction()" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+																	<td class="col-md-1" style="text-align: right;"><c:set
+																			value="0" var="temp"></c:set> <c:forEach var="stock"
+																			items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${stock.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${stock.currentStock}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
+
+																	<td class="col-md-1" style="text-align: center;"><input
+																		name='${items.id}' id='${items.id}'
+																		value='${items.itemQty}' class="tableInput"
+																		type="text" onkeydown="myFunction()"
+																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 																		onchange="onChange('${items.itemRate1}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
@@ -310,11 +394,12 @@ a:hover {
 																			value='${items.itemMrp1}' /></td>
 
 
-																	<td class="col-md-1" style="text-align: center ;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.itemRate1}' /></td>
 																	<c:set var="rate" value="${items.itemRate1}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}" style="text-align: center;"><fmt:formatNumber
+																	<td class="col-md-1" id="total${items.id}"
+																		style="text-align: center;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -352,20 +437,54 @@ a:hover {
 																<tr>
 
 																	<td class="col-md-1" style="text-align: left;"><c:choose>
-																	<c:when test="${items.itemImage!=''}">
-																	<a
-																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;color:#000000;">${items.itemName}</a>
-																	</c:when>	
-																	<c:otherwise>
+																			<c:when test="${items.itemImage!=''}">
+																				<a href="${url}${items.itemImage}"
+																					data-lightbox="image-1" tabindex="-1"
+																					style="text-decoration: underline; color: #000000;">${items.itemName}</a>
+																			</c:when>
+																			<c:otherwise>
 																	${items.itemName}
 																	</c:otherwise>
-																	</c:choose></td>
-																	<td class="col-md-1" style="text-align: center ;"><c:out
+																		</c:choose></td>
+
+
+																	<td class="col-md-1" style="text-align: center;"><c:set
+																			value="0" var="temp"></c:set> <c:forEach var="shelf"
+																			items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${shelf.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${shelf.itemShelfLife}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
-																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
-																		id='${items.id}' value='${items.itemQty}'
-																		class="tableInput" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+
+																	<td class="col-md-1" style="text-align: right;"><c:set
+																			value="0" var="temp"></c:set> <c:forEach var="stock"
+																			items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${stock.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${stock.currentStock}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
+
+
+
+																	<td class="col-md-1" style="text-align: center;"><input
+																		name='${items.id}' id='${items.id}'
+																		value='${items.itemQty}' class="tableInput"
+																		type="text"
+																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 																		onchange="onChange('${items.itemRate2}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
@@ -412,20 +531,52 @@ a:hover {
 																<tr>
 
 																	<td class="col-md-1" style="text-align: left;"><c:choose>
-																	<c:when test="${items.itemImage!=''}">
-																	<a
-																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;color:#000000;">${items.itemName}</a>
-																	</c:when>	
-																	<c:otherwise>
+																			<c:when test="${items.itemImage!=''}">
+																				<a href="${url}${items.itemImage}"
+																					data-lightbox="image-1" tabindex="-1"
+																					style="text-decoration: underline; color: #000000;">${items.itemName}</a>
+																			</c:when>
+																			<c:otherwise>
 																	${items.itemName}
 																	</c:otherwise>
-																	</c:choose></td>
+																		</c:choose></td>
+
+
+																	<td class="col-md-1" style="text-align: center;"><c:set
+																			value="0" var="temp"></c:set> <c:forEach var="shelf"
+																			items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${shelf.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${shelf.itemShelfLife}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
 																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
-																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
-																		id='${items.id}' value='${items.itemQty}'
-																		class="tableInput" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+
+																	<td class="col-md-1" style="text-align: right;"><c:set
+																			value="0" var="temp"></c:set> <c:forEach var="stock"
+																			items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${stock.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${stock.currentStock}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
+
+																	<td class="col-md-1" style="text-align: center;"><input
+																		name='${items.id}' id='${items.id}'
+																		value='${items.itemQty}' class="tableInput"
+																		type="text"
+																		onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 																		onchange="onChange('${items.itemRate3}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
@@ -437,7 +588,8 @@ a:hover {
 																			value='${items.itemRate3}' /></td>
 																	<c:set var="rate" value="${items.itemRate3}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}" style="text-align: center;"><fmt:formatNumber
+																	<td class="col-md-1" id="total${items.id}"
+																		style="text-align: center;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -493,8 +645,9 @@ a:hover {
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 					<div class="order-btn textcenter">
 
-						<input name="" id="subm" class="btn additem_btn" value="SAVE ORDER"
-							type="button" ONCLICK="button1()" style="margin: 0;">
+						<input name="" id="subm" class="btn additem_btn"
+							value="SAVE ORDER" type="button" ONCLICK="button1()"
+							style="margin: 0;">
 					</div>
 
 
@@ -601,6 +754,10 @@ a:hover {
             }    
            
         </script>
+
+
+
+
 
 <script type="text/javascript">
 		function onChange(rate,id) {
@@ -759,5 +916,22 @@ function reload() {
 		}
 	}
 </script>
+
+
+
+<script>
+
+function onChangePrevOrderDate(date,index){
+	
+	
+	//alert("Date - "+date+"    index - "+index);
+	
+	
+}
+</script>
+
+
+
+
 </body>
 </html>

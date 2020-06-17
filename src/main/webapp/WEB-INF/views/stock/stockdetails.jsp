@@ -32,40 +32,40 @@ table, th, td {
 	color: black;
 }
 /* new*/
-
 .labels_text {
-    background-color: transparent !important;
-    border: 1px solid #8039ff !important;
-    color: #8039ff;
-    padding-left: 1.3rem;
-    padding-right: 1.3rem;
+	background-color: transparent !important;
+	border: 1px solid #8039ff !important;
+	color: #8039ff;
+	padding-left: 1.3rem;
+	padding-right: 1.3rem;
 }
 
 .labels_text {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
+	color: #fff;
+	background-color: #6c757d;
+	border-color: #6c757d;
 }
+
 .labels {
-    display: inline-block;
-    font-weight: 400;
-    color: #212529;
-    text-align: center;
-    vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    margin-bottom: 5px;
-    font-size: 1.3rem;
-    line-height: 1.5;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	display: inline-block;
+	font-weight: 400;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	margin-bottom: 5px;
+	font-size: 1.3rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
-
 </style>
 <%-- <!DOCTYPE html>
 <html>
@@ -170,24 +170,30 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright" style="padding-top: 0px;">
-			<div class="col-md-4"><div class="order-left">
-					<h2 class="pageTitle"><i class="fa fa-bar-chart-o" aria-hidden="true" ></i> Stock Details </h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div></div>
-			<div class="col-md-8"><div align="right">
+				<div class="col-md-4">
+					<div class="order-left">
+						<h2 class="pageTitle">
+							<i class="fa fa-bar-chart-o" aria-hidden="true"></i> Stock
+							Details
+						</h2>
+						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div align="right">
 
-					<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
-						type="button" value="Add Opening Stock" class="btn additem_btn" style="margin: 0; text-align: right;">
-					</a>
+						<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
+							type="button" value="Add Opening Stock" class="btn additem_btn"
+							style="margin: 0; text-align: right;"> </a>
 
-				</div></div>
-				
-				
+					</div>
+				</div>
+
+
 
 				<div class="colOuter">
-					<div class="col-md-1" style="margin: 5px 0 0 0;">
-						Current Month:
-					</div>
+					<div class="col-md-1" style="margin: 5px 0 0 0;">Current
+						Month:</div>
 					<div class="col-md-11" style="text-align: left;">
 
 						<c:forEach items="${category}" var="category" varStatus="count">
@@ -238,10 +244,12 @@ table, th, td {
 													<c:otherwise>
 														<c:set var="month" value=""></c:set>
 													</c:otherwise>
-												</c:choose><span class="labels labels_text">
-												<strong > ${category.catName}</strong> : ${month} , </span>
-													 
-													 </c:when>
+												</c:choose>
+												<span class="labels labels_text"> <strong>
+														${category.catName}</strong> : ${month} ,
+												</span>
+
+											</c:when>
 										</c:choose>
 									</c:when>
 								</c:choose>
@@ -249,6 +257,7 @@ table, th, td {
 						</c:forEach>
 					</div>
 				</div>
+
 				<div class="colOuter" style="margin: 10px 0;">
 					<div class="col-md-1">
 						<div class="col1title">Category</div>
@@ -314,66 +323,19 @@ table, th, td {
 					</div>
 					<div class="col-md-1">
 						<input name="search_stock" class="btn additem_btn" value="Search"
-							type="button" onclick="searchStock()" style="margin:0;">
+							type="button" onclick="searchStock()" style="margin: 0;">
 					</div>
-					
-					<!-- <div class="col2">
-						<input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()">
 
-						<div align="center" id="loader" style="display: none">
 
-							<span>
-								<h4>
-									<font color="#343690">Loading</font>
-								</h4>
-							</span> <span class="l-1"></span> <span class="l-2"></span> <span
-								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-							<span class="l-6"></span>
-						</div>
-					</div> -->
-					
-					
-				</div>
-				
-				<div class="row">
-					<div align="center" id="loader" style="display: none">
 
-							<span>
-								<h4>
-									<font color="#343690">Loading</font>
-								</h4>
-							</span> <span class="l-1"></span> <span class="l-2"></span> <span
-								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-							<span class="l-6"></span>
-						</div>
+
 				</div>
 
 
 
-				<!-- <div class="colOuter" style="display: none" id=select_month_year>
-					<div class="col-md-2">
-						<div class="col1title">Select Month From :</div>
-					</div>
-					<div class="col-md-2" align="left">
-
-						<input type='text' placeholder="Select From Month" id='txtDate'
-							name="from_stockdate" required />
-					</div>
-
-					<div class="col3"></div>
 
 
 
-					<div class="col-md-2">
-						<div class="col1title">To :</div>
-					</div>
-					<div class="col-md-2" align="left">
-						<input type='text' placeholder="Select To Month" id=txtDateto
-							name="to_stockdate" required />
-					</div>
-
-				</div> -->
 
 
 
@@ -405,17 +367,10 @@ table, th, td {
 				</div>
 
 
+				<div class="row">
+					<div class="col-md-12">
 
-
-				<!-- <div class="colOuter" style="margin: 15px 0 0 0;"> 
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
-					<div class="col2">
-						<input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()">
-
-						<div align="center" id="loader" style="display: none">
+						<div align="center" id="loader" style="display: none;">
 
 							<span>
 								<h4>
@@ -425,11 +380,11 @@ table, th, td {
 								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
 							<span class="l-6"></span>
 						</div>
+
 					</div>
+				</div>
 
 
-
-				</div> -->
 
 
 
@@ -448,41 +403,49 @@ table, th, td {
 							</label>
 
 
-							<div id="table-scroll"  class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
-								<div id="faux-table" class="faux-table responsive-table" aria="hidden" style="display:none;"> 
-								 <div class="table-wrap"><table id="table_grid1" class="main-table responsive-table">
-										<thead>
-											<tr class="bgpink">
-							<th class="col-md-1">Item Id</th>
-												<th class="col-md-1">Item_Name</th>
-												<th class="col-md-1">Reg Op Stock</th>
-												<th class="col-md-1">Sp Op Stock</th>
-												<th class="col-md-1">Reg Pur Qty</th>
-												<th class="col-md-1">Sp Pur Qty</th>
-												<th class="col-md-1">Grn-Gvn Qty</th>
-												<th class="col-md-1">Regular Sale</th>
-												<th class="col-md-1">Sp Sale</th>
-												<th>Reorder Qty</th>
-												<th class="col-md-1">Reg Cur Stock</th>
-												<th class="col-md-1">Sp Cur Stock</th>
+							<div id="table-scroll" class="table-scroll responsive-table-one">
+								<!-- class="table-scroll" -->
+								<div id="faux-table" class="faux-table responsive-table"
+									aria="hidden" style="display: none;">
+									<div class="table-wrap">
+										<table id="table_grid1" class="main-table responsive-table">
+											<thead>
+												<tr class="bgpink">
+													<th class="col-md-1">Item Id</th>
+													<th class="col-md-1">Item_Name</th>
+													<th class="col-md-1">Reg Op Stock</th>
+													<th class="col-md-1">Sp Op Stock</th>
+													<th class="col-md-1">Reg Pur Qty</th>
+													<th class="col-md-1">Sp Pur Qty</th>
+													<th class="col-md-1">Grn-Gvn Qty</th>
+													<th class="col-md-1">Regular Sale</th>
+													<th class="col-md-1">Sp Sale</th>
+													<th>Reorder Qty</th>
+													<th class="col-md-1">Reg Cur Stock</th>
+													<th class="col-md-1">Sp Cur Stock</th>
 
-												<c:if test="${isMonthCloseApplicable eq true}">
-													<th>Physical Stock</th>
-													<th>Stock Difference</th>
-												</c:if>
-											</tr>
-										</thead></table></div> 
-							</div>
-								<div><!--  class="table-wrap" -->
-									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
+													<c:if test="${isMonthCloseApplicable eq true}">
+														<th>Physical Stock</th>
+														<th>Stock Difference</th>
+													</c:if>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+								<div>
+									<!--  class="table-wrap" -->
+									<table id="table_grid" class="responsive-table">
+										<!-- class="main-table" -->
 										<thead>
 											<tr class="bgpink">
 												<th class="col-md-1">Item Id</th>
 												<th class="col-md-1">Item_Name</th>
-												<th class="col-md-1">Rate/MRP</th><!---->
+												<th class="col-md-1">Rate/MRP</th>
+												<!---->
 												<th class="col-md-1">Op Stock</th>
 												<th class="col-md-1">Op Stock Value</th>
-											<!-- 	<th class="col-md-1">Sp Op Stock</th> -->
+												<!-- 	<th class="col-md-1">Sp Op Stock</th> -->
 												<th class="col-md-1">Pur Qty</th>
 												<th class="col-md-1">Pur Value</th>
 												<!-- <th class="col-md-1">Sp Pur Qty</th> -->
@@ -564,18 +527,15 @@ table, th, td {
 							<div class="col-md-12">
 
 								<button type="button" class="btn additem_btn"
-									onclick="exportToExcel();" id="expExcel"
-									>
-									Export To Excel</button>
-									
-									<button type="button" class="btn additem_btn" onclick="genPdf()"
-									id="PDFButton"
-									>
-									PDF</button>
-						 	</div>
+									onclick="exportToExcel();" id="expExcel">Export To
+									Excel</button>
+
+								<button type="button" class="btn additem_btn" onclick="genPdf()"
+									id="PDFButton">PDF</button>
+							</div>
 
 
-							
+
 
 
 							<div class="colOuter" id="monthEnd" style="display: none">
@@ -717,7 +677,8 @@ table, th, td {
 					});
 </script>
 <script>
-	function showDiv(elem) {$("#select_date").hide();
+	function showDiv(elem) {
+		$("#select_date").hide();
 		if (elem.value == 1) {
 			document.getElementById('select_month_year').style.display = "none";
 		} else if (elem.value == 2) {
@@ -747,6 +708,8 @@ table, th, td {
 
 		var selectedFromDate = $("#fromdatepicker").val();
 		var selectedToDate = $("#todatepicker").val();
+		
+		
 
 		$
 				.getJSON(
@@ -761,6 +724,8 @@ table, th, td {
 						},
 						function(data) {
 							$('#loader').hide();
+							
+							alert(JSON.stringify(data));
 
 							document.getElementById("expExcel").disabled = false;
 							document.getElementById("PDFButton").disabled = false;
@@ -868,7 +833,8 @@ table, th, td {
 																.append($(
 																		'<td class="col-md-1" style="text-align:right;"></td>')
 																		.html(
-																				regOpStockValue.toFixed(2)));
+																				regOpStockValue
+																						.toFixed(2)));
 													} else
 
 													{
@@ -1344,7 +1310,8 @@ table, th, td {
 																	.append($(
 																			'<td class="col-md-1" style="text-align:right;"></td>')
 																			.html(
-																					regOpStockValue.toFixed(2))
+																					regOpStockValue
+																							.toFixed(2))
 																			.toFixed(
 																					2));
 														} else

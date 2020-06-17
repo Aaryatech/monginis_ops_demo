@@ -736,7 +736,7 @@ public class SpCakeController {
 			String spBookForDate = request.getParameter("datepicker3");
 			logger.info("16" + spBookForDate);
 
-			String spCustDOB = request.getParameter("datepicker4");
+			String spCustDOB = request.getParameter("dob");
 			logger.info("17" + spCustDOB);
 
 			String spBookForDOB = request.getParameter("datepicker5");

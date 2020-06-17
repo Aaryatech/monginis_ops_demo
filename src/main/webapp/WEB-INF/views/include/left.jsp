@@ -294,6 +294,12 @@ abbr:hover {cursor: pointer;}
 
 				</c:choose>
 			</c:forEach>
+			
+			
+			
+			
+			
+			
 			<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
 				<li><a
@@ -304,6 +310,17 @@ abbr:hover {cursor: pointer;}
 						<div class="title">
 							Stock <span>Details</span>
 						</div></a></li>
+						
+				<li><a
+					href="${pageContext.request.contextPath}/showExpenseList"><div
+							class="img">
+							<i class="fa fa-suitcase" aria-hidden="true" style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Expense <span>List</span>
+						</div></a></li>
+						
+						
 						
 				<li><a
 					href="${pageContext.request.contextPath}/showPattyCashMgmnt"><div

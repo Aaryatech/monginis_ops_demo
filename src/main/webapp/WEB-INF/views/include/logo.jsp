@@ -49,7 +49,7 @@
                  <div class="userimg">
                 <img src="${frDetails.frImage}"  height="70" width="70" srcset="${pageContext.request.contextPath}/resources/images/user.png">
                 	</div> </a>
-                	<ul class="dropdown">
+                	<ul class="dropdown" style="margin: -16px 0px 0px 50px ">
                        
 						<li><a href="${pageContext.request.contextPath}/showeditprofile">Edit Profile</a></li>
 						<li><a href="${pageContext.request.contextPath}/logout">Log out</a></li>

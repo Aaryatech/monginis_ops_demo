@@ -199,127 +199,134 @@ input:checked+.slider:before {
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
 					<div class="row">
-						<div class="col-md-7"><h2 class="pageTitle">
-						<i class="fa fa-file-pdf-o"></i> Express Bill</h2></div>
-						<div class="col-md-5"><c:choose>
+						<div class="col-md-7">
+							<h2 class="pageTitle">
+								<i class="fa fa-file-pdf-o"></i> Express Bill
+							</h2>
+						</div>
+						<div class="col-md-5">
+							<c:choose>
 
-							<c:when test="${count == 0}">
-								<div class="" >
-									<div>
-										<center>
-											<input name="" class="buttonsaveorder" value="Start Day"
-												type="button" id="start" onclick="start(); hideMe(this.id);">
-										</center>
+								<c:when test="${count == 0}">
+									<div class="">
+										<div>
+											<center>
+												<input name="" class="buttonsaveorder" value="Start Day"
+													type="button" id="start"
+													onclick="start(); hideMe(this.id);">
+											</center>
+										</div>
 									</div>
-								</div>
-							</c:when>
+								</c:when>
 
-							<c:when test="${count ==2}">
+								<c:when test="${count ==2}">
 
 
-								<div>
+									<div>
 
-									<h4>
-										<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-											 Bill Date :${sellBillHeader.billDate}</B>
-									</h4>
-								</div></div>
-					
-					
-						
-					</div>
-					<div style="margin:15px 0">
-					<div class="row text-left bill-date">
-								<div class="col-md-2">
-						<span
-							style="padding-top: 0px; float: left; margin-top: 11px; font-size: 16px; width: 100px;">Single
-							Print</span><label class="switch"> <input type="checkbox"
-							id="id"> <span class="slider round"></span></label>
-					</div>
-					
-					<div class="col-md-2">
-							<span
-								style="padding-top: 0px; float: left; margin-top: 11px; font-size: 14px; width: 40px;">SP</span>
-							<label class="switch"> <input type="checkbox" id="sp"
-								name="sp"> <span class="slider round"></span>
-							</label>
+										<h4>
+											<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp;
+												&nbsp; &nbsp; &nbsp; &nbsp; Bill Date
+												:${sellBillHeader.billDate}</B>
+										</h4>
+									</div>
 						</div>
-						
-					<div class="col-md-2" style="display: none;" id="tp">
-							<select class="form-control" data-placeholder="Search Type"
-								name="type" tabindex="-1" id="type" data-rule-required="true"
-								onchange="onchangetype()">
-								<option value="">Select Search Type</option>
-								<option value="1">Search By Date</option>
-								<option value="2">Search By Order No.</option>
-							</select>
-						</div>	
-						
-						
-					<div class="col-md-6" style="display: none;" id="byDate">
-							<form name="frm_search" id="frm_search" method="post"
-								action="itemHistory">
 
-								<div class="col-md-5">
-									<select name="group" id="group" placeholder="Select Menu"
-										class="form-control" required>
-										<option value="">Select Type</option>
-										<option value="0">All</option>
-										<c:forEach items="${menusList}" var="menusList">
-											<c:choose>
-												<c:when
-													test="${menusList.mainCatId==5 || menusList.menuId==42}">
 
-													<option value="${menusList.menuId}">${menusList.menuTitle}</option>
-												</c:when>
 
-											</c:choose>
-										</c:forEach>
-									</select>
-								</div>
-								<div class="col-md-5">
-									<input id="todatepicker" class="texboxitemcode texboxcal"
-										placeholder="Delivery Date" name="datepicker" type="text"
-										autocomplete="off">
-								</div>
-								<div class="col-md-2">
-									<input name="" class="btn additem_btn" value="Search"
-										type="button" onclick="searchOrders()" style="margin:0;">
-								</div>
-							</form>
-						</div>	
-						
-						
-						<div class="col-md-6" style="display: none;" id="byOrderNo">
-							<form name="frm_search" id="frm_search" method="post"
-								action="itemHistory">
-								<div class="col-md-2">
-									<div class="col1title">Order No.</div>
-								</div>
-								<div class="col-md-4">
-									<input id="orderno" class="form-control" placeholder="Order No"
-										name="orderno" type="text">
-								</div>
-								<div class="col-md-1">
-									<input name="" class="buttonsaveorder" value="Search"
-										type="button" onclick="searchOrder()">
-								</div>
-							</form>
+					</div>
+					<div style="margin: 15px 0">
+						<div class="row text-left bill-date">
+							<div class="col-md-2">
+								<span
+									style="padding-top: 0px; float: left; margin-top: 11px; font-size: 16px; width: 100px;">Single
+									Print</span><label class="switch"> <input type="checkbox"
+									id="id"> <span class="slider round"></span></label>
+							</div>
+
+							<div class="col-md-2">
+								<span
+									style="padding-top: 0px; float: left; margin-top: 11px; font-size: 14px; width: 40px;">SP</span>
+								<label class="switch"> <input type="checkbox" id="sp"
+									name="sp"> <span class="slider round"></span>
+								</label>
+							</div>
+
+							<div class="col-md-2" style="display: none;" id="tp">
+								<select class="form-control" data-placeholder="Search Type"
+									name="type" tabindex="-1" id="type" data-rule-required="true"
+									onchange="onchangetype()">
+									<option value="">Select Search Type</option>
+									<option value="1">Search By Date</option>
+									<option value="2">Search By Order No.</option>
+								</select>
+							</div>
+
+
+							<div class="col-md-6" style="display: none;" id="byDate">
+								<form name="frm_search" id="frm_search" method="post"
+									action="itemHistory">
+
+									<div class="col-md-5">
+										<select name="group" id="group" placeholder="Select Menu"
+											class="form-control" required>
+											<option value="">Select Type</option>
+											<option value="0">All</option>
+											<c:forEach items="${menusList}" var="menusList">
+												<c:choose>
+													<c:when
+														test="${menusList.mainCatId==5 || menusList.menuId==42}">
+
+														<option value="${menusList.menuId}">${menusList.menuTitle}</option>
+													</c:when>
+
+												</c:choose>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-5">
+										<input id="todatepicker" class="texboxitemcode texboxcal"
+											placeholder="Delivery Date" name="datepicker" type="text"
+											autocomplete="off">
+									</div>
+									<div class="col-md-2">
+										<input name="" class="btn additem_btn" value="Search"
+											type="button" onclick="searchOrders()" style="margin: 0;">
+									</div>
+								</form>
+							</div>
+
+
+							<div class="col-md-6" style="display: none;" id="byOrderNo">
+								<form name="frm_search" id="frm_search" method="post"
+									action="itemHistory">
+									<div class="col-md-2">
+										<div class="col1title">Order No.</div>
+									</div>
+									<div class="col-md-4">
+										<input id="orderno" class="form-control"
+											placeholder="Order No" name="orderno" type="text">
+									</div>
+									<div class="col-md-1">
+										<input name="" class="buttonsaveorder" value="Search"
+											type="button" onclick="searchOrder()">
+									</div>
+								</form>
+							</div>
+
+
 						</div>
-						
-						
+
 					</div>
-					
-					</div>
-					
+
 					<div class="row">
-						
 
-						
 
-						
 
-						
+
+
+
+
 						<div class="clearfix"></div>
 						<div class="table-wrap" id="orderHistory" style="display: none;">
 
@@ -354,163 +361,168 @@ input:checked+.slider:before {
 							</div>
 						</div>
 					</div>
-					
-					
-					<div class="row">
-					<div class="table" style="margin: 20px 0 0 0;">
-						<div class="shInnerwidth">
-							<table width="100%" border="0" cellspacing="0" cellpadding="0"
-								class="table">
-								<tr>
-									<td align="center" valign="middle" style="padding: 0px;">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr class="bgpink">
-												<td>Barcode </td>
-												<td>Qty</td>
-												<td>Item Name</td>
-												<td>Rate</td>
-											</tr>
-											<tr>
-												<td><input type="text" class="form-control"
-													style="border-radius: 18px;"
-													data-placeholder="Enter Barcode" id='input' autofocus
-													onchange='onInput()' /></td>
-												<td><input type="number" min="1" max="500"
-													style="border-radius: 18px;" class="form-control"
-													placeholder="1" name="qty1" onkeypress="onQty(event)"
-													id="qty1" value="1" onfocusout="myFunction1()"></td>
-												<td><input list="items" id="itemName" name="itemName"
-													class="form-control chosen" autocomplete="off"
-													placeholder="Item Name" onchange="onSelectItem()"
-													style="border-radius: 18px;" type="text"> <datalist
-														id="items">
-														<c:forEach items="${itemsList}" var="itemsList">
-															<option value='${itemsList.itemId}'
-																data-value='${itemsList.itemName}'
-																data-id='${itemsList.itemName}'>${itemsList.itemName}</option>
-														</c:forEach>
-													</datalist></td>
-												<td >&nbsp;&nbsp;<input type="text" name="rateTdVal1"
-													id="rateTdVal1" value="00"
-													oninput="onRateChange(this.value)"
-													style="width: 65px; border-radius: 18px; text-align: center;" />
-													&nbsp;
-													<button class="btn additem_btn" onclick="insertItem1()"
-									disabled="disabled" id="insertItemButton" style="margin:5px 0;" >Submit</button>
-												</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
 
-							</table>
+
+					<div class="row">
+						<div class="table" style="margin: 20px 0 0 0;">
+							<div class="shInnerwidth">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0"
+									class="table">
+									<tr>
+										<td align="center" valign="middle" style="padding: 0px;">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr class="bgpink">
+													<td>Barcode</td>
+													<td>Qty</td>
+													<td>Item Name</td>
+													<td>Rate</td>
+												</tr>
+												<tr>
+													<td><input type="text" class="form-control"
+														style="border-radius: 18px;"
+														data-placeholder="Enter Barcode" id='input' autofocus
+														onchange='onInput()' /></td>
+													<td><input type="number" min="1" max="500"
+														style="border-radius: 18px;" class="form-control"
+														placeholder="1" name="qty1" onkeypress="onQty(event)"
+														id="qty1" value="1" onfocusout="myFunction1()"></td>
+													<td><input list="items" id="itemName" name="itemName"
+														class="form-control chosen" autocomplete="off"
+														placeholder="Item Name" onchange="onSelectItem()"
+														style="border-radius: 18px;" type="text"> <datalist
+															id="items">
+															<c:forEach items="${itemsList}" var="itemsList">
+																<option value='${itemsList.itemId}'
+																	data-value='${itemsList.itemName}'
+																	data-id='${itemsList.itemName}'>${itemsList.itemName}</option>
+															</c:forEach>
+														</datalist></td>
+													<td>&nbsp;&nbsp;<input type="text" name="rateTdVal1"
+														id="rateTdVal1" value="00"
+														oninput="onRateChange(this.value)"
+														style="width: 65px; border-radius: 18px; text-align: center;" />
+														&nbsp;
+														<button class="btn additem_btn" onclick="insertItem1()"
+															disabled="disabled" id="insertItemButton"
+															style="margin: 5px 0;">Submit</button>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+
+								</table>
+							</div>
 						</div>
-					</div>
-					
+
 					</div>
 					<input name="rate1" id="rate1" type="hidden" value="00" />
 					<div class="row">
-						<div >
-						<%-- 	<center> --%>
-								
-
-								
+						<div>
+							<%-- 	<center> --%>
 
 
 
-								<button style="float:right;"  type="button"
-									class="btn additem_btn" onclick="printExBill()" disabled
-									id="printExBill">Print</button>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="itemNameForZeroMrp"></label>
-								
-								<label style="float: right;margin-top: 5px;margin-left: 40px;font-size: 18px;">Total : &nbsp;<input
-									type="text" id="total" name="total" readonly="readonly"
-									value="${itemTotal}" style="width:100px;border:0px;text-align: center;"></label>
-								
-						<%-- 	</center> --%>
+
+
+
+							<button style="float: right;" type="button"
+								class="btn additem_btn" onclick="printExBill()" disabled
+								id="printExBill">Print</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="itemNameForZeroMrp"></label>
+
+							<label
+								style="float: right; margin-top: 5px; margin-left: 40px; font-size: 18px;">Total
+								: &nbsp;<input type="text" id="total" name="total"
+								readonly="readonly" value="${itemTotal}"
+								style="width: 100px; border: 0px; text-align: center;">
+							</label>
+
+							<%-- 	</center> --%>
 							<div align="center" id="loader11"
 								style="display: none; color: BLUE; font-size: 20px;">
 
 								Loading....</div>
 						</div>
 
-						
+
 
 					</div>
 					<!-- Form End -->
-					
+
 					<div class="row">
-					
-					<div class="table-responsive">
-						<div class="shInnerwidth">
 
-							<table class="table table-bordered" width="100%" border="0"
-								cellspacing="0" cellpadding="0 " id="table_grid1">
-								<tr class="bgpink">
-									<th>Print</th>
-									<th>Sr.</th>
-									<th>Detail Id</th>
-									<th>Barcode</th>
-									<th>Item Name</th>
-									<th style="width: 130px;">Qty</th>
-									<th>Rate</th>
-									<th>Amt</th>
-									<th>Action</th>
-								</tr>
+						<div class="table-responsive">
+							<div class="shInnerwidth">
 
-								<c:set var="total" value="${0}" />
-
-								<c:forEach items="${sellBillDetails}" var="sellBillDetails"
-									varStatus="count">
-									<tr>
-										<td><input type="checkbox" name="select_to_print"
-											onchange="selectToPrint()" style="width: 25px; height: 25px;"
-											id="select_to_print"
-											value="${sellBillDetails.sellBillDetailNo}"></td>
-
-
-										<td><c:out value="${listSize}" /></td>
-										<c:set value="${listSize-1}" var="listSize"></c:set>
-										<td><c:out value="${sellBillDetails.sellBillDetailNo}" /></td>
-										<td><c:out value="${sellBillDetails.itemId}" /></td>
-										<td><c:out value="${sellBillDetails.itemName}" /></td>
-										<td style="text-align: right;"><c:out
-												value="${sellBillDetails.qty}" /></td>
-										<td style="text-align: right;"><c:out
-												value="${sellBillDetails.mrp}" /></td>
-										<td style="text-align: right;"><fmt:formatNumber
-												type="number" minFractionDigits="1" maxFractionDigits="1"
-												value="${sellBillDetails.grandTotal}" /></td>
-
-										<td style="text-align: center;"><a href="#"
-											class="action_btn"
-											onclick="deleteItem(${sellBillDetails.sellBillDetailNo},${sellBillDetails.qty},${sellBillDetails.itemId})"><abbr
-												title="Delete"><i class="fa fa-trash"></i></abbr></a></td>
-
-
-										<c:set var="total"
-											value="${total + sellBillDetails.grandTotal}" />
-
+								<table class="table table-bordered" width="100%" border="0"
+									cellspacing="0" cellpadding="0 " id="table_grid1">
+									<tr class="bgpink">
+										<th>Print</th>
+										<th>Sr.</th>
+										<th>Detail Id</th>
+										<th>Barcode</th>
+										<th>Item Name</th>
+										<th style="width: 130px;">Qty</th>
+										<th>Rate</th>
+										<th>Amt</th>
+										<th>Action</th>
 									</tr>
-								</c:forEach>
-							</table>
+
+									<c:set var="total" value="${0}" />
+
+									<c:forEach items="${sellBillDetails}" var="sellBillDetails"
+										varStatus="count">
+										<tr>
+											<td><input type="checkbox" name="select_to_print"
+												onchange="selectToPrint()"
+												style="width: 25px; height: 25px;" id="select_to_print"
+												value="${sellBillDetails.sellBillDetailNo}"></td>
+
+
+											<td><c:out value="${listSize}" /></td>
+											<c:set value="${listSize-1}" var="listSize"></c:set>
+											<td><c:out value="${sellBillDetails.sellBillDetailNo}" /></td>
+											<td><c:out value="${sellBillDetails.itemId}" /></td>
+											<td><c:out value="${sellBillDetails.itemName}" /></td>
+											<td style="text-align: right;"><c:out
+													value="${sellBillDetails.qty}" /></td>
+											<td style="text-align: right;"><c:out
+													value="${sellBillDetails.mrp}" /></td>
+											<td style="text-align: right;"><fmt:formatNumber
+													type="number" minFractionDigits="1" maxFractionDigits="1"
+													value="${sellBillDetails.grandTotal}" /></td>
+
+											<td style="text-align: center;"><a href="#"
+												class="action_btn"
+												onclick="deleteItem(${sellBillDetails.sellBillDetailNo},${sellBillDetails.qty},${sellBillDetails.itemId})"><abbr
+													title="Delete"><i class="fa fa-trash"></i></abbr></a></td>
+
+
+											<c:set var="total"
+												value="${total + sellBillDetails.grandTotal}" />
+
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+
+
+							<!-- Loader Div -->
+							<div align="center" id="loader" style="display: none">
+								<span>
+									<h4>
+										<font color="#343690">Loading</font>
+									</h4>
+								</span> <span class="l-1"></span> <span class="l-2"></span> <span
+									class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+								<span class="l-6"></span>
+							</div>
+
+							<!--End of  Loader Div -->
 						</div>
 
-
-						<!-- Loader Div -->
-						<div align="center" id="loader" style="display: none">
-							<span>
-								<h4>
-									<font color="#343690">Loading</font>
-								</h4>
-							</span> <span class="l-1"></span> <span class="l-2"></span> <span
-								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-							<span class="l-6"></span>
-						</div>
-
-						<!--End of  Loader Div -->
-					</div>
-					
 					</div>
 					<c:set var="dayCloseStyleDisplay" value="disabled" />
 					<c:choose>

@@ -560,7 +560,7 @@ select {
 	<div class="colOuter">
 	<div class="col1"><div class="col1title">DOB</div></div>
 		
-		<div class="col2full"><input id="datepicker4" class="texboxitemcode texboxcal" autocomplete="off" placeholder="<%=fDate %>" name="datepicker4" id="datepicker4" type="text"required></div>
+		<div class="col2full"><input id="dob" class="texboxitemcode " autocomplete="off" placeholder="<%=fDate %>" name="dob" type="date"required></div>
       </div>
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Mobile</div></div>

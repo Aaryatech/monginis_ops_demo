@@ -36,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.SubCategoryResponse;
@@ -117,23 +118,23 @@ public class RegularSpCakeController {
 					List<MCategory> catList=new ArrayList<>();
 			        mCategories=categoryResponse.getmCategoryList();
 			        
-			    	for (MCategory mCategory : mCategories) {
-			    		if(currentMenuId==42) {
-						if (mCategory.getCatId() == 2) {
-							catList.add(mCategory);
-                            model.addObject("mainCatId", mCategory.getCatId());
-						}
-			    		}
-			    		else
-			    			if(currentMenuId==29||currentMenuId==30||currentMenuId==80)
-			    			{
-			    				if (mCategory.getCatId() == 1) {
-									catList.add(mCategory);
-		                            model.addObject("mainCatId", mCategory.getCatId());
-								}
-			    			}
-			    		
-					}
+//			    	for (MCategory mCategory : mCategories) {
+//			    		if(currentMenuId==42) {
+//						if (mCategory.getCatId() == 2) {
+//							catList.add(mCategory);
+//                            model.addObject("mainCatId", mCategory.getCatId());
+//						}
+//			    		}
+//			    		else
+//			    			if(currentMenuId==29||currentMenuId==30||currentMenuId==80)
+//			    			{
+//			    				if (mCategory.getCatId() == 1) {
+//									catList.add(mCategory);
+//		                            model.addObject("mainCatId", mCategory.getCatId());
+//								}
+//			    			}
+//			    		
+//					}
 			    	String spNo="";
 			      try {
 			    	  spNo=getSpNo(request,response);
@@ -147,7 +148,9 @@ public class RegularSpCakeController {
 			
 				   // model.addObject("categoryResponse", subCategories);
 				    
-				    model.addObject("mCategories", catList);
+				    //model.addObject("mCategories", catList);
+				    model.addObject("mCategories", mCategories);
+				    
 				     
 				    model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 				    model.addObject("title",menutitle);
@@ -169,6 +172,13 @@ public class RegularSpCakeController {
 		logger.info("/regularSpCkOrder  request mapping");
 
 		ModelAndView mav = new ModelAndView("order/regularSpOrderRes");
+		
+		try {
+			spCustDOB=DateConvertor.convertToDMY(spCustDOB);
+		}catch(Exception e) {
+			
+		}
+		
 
 		try {
 			if (regularSpCake != null) {
@@ -367,7 +377,7 @@ public class RegularSpCakeController {
 			 
 			     String convertedDelDate=Main.formatDate(rspDeliveryDt);               
 		
-			     spCustDOB = request.getParameter("datepicker2");
+			     spCustDOB = request.getParameter("dob");
 			     logger.info("9" + spCustDOB);
 
 			     rspCustMobileNo = request.getParameter("sp_cust_mobile_no");

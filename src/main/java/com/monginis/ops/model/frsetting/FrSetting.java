@@ -1,21 +1,22 @@
 package com.monginis.ops.model.frsetting;
 
-
 public class FrSetting {
-	
+
 	private int frSettingId;
 
 	private int frId;
-	
+
 	private String frCode;
 
 	private int sellBillNo;
-	
+
 	private int grnGvnNo;
-	
+
 	private int spNo;
-	
-	
+
+	private int count;
+	private int posCr;
+	private String exVarchar;
 
 	public int getSpNo() {
 		return spNo;
@@ -41,7 +42,6 @@ public class FrSetting {
 		this.frId = frId;
 	}
 
-
 	public String getFrCode() {
 		return frCode;
 	}
@@ -66,11 +66,35 @@ public class FrSetting {
 		this.grnGvnNo = grnGvnNo;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public String getExVarchar() {
+		return exVarchar;
+	}
+
+	public void setExVarchar(String exVarchar) {
+		this.exVarchar = exVarchar;
+	}
+
+	public int getPosCr() {
+		return posCr;
+	}
+
+	public void setPosCr(int posCr) {
+		this.posCr = posCr;
+	}
+
 	@Override
 	public String toString() {
 		return "FrSetting [frSettingId=" + frSettingId + ", frId=" + frId + ", frCode=" + frCode + ", sellBillNo="
-				+ sellBillNo + ", grnGvnNo=" + grnGvnNo + "]";
+				+ sellBillNo + ", grnGvnNo=" + grnGvnNo + ", spNo=" + spNo + ", count=" + count + ", posCr=" + posCr
+				+ ", exVarchar=" + exVarchar + "]";
 	}
-
 
 }

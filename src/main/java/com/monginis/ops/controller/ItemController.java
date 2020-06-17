@@ -46,6 +46,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustList;
@@ -58,6 +59,8 @@ import com.monginis.ops.model.GetOrder;
 import com.monginis.ops.model.GetOrderList;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
+import com.monginis.ops.model.OpsCurStockAndShelfLife;
+import com.monginis.ops.model.OpsFrItemStock;
 import com.monginis.ops.model.Orders;
 import com.monginis.ops.model.TabTitleData;
 import com.monginis.ops.model.creditnote.CreditNoteHeaderPrint;
@@ -105,11 +108,10 @@ public class ItemController {
 			CustList[] custList1 = restTemplate.postForObject(Constant.URL + "getCutslListFroFranchasee", map,
 					CustList[].class);
 			List<CustList> custList = new ArrayList<CustList>(Arrays.asList(custList1));
- 
+
 			mav.addObject("custList", custList);
 			mav.addObject("frId", frDetails.getFrId());
-			
-			
+
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 			ExportToExcel expoExcel = new ExportToExcel();
@@ -118,11 +120,10 @@ public class ItemController {
 			rowData.add("Sr. No");
 			rowData.add("Customer");
 			rowData.add("Mobile no");
-			rowData.add("GST No."); 
-			expoExcel.setRowData(rowData); 
+			rowData.add("GST No.");
+			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
-			 
 			for (int i = 0; i < custList.size(); i++) {
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
@@ -130,21 +131,20 @@ public class ItemController {
 				rowData.add("" + (i + 1));
 				rowData.add("" + custList.get(i).getUserName());
 				rowData.add("" + custList.get(i).getUserPhone());
-				rowData.add("" + custList.get(i).getUserGstNo()); 
+				rowData.add("" + custList.get(i).getUserGstNo());
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
 
-				 
 			}
 
 			session = request.getSession();
 			session.setAttribute("exportExcelListNew", exportToExcelList);
 			session.setAttribute("excelNameNew", "CustomerList");
-			session.setAttribute("reportNameNew", "Customer List"); 
+			session.setAttribute("reportNameNew", "Customer List");
 			session.setAttribute("mergeUpto1", "$A$1:$D$1");
 			session.setAttribute("mergeUpto2", "$A$2:$D$2");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -152,23 +152,24 @@ public class ItemController {
 		return mav;
 
 	}
-	
+
 	@RequestMapping(value = "pdf/getcustomerListPdf/{frId}", method = RequestMethod.GET)
-	public ModelAndView getCrnCheckedHeadersNew(@PathVariable int frId,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getCrnCheckedHeadersNew(@PathVariable int frId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/getcustomerListPdf");
 
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 
-			MultiValueMap<String, Object> map  = new LinkedMultiValueMap<String, Object>();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frId);
-			 
+
 			CustList[] custList1 = restTemplate.postForObject(Constant.URL + "getCutslListFroFranchasee", map,
 					CustList[].class);
 			List<CustList> custList = new ArrayList<CustList>(Arrays.asList(custList1));
- 
-			model.addObject("custList", custList); 
+
+			model.addObject("custList", custList);
 
 		} catch (Exception e) {
 			System.err.println("Exce Occured ");
@@ -188,6 +189,10 @@ public class ItemController {
 
 		subCatList = new ArrayList<>();
 		globalIndex = index;
+		
+		String prevDate=request.getParameter("prevdatepicker");
+		System.err.println("PREV DATE -------- "+prevDate);
+		
 
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -270,6 +275,12 @@ public class ItemController {
 		System.out.println("Order date: " + orderDate);
 		System.out.println("Production date: " + productionDate);
 		System.out.println("Delivery date: " + deliveryDate);
+		
+		
+		if(prevDate!=null) {
+			productionDate=DateConvertor.convertToYMD(prevDate);
+		}
+		System.out.println("PREV DATE AS Production date: " + productionDate);
 
 		frItemList = new ArrayList<GetFrItem>();
 		prevFrItemList = new ArrayList<GetFrItem>();
@@ -332,15 +343,20 @@ public class ItemController {
 		Set<String> setName = new HashSet<String>();
 
 		double grandTotal = 0;
+		
+		System.err.println("RATE CAT = "+frDetails.getFrRateCat());
 
 		for (int i = 0; i < frItemList.size(); i++) {
 
 			if (frDetails.getFrRateCat() == 1) {
+				System.err.println(" 1 - "+(frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1()));
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
 			} else if (frDetails.getFrRateCat() == 2) {
+				System.err.println(" 2 - "+(frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2()));
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
 
 			} else if (frDetails.getFrRateCat() == 3) {
+				System.err.println(" 3 - "+(frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3()));
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
 
 			}
@@ -438,6 +454,7 @@ public class ItemController {
 		String strDeliveryDate = formatter.format(itemDeliveryDate);
 
 		model.addObject("menuList", menuList);
+		model.addObject("con_index", index);
 
 		model.addObject("subCatListTitle", subCatListWithQtyTotal);
 
@@ -457,10 +474,29 @@ public class ItemController {
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
 		model.addObject("url", Constant.ITEM_IMAGE_URL);
+		
+		if(prevDate==null) {
+			model.addObject("prevDate", strOrderDate);
+		}else {
+			model.addObject("prevDate", prevDate);
+		}
+		
+
+		try {
+			List<OpsCurStockAndShelfLife> itemStock = new StockController()
+					.getItemCurrentStockForOps(menuList.get(index).getItemShow(), request, response);
+			model.addObject("itemStock", itemStock);
+			System.err.println("ITEM CURR STOCK -------- " + itemStock);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return model;
 
 	}
+
+
 
 	// -----------------------------------------------------------------------------------------
 	@RequestMapping(value = "/quantityValidation", method = RequestMethod.GET)
@@ -697,6 +733,16 @@ public class ItemController {
 
 			if (isValidQty) {
 				frItemList = new ArrayList<GetFrItem>();
+				
+				
+//				map = new LinkedMultiValueMap<String, Object>();
+//
+//				map.add("items", menuList.get(index).getItemShow());
+//				map.add("frId", frDetails.getFrId());
+//				map.add("date", productionDate);
+//				map.add("menuId", menuList.get(index).getMenuId());
+//				map.add("isSameDayApplicable", isSameDayApplicable);
+				
 
 				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
 				};
@@ -704,6 +750,8 @@ public class ItemController {
 						HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 				frItemList = responseEntity.getBody();
+				
+				System.err.println("FR ITEMS =========== "+frItemList);
 
 			}
 
@@ -817,8 +865,13 @@ public class ItemController {
 
 						System.out.println(" " + frItem.getItemQty() + "=?" + strQty);
 
-						if (qty != frItem.getItemQty()) {
+//						if (qty != frItem.getItemQty()) {
+//
+//							frItem.setItemQty(qty);
+//							orderList.add(frItem);
+//						}
 
+						if(qty>0) {
 							frItem.setItemQty(qty);
 							orderList.add(frItem);
 						}
