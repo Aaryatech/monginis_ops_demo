@@ -125,10 +125,13 @@
 
 </head>
 <body>
+	<c:url var="getAllFrEmp" value="/getAllFrEmp" />
+<c:url var="getFrEmpById" value="/getFrEmpById" />
 	<c:url var="checkUserAuthority" value="/checkUserAuthority" />
 	<c:url var="updateUserPasswords" value="/updateUserPasswords" />
 	<c:url var="updateAdminPassword" value="/updateAdminPassword" />
-
+	<c:url var="getCurrentEmpCodeValue" value="/getCurrentEmpCodeValue" />
+	<c:url var="verifyUniqueContactNo" value="/verifyUniqueContactNo" />
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
@@ -531,9 +534,6 @@
 						</div>
 					</div>
 
-
-
-
 					<!--latestNews-->
 
 				</div>
@@ -561,37 +561,42 @@
 			<h3 class="pop_head">Add Employee</h3>
 			<div>
 				<div class="row">
-					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post">
+					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post" autocomplete="off">
 						<div class="col-lg-6">
 
-							<input type="hidden" value="${emp.frEmpId}" name="fr_emp_id"
+							<input type="hidden"  name="fr_emp_id"
 								id="fr_emp_id">
 
 							<div class="profile">
-								<div class="profilefildset">Employee Name</div>
+								<div class="profilefildset">Employee Code</div>
 								<div class="profileinput">
-									<input name="emp_name" type="text" class="input_add"
-										id="emp_name" value="${emp.frEmpName}" required />
+									<c:choose>
+										<c:when test="${empCode>0}">
+											<input name="emp_code" type="text" class="texboxitemcode"
+												readonly="readonly" id="emp_code" value="${empCode}"
+												required="required" />
+										</c:when>
+										<c:otherwise>
+											<input name="emp_code" type="text" class="texboxitemcode"
+												readonly="readonly" id="emp_code" value="${empCode}"
+												required="required" />
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
-
+							
 							<div class="profile">
-								<div class="profilefildset">Joining Date</div>
+								<div class="profilefildset">Mobile Number</div>
 								<div class="profileinput">
-									<input name="join_date" type="date" class="input_add"
-										id="join_date" value="${emp.frEmpJoiningDate}" required />
+									<input name="emp_contact" type="text" class="texboxitemcode"
+										id="emp_contact" onchange="checkContactNo()"
+										 maxlength="10" autocomplete="off"
+										oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+										required />
 								</div>
 							</div>
-
-							<div class="profile">
-								<div class="profilefildset">Joining Date</div>
-								<div class="profileinput">
-									<input name="join_date" type="date" class="input_add"
-										id="join_date" value="${emp.frEmpJoiningDate}" required />
-								</div>
-							</div>
-
-							<input name="ttl_limit" type="hidden" class="input_add"
+							
+							<input name="ttl_limit" type="hidden" class="texboxitemcode"
 								id="ttl_limit" value="1"
 								oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 								required />
@@ -599,8 +604,8 @@
 							<div class="add_frm_one" style="z-index: 9999; display: none;">
 								<div class="add_customer_one">From Date</div>
 								<div class="add_input">
-									<input name="from_date" type="date" class="input_add"
-										id="from_date" value="${emp.fromDate}" required
+									<input name="from_date" type="date" class="texboxitemcode"
+										id="from_date"  required
 										autocomplete="off" />
 
 								</div>
@@ -608,19 +613,10 @@
 							</div>
 
 							<div class="profile">
-								<div class="profilefildset">Password</div>
-								<div class="profileinput">
-									<input name="pass" type="password" class="input_add" id="pass"
-										value="${emp.password}" required />
-								</div>
-							</div>
-
-
-							<div class="profile">
 								<div class="profilefildset">Designation</div>
 								<div class="profileinput">
 									<select name="designation" id="designation"
-										data-placeholder="Designation" class="add_input"
+										data-placeholder="Designation" class="texboxitemcode"
 										class="input_add " style="text-align: left;">
 										<option value="1" style="text-align: left;" selected>Admin</option>
 										<option value="2" style="text-align: left;">Manager</option>
@@ -628,32 +624,37 @@
 									</select>
 								</div>
 							</div>
+							
+							<div class="profile">
+								<div class="profilefildset">Password</div>
+								<div class="profileinput">
+									<input name="pass" type="password" class="texboxitemcode" id="pass"
+										required />
+								</div>
+							</div>
 
 
 						</div>
 
 						<div class="col-lg-6">
-
+							
 							<div class="profile">
-								<div class="profilefildset">Mobile Number</div>
+								<div class="profilefildset">Employee Name</div>
 								<div class="profileinput">
-									<input name="emp_contact" type="text" class="input_add"
-										id="emp_contact" onchange="checkContactNo()"
-										value="${emp.frEmpContact}" maxlength="10"
-										oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
-										required />
+									<input name="emp_name" type="text" class="texboxitemcode"
+										id="emp_name" required />
 								</div>
 							</div>
 
 							<div class="profile">
 								<div class="profilefildset">Address</div>
 								<div class="profileinput">
-									<input name="emp_address" type="text" class="input_add"
-										id="emp_address" value="${emp.frEmpAddress}" required />
+									<input name="emp_address" type="text" class="texboxitemcode"
+										id="emp_address" required />
 								</div>
 							</div>
 
-							<input name="curr_bill_amt" type="hidden" class="input_add"
+							<input name="curr_bill_amt" type="hidden" class="texboxitemcode"
 								id="curr_bill_amt" value="1"
 								oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 								required />
@@ -661,27 +662,17 @@
 							<div class="add_frm_one" style="display: none;">
 								<div class="add_customer_one">To Date</div>
 								<div class="add_input">
-									<input name="to_date" type="date" class="input_add"
-										id="to_date" value="${emp.toDate}" />
+									<input name="to_date" type="date" class="texboxitemcode"
+										id="to_date"/>
 								</div>
 								<div class="clr"></div>
 							</div>
 
 							<div class="profile">
-								<div class="profilefildset">Employee Code</div>
+								<div class="profilefildset">Joining Date</div>
 								<div class="profileinput">
-									<c:choose>
-										<c:when test="${emp.empCode>0}">
-											<input name="emp_code" type="text" class="input_add"
-												readonly="readonly" id="emp_code" value="${emp.empCode}"
-												required="required" />
-										</c:when>
-										<c:otherwise>
-											<input name="emp_code" type="text" class="input_add"
-												readonly="readonly" id="emp_code" value="${empCode}"
-												required="required" />
-										</c:otherwise>
-									</c:choose>
+									<input name="join_date" type="date" class="texboxitemcode"
+										id="join_date" required />
 								</div>
 							</div>
 
@@ -702,12 +693,10 @@
 			</div>
 
 			<div class="pop_btns">
-				<div class="close_l">
-					<button class="addcust_close close_btn" onclick="clearForm()">Close</button>
-				</div>
-				<div class="close_r">
-					<input type="submit" class="pending_btn" id="sbtbtn4" value="Save">
-				</div>
+				<div class="close_l" style="text-align: center;">
+					<input type="submit" class="btn additem_btn" id="sbtbtn4" value="Save">
+					<button class="btn additem_btn" onclick="clearForm()" id="cls_btn">Close</button>
+				</div>				
 				<div class="clr"></div>
 			</div>
 
@@ -717,8 +706,45 @@
 	</div>
 
 	<!-- -*********************------------- -->
+	<!--Emp List popup-->
+	<div id="empListModal" class="modal">
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
 
+		<div class="modal-content" style="width: 75%">
+			<span class="close" onclick="closeEmpListPopUp()" style="opacity: 2;">&times;</span>
 
+			<h3 class="pop_head">Employee List</h3>
+			<div>
+				<div class="row">
+					<table class="responsive-table" id="table_grid">
+				<thead>
+					<tr class="bgpink">
+						<th>Sr.No.</th>
+						<th>Employee Name</th>
+						<th>Contact No</th>
+						<th>Address</th>
+						<th>Joining Date</th>
+						<!-- <th>Code</th> -->
+						<th>Status</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+				</div>
+			</div>
+			<div class="pop_btns">
+				<div class="close_l" style="text-align: center;">					
+					<button class="btn additem_btn" onclick="closeEmpListPopUp()">Close</button>
+				</div>				
+				<div class="clr"></div>
+			</div>
+		</div>
+	</div>
 </body>
 
 
@@ -740,8 +766,342 @@
 		// document.getElementById('dt').value=date;
 
 	}
+	function openEmpListPopUp() {
+		var modal = document.getElementById("empListModal");
+		modal.style.display = "block";
+	}
+	
+	function closeEmpListPopUp() {
+		var modal = document.getElementById("empListModal");
+		modal.style.display = "none";
+	}
 </script>
 
+<script type="text/javascript">
+		function clearForm() {
+			closeAddEmpPopup();
+			$("#fr_emp_form").trigger("reset");			
+		}
+
+		$('#sbtbtn4').click(function() {
+			var mobNo = $('#emp_contact').val();
+			var empId = $('#fr_emp_id').val();
+
+			var valid = 0;
+			if ($('#emp_name').val() == "") {
+				valid = 1;
+				alert("Enter Employee Name");
+			} else if ($('#emp_contact').val() == "") {
+				valid = 1;
+				alert("Enter Contact No.");
+			} else if ($('#join_date').val() == "") {
+				valid = 1;
+				alert("Enter Joining Date");
+			} else if ($('#emp_address').val() == "") {
+				valid = 1;
+				alert("Enter Employee Address");
+			} 
+			
+			/* else if ($('#ttl_limit').val() == 0) {
+				valid = 1;
+				alert("Enter Total Limit");
+			} */
+			/* else if ($('#curr_bill_amt').val() == 0) {
+				valid = 1;
+				alert("Enter Current Bill Amount");
+			} */
+			/*  else if ($('#from_date').val() == "") {
+				 valid = 1;
+				alert("Enter From Date"); 				
+			}  */
+			
+			/*  else if ($('#to_date').val() == "") {
+				 valid = 1;
+				alert("Enter To Date"); 
+
+			 }  */
+			else if ($('#pass').val() == "") {
+				valid = 1;
+				alert("Enter Password");
+			}
+			/* else if ($('#pass').val().length != 4) {
+				valid = 1;
+				alert("Enter 4 digit Password");
+			} */
+			else if ($('#emp_code').val() == "") {
+				valid = 1;
+				alert("Enter Employee Code");
+			}
+
+			if (valid == 0) {
+				save();
+			}
+
+		});
+		function save() {
+
+			document.getElementById('sbtbtn4').disabled = true;
+			document.getElementById('cls_btn').disabled = true;		
+
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
+				data : $("#fr_emp_form").serialize(),
+				dataType : 'json',
+				success : function(data) {
+					if (data.frEmpName != null) {
+
+						document.getElementById('sbtbtn4').disabled = false;
+						document.getElementById('cls_btn').disabled = false;		
+
+						$("#fr_emp_form").trigger("reset");
+						getCurrentEmpCode();
+						closeAddEmpPopup();
+						alert("Employee Saved Successfylly");
+					}
+				}
+			}).done(function() {
+				setTimeout(function() {
+				}, 500);
+			});
+		}
+
+		 function getData() {
+			 
+			 openEmpListPopUp();
+			 
+			$
+					.getJSON(
+							'${getAllFrEmp}',
+
+							{
+								ajax : 'true'
+							},
+							function(data) {
+								$('#table_grid td').remove();
+								$
+										.each(
+												data,
+												function(key, emp) {
+													//alert(JSON.stringify(cashHndOvr));
+													$('#loader').hide();
+
+													
+
+													var tr = $('<tr></tr>');
+													tr.append($('<td></td>')
+															.html(key + 1));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpName));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpContact));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpAddress));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			emp.frEmpJoiningDate));
+													var stat = '';
+													if(emp.delStatus==0){
+														stat='Active'
+													}else{
+														stat='In-Active'
+													}
+													tr.append($('<td ></td>')
+															.html(stat));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			"<a href='#' onclick=editFrEmp("
+																					+ emp.frEmpId
+																					+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>"));
+													$('#table_grid tbody')
+															.append(tr);
+
+												})
+
+							});
+		} 
+		/* "<a href='#' onclick=deletFrEmp("+ emp.frEmpId+") title='Delete'><i class='fa fa-trash'></i></a>" */
+
+		/* function deletFrEmp(empId) {
+			//alert("Id----------"+empId)
+
+			if (empId != null) {
+
+				$
+						.getJSON(
+								'${delFrEmpById}',
+
+								{
+									empId : empId,
+									ajax : 'true'
+								},
+								function(data) {
+									$('#table_grid td').remove();
+									$
+											.each(
+													data,
+													function(key, emp) {
+														//alert(JSON.stringify(cashHndOvr));
+														$('#loader').hide();
+
+														var tr = $('<tr  ></tr>');
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				key + 1));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				emp.frEmpName));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				emp.frEmpContact));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				emp.frEmpAddress));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				emp.frEmpJoiningDate));
+														tr
+																.append($(
+																		'<td  ></td>')
+																		.html(
+																				emp.empCode));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				"<a href='#' onclick=editFrEmp("
+																						+ emp.frEmpId
+																						+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>&nbsp&nbsp<a href='#' onclick=deletFrEmp("
+																						+ emp.frEmpId
+																						+ ") title='Delete'><i class='fa fa-trash'></i></a>"));
+														$('#table_grid tbody')
+																.append(tr);
+
+													})
+								});
+			}
+		} */
+
+		 function editFrEmp(empId) {
+
+			if (empId != null) {
+
+				$
+						.getJSON(
+								'${getFrEmpById}',
+
+								{
+									empId : empId,
+									ajax : 'true'
+								},
+								function(data) {
+
+									//alert(JSON.stringify(data.delStatus)); 
+
+									//$('#addcust').show();
+									if(data!=null){
+										var modal = document.getElementById("addEmpModal");
+										modal.style.display = "block";
+									}
+									$('#fr_emp_id').val(data.frEmpId);
+									$('#emp_name').val(data.frEmpName);
+									$('#curr_bill_amt')
+											.val(data.currentBillAmt);
+									$('#emp_code').val(data.empCode);
+									$('#emp_address').val(data.frEmpAddress);
+									$('#emp_contact').val(data.frEmpContact);
+									$('#join_date').val(data.exVar1);
+									$('#from_date').val(data.exVar2);
+									$('#to_date').val(data.exVar3);
+									$('#pass').val(data.password);
+									$('#ttl_limit').val(data.totalLimit);
+									if (data.designation == 1) {
+										document.getElementById("designation").value = data.designation;
+									} else if (data.designation == 2) {
+										document.getElementById("designation").value = data.designation;
+									} else if (data.designation == 3) {
+										document.getElementById("designation").value = data.designation;
+									}
+									if(data.delStatus==0){
+										document.getElementById("emp_status_yes").checked = true;
+										
+									}else{
+										document.getElementById("emp_status_no").checked = true;
+									}
+									
+									closeEmpListPopUp();
+								});
+			}
+		}
+
+		
+		function getCurrentEmpCode() {
+
+			$.getJSON('${getCurrentEmpCodeValue}', {
+				ajax : 'true'
+			}, function(data) {
+
+				//alert(JSON.stringify(data)); 
+				document.getElementById("emp_code").value = data;
+
+			});
+
+		}
+	</script>
+<script type="text/javascript">
+		function checkContactNo() {
+
+			var empId = $('#fr_emp_id').val();
+		
+			var mobNo = $('#emp_contact').val();
+		
+			if (mobNo != "" || mobNo != null && empId!=" ") {
+
+				$.getJSON('${verifyUniqueContactNo}', {
+					mobNo : mobNo,
+					ajax : 'true'
+				}, function(data) {
+
+					//alert("Info : "+JSON.stringify(data)); 
+					if (data.error == false) {
+
+						if (data.message != empId) {
+
+							document.getElementById("emp_contact").value = "";
+							alert("Contact No. Already Exist.");
+							$('#emp_contact').focus();
+							return true;
+						}
+					}
+
+				});
+
+			}
+		}
+	</script>
 
 
 <script type="text/javascript">

@@ -1,8 +1,10 @@
 package com.monginis.ops.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
@@ -33,6 +36,8 @@ import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
+import com.monginis.ops.model.Setting;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
  
 
 @Controller
@@ -50,10 +55,15 @@ public class ProfileController {
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			String frImageName = (String) ses.getAttribute("frImage");
 			System.out.println("Franchisee Rsponse" + frDetails);
-
+			RestTemplate rest = new RestTemplate();
+			
+			Setting setting= rest.getForObject(Constant.URL + "/getSettingDataById?settingId={settingId}",
+					Setting.class,52);
+			model.addObject("empCode", setting.getSettingValue());
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
-			RestTemplate rest = new RestTemplate();
+			
 
 			FranchiseSup frSup = rest.postForObject(Constant.URL + "/getFrSupByFrId", map, FranchiseSup.class);
 
@@ -70,12 +80,14 @@ public class ProfileController {
 			if (fbaLicenseDate.before(currentDate)) {
 				fbaFlag=1;
 			}
+			
 			model.addObject("pestControlFlag", pestControlFlag);
 			model.addObject("aggrementFlag", aggrementFlag);
 			model.addObject("fbaFlag", fbaFlag);
 			model.addObject("frSup", frSup);
 			model.addObject("URL", Constant.FR_IMAGE_URL);
 			model.addObject("frImageName", frImageName);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -291,4 +303,176 @@ public class ProfileController {
 		 System.out.println(info.toString());
 		return info;
 	}
+	
+	
+	/***********************************
+	 * Franchisee Employee
+	 ****************************************/
+
+	@RequestMapping(value = "/saveFranchiseeEmp", method = RequestMethod.POST)
+	public @ResponseBody FrEmpMaster saveFranchiseeEmp(HttpServletRequest req, HttpServletResponse resp,
+			HttpSession session) {
+		FrEmpMaster saveEmp = new FrEmpMaster();
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+
+			session = req.getSession();
+			int frid = (int) session.getAttribute("frId");
+
+			RestTemplate rest = new RestTemplate();
+			FrEmpMaster emp = new FrEmpMaster();
+			int frEmpId = 0;
+			try {
+					frEmpId = Integer.parseInt(req.getParameter("fr_emp_id"));
+				}catch (Exception e) {
+					frEmpId = 0;
+					e.printStackTrace();
+				}
+			System.out.println("EmpId=" + frEmpId);
+
+			emp.setFrEmpId(frEmpId);
+			emp.setCurrentBillAmt(Float.parseFloat(req.getParameter("curr_bill_amt")));
+			emp.setDelStatus(Integer.parseInt(req.getParameter("emp_status")));
+			emp.setDesignation(Integer.parseInt(req.getParameter("designation")));
+			emp.setEmpCode(req.getParameter("emp_code"));
+			emp.setExInt1(0);
+			emp.setExInt2(0);
+			emp.setExInt3(0);
+			emp.setExVar1("NA");
+			emp.setExVar2("NA");
+			emp.setExVar3("NA");
+			emp.setFrEmpAddress(req.getParameter("emp_address"));
+			emp.setFrEmpContact(req.getParameter("emp_contact"));
+			System.out.println(req.getParameter("join_date"));
+			emp.setFrEmpJoiningDate(req.getParameter("join_date"));
+			emp.setFrEmpName(req.getParameter("emp_name"));
+			emp.setFrId(frid);
+
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			
+			String frDate = req.getParameter("from_date");
+			String tDate = req.getParameter("to_date");
+			
+		//	System.err.println("FDATE ------------------------------ "+frDate);
+		//	System.err.println("TDATE ------------------------------ "+tDate);
+			
+			if (frDate == null || frDate.isEmpty()) {
+					frDate=sdf.format(Calendar.getInstance().getTimeInMillis());
+			}
+
+			if (tDate == null || tDate.isEmpty()) {
+				tDate=sdf.format(Calendar.getInstance().getTimeInMillis());
+			}
+			
+			//System.err.println("FDATE ------------------------------ "+frDate);
+			//System.err.println("TDATE ------------------------------ "+tDate);
+
+			emp.setFromDate(frDate);
+			emp.setToDate(tDate);
+			emp.setIsActive(0);
+			emp.setPassword(req.getParameter("pass"));
+			emp.setTotalLimit(Float.parseFloat(req.getParameter("ttl_limit")));
+			emp.setUpdateDatetime(dateFormat.format(date));
+
+			saveEmp = rest.postForObject(Constant.URL + "/saveFrEmpDetails", emp, FrEmpMaster.class);
+			//System.out.println("Result-----------" + saveEmp);
+
+			if (saveEmp != null) {
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return saveEmp;
+
+	}
+
+	@RequestMapping(value = "/getAllFrEmp", method = RequestMethod.GET)
+	public @ResponseBody List<FrEmpMaster> getAllFrEmp(HttpServletRequest req, HttpServletResponse resp,
+			HttpSession session) {
+		List<FrEmpMaster> empList = null;
+		try {
+			session = req.getSession();
+			int frid = (int) session.getAttribute("frId");
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frid);
+			FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmp", map, FrEmpMaster[].class);
+			empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+
+		//	System.out.println("Emp List----------" + empList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return empList;
+
+	}
+	
+	@RequestMapping(value = "/getCurrentEmpCodeValue", method = RequestMethod.GET)
+	public @ResponseBody int getCurrentEmpCodeValue(HttpServletRequest request,HttpServletResponse response) {
+		
+		int value=0;
+		
+		RestTemplate rest = new RestTemplate();
+			
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("settingId", 52);
+			Setting setting= rest.postForObject(Constant.URL + "/getSettingValueById",map,
+					Setting.class);
+			value=setting.getSettingValue();
+			
+		}catch(Exception e) {e.printStackTrace();}
+
+		return value;
+	}
+	
+	@RequestMapping(value = "/getFrEmpById", method = RequestMethod.GET)
+	public @ResponseBody FrEmpMaster getFrEmpById(HttpServletRequest req, HttpServletResponse resp,
+			HttpSession session) {
+		FrEmpMaster emp = new FrEmpMaster();
+		try {
+			RestTemplate rest = new RestTemplate();
+			int empId = Integer.parseInt(req.getParameter("empId"));
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("empId", empId);
+
+			emp = rest.postForObject(Constant.URL + "/getFrEmpByEmpId", map, FrEmpMaster.class);
+			emp.setExVar1(DateConvertor.convertToYMD(emp.getFrEmpJoiningDate()));
+			emp.setExVar2(DateConvertor.convertToYMD(emp.getFromDate()));
+			emp.setExVar3(DateConvertor.convertToYMD(emp.getToDate()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return emp;
+	}
+	
+	@RequestMapping(value = "/verifyUniqueContactNo", method = RequestMethod.GET)
+	public @ResponseBody Info verifyUniqueContactNo(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+			HttpSession session = request.getSession();
+			int frid = (int) session.getAttribute("frId");
+			RestTemplate restTemplate = new RestTemplate();
+			String mobNo = request.getParameter("mobNo");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("mobNo", mobNo);
+			map.add("frId", frid);
+
+			info = restTemplate.postForObject(Constant.URL + "/checkUniqueContactNo", map, Info.class);
+			//System.out.println("Info Res----------------" + info);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return info;
+
+	}
+	
 }
