@@ -228,7 +228,13 @@
 		var modal = document.getElementById("basic");
 		modal.style.display = "none";
 	}
-    
+	
+	 $(document).ready(function () {
+	      $('#basic').popup();
+	      $('#basic_pass').popup({horizontaal:'center'});
+	      //data-popup-ordinal
+	    });
+	 
     $('#otp').on('input', function() {
     	 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
     	});

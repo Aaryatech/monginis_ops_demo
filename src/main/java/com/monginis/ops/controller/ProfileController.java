@@ -44,6 +44,7 @@ import com.monginis.ops.model.pettycash.FrEmpMaster;
 @Scope("session")
 public class ProfileController {
 	
+	int empCodeKey = 52;
 
 	@RequestMapping(value = "/showeditprofile")
 	public ModelAndView displaySavouries(HttpServletRequest request,HttpServletResponse response) {
@@ -58,7 +59,7 @@ public class ProfileController {
 			RestTemplate rest = new RestTemplate();
 			
 			Setting setting= rest.getForObject(Constant.URL + "/getSettingDataById?settingId={settingId}",
-					Setting.class,52);
+					Setting.class,empCodeKey);
 			model.addObject("empCode", setting.getSettingValue());
 			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -421,7 +422,7 @@ public class ProfileController {
 		try {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("settingId", 52);
+			map.add("settingId", empCodeKey);
 			Setting setting= rest.postForObject(Constant.URL + "/getSettingValueById",map,
 					Setting.class);
 			value=setting.getSettingValue();
