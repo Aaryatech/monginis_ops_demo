@@ -30,6 +30,43 @@
 	href="${pageContext.request.contextPath}/resources/newpos/css/saleslogin.css"
 	rel="stylesheet" type="text/css" />
 <style type="text/css">
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 555; /* Sit on top */
+	padding-top: 60px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 8px 20px 20px 20px;
+	border: 1px solid #888;
+	width: 30%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 #overlay2 {
 	position: fixed;
 	display: none;
@@ -138,114 +175,92 @@
 					
 					<a class="initialism basic_open" href="#basic"
 						onclick="getMobileNo()">Forgot Password</a>
-					<!--  onclick="getMobileNo()" -->
-
-
-					<!-- <div class="flasher"></div> -->
-					<!-- <div style="text-align: center;">
-					<div class="error notification">ERROR</div>
-					</div>
 					
-					<div class="success notification">SUCCESS</div> -->
-
-
-
-
-					<!-- <div class="key">a</div>
-	<div class="key">2</div>
-	<div class="key">3</div>
-	<div class="key">4</div>
-	<div class="key">5</div>
-	<div class="key">6</div>
-	<div class="key">7</div>
-	<div class="key">8</div>
-	<div class="key">9</div>
-	<div class="key last">0</div> -->
-
-				</div>
-
-
-
-				<!-- <a href="#" title="Close" class="modal-close">Forgot Password</a> -->
+				</div>				
 			</div>
 		</div>
 	</div>
 	
 	
-	<!--basic pop up container-->
-    <div id="basic" class="wellnew">
-     <!--  <form action="" method="get">  -->
-        <div class="mob_no" id="empMob"></div>
-        <div class="frm_bx">
-          <div class="frm_one">
-          	<input name="otp" type="text" class="input_one" placeholder="Enter OTP" id="otp" maxlength="6"/>
+	<!--OTP pop up container-->
+
+	<div id="slide" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeOTPPopUp()" style="opacity: 2;">&times;</span>
+
+			<h2 id="empMob" style="text-align: center; font-family: sans-serif" class="pageTitle"></h2>
+			<div class="row">
+				<input name="otp" type="text" class="input_one" placeholder="Enter OTP" id="otp" maxlength="6"/>
           	 <span class="error_form text-danger" id="invalid_otp"
 			style="display: none; color: red;">Invalid OTP</span>
-          </div>
+         </div>
+         <div class="row">
           <input name="" type="submit" value="Submit" onclick="validateOtp()" class="sub_btn" />
           <input id="resend_btn" type="submit" value="Re Send OTP" onclick="reSendOtp()" class="sub_btn" disabled="disabled"
           style="float: right;"/>
-        </div>
-        <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
-     <!--  </form>  -->
-    </div>
-    <!--End basic pop up container-->
+          </div>
+			
+		</div>
+	</div>
+    <!--End OTP pop up container-->
+    
     
     <!--Change Password Modal-->
-    <div id="basic_pass" class="wellnew">
-     <!--  <form action="" method="get">  -->
-        <div class="mob_no" id="edit_pass_modal">Change Password</div>
-        <div class="frm_bx">
-          <div class="frm_one">
-          	<input name="newPass" type="password" class="input_one" placeholder="Enter New Password" id="newPass"/>
-         <span class="error_form text-danger" id="error_newPass"
-			style="display: none; color: red;">This field is required</span>
-          </div>
-          
-            <div class="frm_one">
-          	<input name="confirmPass" type="password" class="input_one" placeholder="Enter Confirm Password" id="confirmPass"/>
-         <span class="error_form text-danger" id="error_confirmPass"
-			style="display: none; color: red;">This field is required</span>
-			
-			<span class="error_form text-danger" id="error_match"
-			style="display: none; color: red;">New password not matched with confirm password</span>
-          </div>
-          
-          <input name="" type="submit" value="Submit" class="sub_btn" id="cng_pswrd"/>
-        </div>
-        <div class="basic_pass_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
-      <!-- </form>  -->
-    </div>
+	<div id="basic" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeCngPassPopUp()" style="opacity: 2;">&times;</span>
+
+			<h2 id="empMob" style="text-align: center;" class="pageTitle">Change
+				Password</h2>
+			<div class="row">
+
+				<div class="frm_one">
+					<input name="newPass" type="password" class="input_one"
+						placeholder="Enter New Password" id="newPass" /> <span
+						class="error_form text-danger" id="error_newPass"
+						style="display: none; color: red;">This field is required</span>
+				</div>
+
+				<div class="frm_one">
+					<input name="confirmPass" type="password" class="input_one"
+						placeholder="Enter Confirm Password" id="confirmPass" /> <span
+						class="error_form text-danger" id="error_confirmPass"
+						style="display: none; color: red;">This field is required</span>
+						<span class="error_form text-danger" id="error_match"
+						style="display: none; color: red;">Password and Confirm Password Not Matched</span>
+				</div>
+
+			</div>
+			<div class="row">
+				<input name="" type="submit" value="Submit" class="sub_btn"
+					id="cng_pswrd" />
+			</div>
+
+		</div>
+	</div>
+	<!--End Change Password Modal-->
     
     
     <script type="text/javascript">
-    function openCngPassPopUp() {
-		var modal = document.getElementById("basic");
+    function openOTPPopUp() {
+		var modal = document.getElementById("slide");
 		modal.style.display = "block";
+	}
+    function closeOTPPopUp() {
+		var modal = document.getElementById("slide");
+		modal.style.display = "none";
 	}
 	
 	function closeCngPassPopUp() {
 		var modal = document.getElementById("basic");
 		modal.style.display = "none";
 	}
-	
-	 $(document).ready(function () {
-	      $('#basic').popup();
-	      $('#basic_pass').popup({horizontaal:'center'});
-	      //data-popup-ordinal
-	    });
 	 
     $('#otp').on('input', function() {
     	 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
     	});
     </script>
-    
-    <!-- <script type="text/javascript">
-    $(document).ready(function () {
-      $('#basic_pass').popup();
-    });
-    </script> -->
-    
+   
     
 	<script type="text/javascript">
 	
@@ -413,7 +428,7 @@
 	/************************************************  */	
 		function getMobileNo(){
 			hideNumPad();
-			openCngPassPopUp();
+			openOTPPopUp();
 			
 			var mob = $("#empContact").val();			
 			var frEmpId = $("#employeeId").val();
@@ -437,22 +452,13 @@
 			ajax : 'true'
 		}, function(data) {
 			
-	//	alert("OTP---------"+JSON.stringify(data))
+	//alert("OTP---------"+JSON.stringify(data))
 			if(data.error!=true){
-				
-					
-				      
-				      //$('#basic').popup('hide');
+				closeOTPPopUp();
 				      var modalGetOtp = document.getElementById("basic");
-				      modalGetOtp.style.display = "none";
-				      
-				      
-				      //$('#basic_pass').popup('show');
-				      var modalCngPass = document.getElementById("basic_pass");
-				      modalCngPass.style.display = "block";
+				      modalGetOtp.style.display = "block";
 				      
 				   
-				
 				$("#invalid_otp").hide()
 			}else{
 				$("#invalid_otp") .show()
@@ -495,7 +501,7 @@ function updatePass(){
 			
 				document.getElementById('empContact').value = '';
 				document.getElementById('employeeId').value = '';
-				document.getElementById("basic_pass").style.display = "none";
+				closeCngPassPopUp();
 				window.location.reload();
 				
 			}
@@ -503,7 +509,7 @@ function updatePass(){
 			
 		});
 	}
-$('#cng_pswrd').click(function () {
+	$('#cng_pswrd').click(function () {
 
 						var isError = false;
 						

@@ -114,6 +114,15 @@ abbr:hover {cursor: pointer;}
 							 View Sale Bill
 							 <span></span>
 						</div></a></li>
+						
+				<li><a href="${pageContext.request.contextPath}/insertCreditNote"><div
+							class="img">
+							<i class="fa fa-credit-card" aria-hidden="true"  style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							 Sell Credit Note
+							 <span></span>
+						</div></a></li>
 			</c:if>
 				
 		
