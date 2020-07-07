@@ -265,7 +265,7 @@ table, th, td {
 							</div>
 							<div col-md-3>
 								<div class="col-md-1">
-									<div class="col1title">
+									<div class="col1title" style="text-align: right;">
 										<b>Bills</b>
 									</div>
 								</div>
@@ -290,7 +290,7 @@ table, th, td {
 									</div>
 								</div>
 								<div class="col-md-2"
-									style="text-align: center; margin-top: 7px;">
+									style="text-align: left; margin-top: 7px;">
 									<input type="radio" name="stockable" id="stockable" value="0"
 										checked>NO &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <input
 										type="radio" name="stockable" id="stockable" value="1">YES
@@ -299,7 +299,7 @@ table, th, td {
 
 							<div col-md-3>
 								<div class="col-md-1">
-									<div class="col1title">
+									<div class="col1title" style="text-align: left;">
 										<b>Return %</b>
 									</div>
 								</div>
