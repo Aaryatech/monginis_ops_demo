@@ -40,6 +40,7 @@ import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AllMenuResponse;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrConfigure;
 import com.monginis.ops.model.FrItemStockConfigureList;
@@ -56,7 +57,10 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Menus;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
+import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.setting.NewSetting;
 //import com.sun.org.apache.regexp.internal.RE;
 
 @Controller
@@ -594,10 +598,13 @@ public class ExpressBillController {
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
 				sellBillDetail.setQty(qty);
-				sellBillDetail.setRemark(item.getHsnCode());// hsn new change
+				//sellBillDetail.setRemark();
 				sellBillDetail.setSellBillDetailNo(0);
 				sellBillDetail.setSellBillNo(sellBillHeaderGlobal.getSellBillNo());
 				sellBillDetail.setBillStockType(1);
+				
+				sellBillDetail.setExtFloat1(grandTotal);
+				sellBillDetail.setExtVar1(item.getHsnCode());
 
 				sumTaxableAmt = sumTaxableAmt + taxableAmt;
 				sumTotalTax = sumTotalTax + totalTax;
@@ -840,97 +847,142 @@ public class ExpressBillController {
 
 	@RequestMapping(value = "/dayClose", method = RequestMethod.GET)
 	public @ResponseBody int dayClose(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-		RestTemplate restTemplate = new RestTemplate();
-		System.out.println("inside day close ");
-
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-		map.add("billNo", sellBillHeaderGlobal.getSellBillNo());
-
-		SellBillDetailList sellBillDetailList = restTemplate.postForObject(Constant.URL + "/getSellBillDetails", map,
-				SellBillDetailList.class);
-
-		List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
-
-		System.err.println("Day close detail list");
-
-		System.out.println("sellBillDetails inside dayClose are " + sellBillDetails.toString());
-
-		map = new LinkedMultiValueMap<String, Object>();
-
-		System.out.println("global BILL NO ************" + sellBillHeaderGlobal.getSellBillNo());
-
-		map.add("sellBillNo", sellBillHeaderGlobal.getSellBillNo());
-
-		System.out.println("sellBillHeaderGlobal.getSellBillNo()" + sellBillHeaderGlobal.getSellBillNo());
-		SellBillHeader billHeader = restTemplate.postForObject(Constant.URL + "/getSellBillHeaderForDayClose", map,
-				SellBillHeader.class);
-
-		sellInvoiceGlobal = billHeader.getInvoiceNo();
-
-		System.out.println("billHeader " + billHeader.toString());
-
-		if (sellBillDetails.isEmpty()) {
-
-			/*
-			 * System.out.println("Bill Detail is Empty "); billHeader.setTaxableAmt(0);
-			 * 
-			 * billHeader.setTotalTax(1);
-			 * 
-			 * billHeader.setGrandTotal(1);
-			 * 
-			 * billHeader.setDiscountPer(1);
-			 */
-
-			int responseDelete = restTemplate.postForObject(Constant.URL + "deleteExBillHeader", map, Integer.class);
-
-			System.out.println("Bill Header Response if Bill Detail Is Empty " + billHeader.toString());
-
-		} else {
-			System.out.println("Bill Detail Not Empty ");
-
-			for (int x = 0; x < sellBillDetails.size(); x++) {
-
-				billHeader.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
-
-				billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
-				billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
-
-				// billHeader.setBillDate(billHeader.getBillDate());
-
-				billHeader.setDiscountPer(billHeader.getDiscountPer());
-
-			}
-			billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
-			billHeader.setPaidAmt(billHeader.getGrandTotal());
-			billHeader.setPayableAmt(billHeader.getGrandTotal());
-
-			System.err.println("bill Header data for Day close " + billHeader.toString());
-			String start_dt = billHeader.getBillDate();
-			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			Date date = (Date) formatter.parse(start_dt);
-
-			SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-			String finalString = newFormat.format(date);
-			billHeader.setBillDate(finalString);
-
-			billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+		try {
+			
+			System.out.println("inside day close ");
+			
+			HttpSession session = request.getSession();
+			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			
+			RestTemplate restTemplate = new RestTemplate();
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+	
+			map.add("billNo", sellBillHeaderGlobal.getSellBillNo());
+	
+			SellBillDetailList sellBillDetailList = restTemplate.postForObject(Constant.URL + "/getSellBillDetails", map,
+					SellBillDetailList.class);
+	
+			List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
+	
+			System.err.println("Day close detail list");
+	
+			System.out.println("sellBillDetails inside dayClose are " + sellBillDetails.toString());
+	
+			map = new LinkedMultiValueMap<String, Object>();
+	
+			System.out.println("global BILL NO ************" + sellBillHeaderGlobal.getSellBillNo());
+	
+			map.add("sellBillNo", sellBillHeaderGlobal.getSellBillNo());
+	
+			System.out.println("sellBillHeaderGlobal.getSellBillNo()" + sellBillHeaderGlobal.getSellBillNo());
+			SellBillHeader billHeader = restTemplate.postForObject(Constant.URL + "/getSellBillHeaderForDayClose", map,
 					SellBillHeader.class);
-
+	
 			sellInvoiceGlobal = billHeader.getInvoiceNo();
-			System.out.println("Bill Header Response if Bill Detail Not Empty " + billHeader.toString());
+	
+			System.out.println("billHeader " + billHeader.toString());
+	
+			if (sellBillDetails.isEmpty()) {
+	
+				/*
+				 * System.out.println("Bill Detail is Empty "); billHeader.setTaxableAmt(0);
+				 * 
+				 * billHeader.setTotalTax(1);
+				 * 
+				 * billHeader.setGrandTotal(1);
+				 * 
+				 * billHeader.setDiscountPer(1);
+				 */
+	
+				int responseDelete = restTemplate.postForObject(Constant.URL + "deleteExBillHeader", map, Integer.class);
+	
+				System.out.println("Bill Header Response if Bill Detail Is Empty " + billHeader.toString());
+	
+			} else {
+				System.out.println("Bill Detail Not Empty ");
+	
+				for (int x = 0; x < sellBillDetails.size(); x++) {
+	
+					billHeader.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
+	
+					billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
+					billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
+	
+					// billHeader.setBillDate(billHeader.getBillDate());
+	
+					billHeader.setDiscountPer(billHeader.getDiscountPer());
+	
+				}
+				billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
+				billHeader.setPaidAmt(billHeader.getGrandTotal());
+				billHeader.setPayableAmt(billHeader.getGrandTotal());
+				
+	
+				System.err.println("bill Header data for Day close " + billHeader.toString());
+				String start_dt = billHeader.getBillDate();
+				DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				Date date = (Date) formatter.parse(start_dt);
+	
+				SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String finalString = newFormat.format(date);
+				billHeader.setBillDate(finalString);
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("settingKey", "DEFLTCUST");
+				NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", map,
+						NewSetting.class);
+				System.err.println("Default Customer Val------------------" + settingValue.toString());
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("custId", settingValue.getSettingValue1());
+				Customer customer = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map,
+						Customer.class);
+				
+				billHeader.setCustId(customer.getCustId());
+				billHeader.setUserName(customer.getCustName());
+				billHeader.setUserGstNo(customer.getGstNo());
+				billHeader.setUserPhone(customer.getPhoneNumber());
+				billHeader.setStatus(2);
+				billHeader.setExtInt1(frEmpDetails.getFrEmpId());
+				billHeader.setExtFloat1(0);
+	
+				billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+						SellBillHeader.class);
+				
+				if (billHeader != null) {
 
-			System.out.println("billHeader new " + billHeader.toString());
-
+					List<TransactionDetail> dList = new ArrayList<>();
+	
+					TransactionDetail transactionDetail = new TransactionDetail();
+				
+					transactionDetail.setCashAmt(Math.round(billHeader.getGrandTotal()));  // header grand total
+					transactionDetail.setExInt2(0);
+	
+					transactionDetail.setPayMode(1);
+					transactionDetail.setSellBillNo(billHeader.getSellBillNo());
+					
+					transactionDetail.setTransactionDate(billHeader.getBillDate()); //bill header date
+					transactionDetail.setExVar1("0,1");
+					transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+					dList.add(transactionDetail);
+			
+					TransactionDetail[] transactionDetailRes = restTemplate
+						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+			}
+	
+				sellInvoiceGlobal = billHeader.getInvoiceNo();
+				System.out.println("Bill Header Response if Bill Detail Not Empty " + billHeader.toString());
+	
+				System.out.println("billHeader new " + billHeader.toString());
+	
+			}
+			
+			ModelAndView model = new ModelAndView("expressBill/expressBill");	
+	
+		}catch (Exception e) {
+			System.err.println("Exception in /dayClose : "+e.getMessage());
 		}
-		/*
-		 * billHeader=restTemplate.postForObject(Constant.URL + "saveSellBillHeader",
-		 * billHeader, SellBillHeader.class);
-		 */
-		ModelAndView model = new ModelAndView("expressBill/expressBill");
-
-		System.out.println("redirecting to model ex bill ");
-
 		return 1;
 	}
 

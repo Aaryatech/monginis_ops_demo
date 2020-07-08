@@ -61,6 +61,7 @@ import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.CurrentStockResponse;
+import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.FrConfigure;
@@ -77,7 +78,10 @@ import com.monginis.ops.model.PostFrItemStockDetail;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SubCategory;
 import com.monginis.ops.model.TabTitleData;
+import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
 @Scope("session")
@@ -1518,6 +1522,7 @@ public class StockController {
 	public String addSellBill(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		SellBillHeader sellBillHeaderRes = new SellBillHeader();
 		try {
@@ -1646,7 +1651,7 @@ public class StockController {
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
 				sellBillDetail.setQty(customerBillItemList.get(i).getQty());
-				sellBillDetail.setRemark(customerBillItemList.get(i).getHsnCode());// hsncode --new
+				//sellBillDetail.setRemark(customerBillItemList.get(i).getHsnCode());// hsncode --new
 				sellBillDetail.setSellBillDetailNo(0);
 				sellBillDetail.setSellBillNo(0);
 				sellBillDetail.setBillStockType(customerBillItemList.get(i).getBillStockType());
@@ -1658,6 +1663,10 @@ public class StockController {
 
 				sellBillDetail.setTaxableAmt(taxableAmt);
 				sellBillDetail.setTotalTax(totalTax);
+				
+				
+				sellBillDetail.setExtFloat1(grandTotal);
+				sellBillDetail.setExtVar1(customerBillItemList.get(i).getHsnCode());
 
 				sellBillDetailList.add(sellBillDetail);
 
@@ -1692,17 +1701,54 @@ public class StockController {
 			sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
 			sellBillHeader.setRemainingAmt(0);
 			sellBillHeader.setStatus(1);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "DEFLTCUST");
+			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", map,
+					NewSetting.class);
+			System.err.println("Default Customer Val------------------" + settingValue.toString());
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("custId", settingValue.getSettingValue1());
+			Customer customer = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map,
+					Customer.class);
+			
+			sellBillHeader.setCustId(customer.getCustId());
+			sellBillHeader.setUserName(customer.getCustName());
+			sellBillHeader.setUserGstNo(customer.getGstNo());
+			sellBillHeader.setUserPhone(customer.getPhoneNumber());
+			sellBillHeader.setStatus(2);
+			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
+			sellBillHeader.setExtFloat1(0);
 
 			sellBillHeader.setSellBillDetailsList(sellBillDetailList);
 			System.out.println("Sell Bill Detail: " + sellBillHeader.toString());
+			
 			sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
 					SellBillHeader.class);
 
 			System.out.println("info :" + sellBillHeaderRes.toString());
 
 			if (sellBillHeaderRes != null) {
+				
+				List<TransactionDetail> dList = new ArrayList<>();
+				
+				TransactionDetail transactionDetail = new TransactionDetail();
+			
+				transactionDetail.setCashAmt(Math.round(sellBillHeaderRes.getGrandTotal()));  // header grand total
+				transactionDetail.setExInt2(0);
 
-				map = new LinkedMultiValueMap<String, Object>();
+				transactionDetail.setPayMode(1);
+				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+				
+				transactionDetail.setTransactionDate(sellBillHeaderRes.getBillDate()); //bill header date
+				transactionDetail.setExVar1("0,1");
+				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+				dList.add(transactionDetail);
+		
+				TransactionDetail[] transactionDetailRes = restTemplate
+					.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+				
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("frId", frDetails.getFrId());
