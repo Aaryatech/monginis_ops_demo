@@ -696,6 +696,27 @@ public class OpsController {
 		return edit;
 	}
 	
+	@RequestMapping(value = "/getCustById", method = RequestMethod.GET)
+	@ResponseBody
+	public Customer getCustById(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Customer cust = new Customer();
+
+		try {
+
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("custId", custId);
+			cust = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
+			cust.setCustDob(DateConvertor.convertToDMY(cust.getCustDob()));
+			System.out.println("Customer ---- "+cust);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cust;
+	}
+	
 	@RequestMapping(value = "/submitEditCustomer", method = RequestMethod.POST)
 	@ResponseBody
 	public AddCustemerResponse submitEditCustomer(HttpServletRequest request, HttpServletResponse responsel) {

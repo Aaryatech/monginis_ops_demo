@@ -70,9 +70,7 @@ private float extFloat1;
 
 private String extVar1;
 
-
-
-
+private String extVar2;
 
 
 public String getExtVar1() {
@@ -81,6 +79,14 @@ public String getExtVar1() {
 
 public void setExtVar1(String extVar1) {
 	this.extVar1 = extVar1;
+}
+
+public String getExtVar2() {
+	return extVar2;
+}
+
+public void setExtVar2(String extVar2) {
+	this.extVar2 = extVar2;
 }
 
 public float getDiscPer() {
@@ -269,19 +275,16 @@ public void setExtFloat1(float exFloat1) {
 	this.extFloat1 = exFloat1;
 }
 
-
 @Override
 public String toString() {
-	return "SellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", catId="
-			+ catId + ", itemId=" + itemId + ", itemName=" + itemName + ", mrp=" + mrp + ", qty=" + qty
-			+ ", mrpBaseRate=" + mrpBaseRate + ", billStockType=" + billStockType + ", taxableAmt=" + taxableAmt
-			+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
-			+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt
-			+ ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus="
-			+ delStatus + ", extFloat1=" + extFloat1 + ", extVar1=" + extVar1 + "]";
+	return "SellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", catId=" + catId
+			+ ", itemId=" + itemId + ", itemName=" + itemName + ", mrp=" + mrp + ", qty=" + qty + ", mrpBaseRate="
+			+ mrpBaseRate + ", billStockType=" + billStockType + ", taxableAmt=" + taxableAmt + ", sgstPer=" + sgstPer
+			+ ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer
+			+ ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt + ", totalTax=" + totalTax
+			+ ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus=" + delStatus + ", extFloat1="
+			+ extFloat1 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + "]";
 }
 
-
-	
 	
 }

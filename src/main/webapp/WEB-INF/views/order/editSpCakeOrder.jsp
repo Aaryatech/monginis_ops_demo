@@ -117,7 +117,78 @@ select {
      margin: 0px 0px 0px 0px;
     padding-top: 1px;
 }
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 555; /* Sit on top */
+	padding-top: 60px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 8px 20px 20px 20px;
+	border: 1px solid #888;
+	width: 30%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(239, 219, 219, 0.5);
+	z-index: 9992;
+	cursor: pointer;
+}
+
+#text2 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+.itemDummyClass {
+	cursor: pointer;
+}
+
+.def_customer {
+	display: none;
+}
 	</style>
+	
 </head>
 <body onload="onLoad()">
 <!--topLeft-nav-->
@@ -128,9 +199,14 @@ select {
 <div class="wrapper">
 
 <!--topHeader-->
+<c:url var="getCustById" value="/getCustById" />
+<c:url var="checkEmailText" value="/checkEmailText" />
+<c:url var="saveCustomerFromBill" value="/saveCustomerFromBill" />
+
 <c:url var="findAvailableSlot" value="/getAvailableSlot" />
 <c:url var="findAddOnRate" value="/getAddOnRate" />
 <c:url var="getFlavourBySpfId" value="/getFlavourBySpfId" />
+
 <jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
@@ -601,10 +677,31 @@ select {
 	
 	
 	<div class="colOuter">
-	    <div class="col1"><div class="col1title">Customer Name</div></div>
-		<div class="col2full"><input class="texboxitemcode texboxcal2" autocomplete="off"  placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name" value="${spCakeOrder.spCustName}" required></div>
-		
-		
+	    <div class="col1"><div class="col1title">Customer Name </div></div>
+	    <div class="col2full">
+	   <select id="sp_cust_id" class="form-control chosen-select" name="sp_cust_id" onchange="showEmpInfo(this.value)" required style="width: 80%;">
+			  <option>Select Customer</option>	
+			  	<c:forEach items="${customerList}" var="customerList">
+			  	<c:choose>
+					<c:when test="${customerList.custId == spCakeOrder.exInt1}">
+						<option value="${customerList.custId}" style="text-align: left;" selected="selected">
+						${customerList.custName} &nbsp;${customerList.phoneNumber}</option>	
+						</c:when>
+					<c:otherwise>
+						<option value="${customerList.custId}"style="text-align: left;">
+						${customerList.custName} &nbsp;${customerList.phoneNumber}</option>	
+					</c:otherwise>
+				</c:choose>
+				</c:forEach>
+				
+			  </select>
+			  &nbsp; &nbsp; &nbsp;
+			    <button class="plus_btn addcust_open" type="button"
+						onclick="openNewCustPopUp()">
+				<i class="fa fa-plus" aria-hidden="true"></i>
+			</button> 
+		<div class="col2full"><input class="texboxitemcode texboxcal2" autocomplete="off"  placeholder="Customer Name" name="sp_cust_name" type="hidden" id="sp_cust_name" value="${spCakeOrder.spCustName}" required></div>
+		</div> 	
 <%-- 		<div class="col3"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
  --%>	</div>
 	<div class="colOuter">
@@ -1707,5 +1804,439 @@ $("#sp_code").on('input', function () {
     }
 });
 </script>
+
+<!-- --------------------------------------------------------- -->
+<div id="addEmpModal" class="modal">
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
+
+		<div class="modal-content" style="width: 75%">
+			<span class="close" onclick="closeNewCustPopUp()" style="opacity: 2;">&times;</span>
+
+			<h3 class="pop_head">Add Customer</h3>
+			<hr>
+			<div>
+				<div class="row">
+					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post" autocomplete="off">
+						<div class="col-lg-12">
+
+						<input type="hidden" name="custId" id="custId" value="0" />
+
+							<div class="profile">
+								<div class="profilefildset">Customer Name* </div>
+								<div class="profileinput">
+									<input type="text" class="texboxitemcode"
+										placeholder="Enter Customer Name" name="customerName"
+										onchange="trim(this)" id="customerName" />
+								</div>
+							</div>
+							
+							<div class="profile">
+								<div class="profilefildset">Mobile Number</div>
+								<div class="profileinput">
+									<input type="text" class="texboxitemcode" placeholder="Enter Mobile No."
+									name="mobileNo" id="mobileNo" onchange="trim(this)" maxlength="10" autocomplete="off"
+									oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"/>
+								</div>
+							</div>
+							
+							<div class="profile"  style="display: none;">
+								<div class="profilefildset">Pin Code</div>
+								<div class="profileinput">
+									<input type="text" class="texboxitemcode" placeholder="Enter Pin Code" value="0"
+							name="pincode" id="pincode" onchange="trim(this)" maxlength="6"
+							pattern="[0-9]" />
+								</div>
+							</div>
+							
+							<div class="profile" style="display: none;">
+								<div class="profilefildset">Distance(In Kms)</div>
+								<div class="profileinput">
+									<input type="text" class="texboxitemcode" 
+									placeholder="Enter distance in kms" name="kms" id="kms" value="0">
+								</div>
+							</div>
+							
+							
+
+							<div class="profile">
+								<div class="profilefildset">Gender*</div>
+								<div class="profileinput">
+								<input type="radio" type="radio" name="gender"
+									id="moption" checked value="1"> <label for="moption">M</label>
+									
+								<input type="radio" id="foption" name="gender"
+									value="2"> <label for="foption">F </label>
+
+								</div>								
+							</div>
+							
+							
+							<div class="profile" style="display: none;">
+								<div class="profilefildset">Type</div>
+								<div class="profileinput">
+									<select name="custType" id="custType"
+										data-placeholder="Customer Type" class="texboxitemcode"
+										class="input_add " style="text-align: left;">
+										<option value="1" style="text-align: left;">Owner</option>
+										<option value="2" style="text-align: left;">Employee</option>
+										<option value="3" style="text-align: left;" selected>Customer</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="profile">
+								<div class="profilefildset">Age Group*</div>
+								<div class="profileinput">
+									<select name="ageRange" id="ageRange"
+										data-placeholder="Age-Group" class="texboxitemcode"
+										class="input_add " style="text-align: left;">
+										<option value="14-21" style="text-align: left;">14-21 Years</option>
+										<option value="22-28" style="text-align: left;">22-28 Years</option>
+										<option value="29-35" style="text-align: left;">29-35 Years</option>
+										<option value="36-42" style="text-align: left;">36-42 Years</option>
+										<option value="43-49" style="text-align: left;">43-49 Years</option>
+										<option value="50-56" style="text-align: left;">50-56 Years</option>
+										<option value="57 & above" style="text-align: left;">57 & above</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="profile">
+								<div class="profilefildset">DOB</div>
+								<div class="profileinput">
+									<input name="dateOfBirth" type="date" class="texboxitemcode"
+										id="dateOfBirth" placeholder="Date Of Birth"/>
+								</div>
+							</div>
+							
+						<div class="profile">
+								<div class="profilefildset">Business</div>
+								<div class="profileinput">
+								<input type="radio" type="radio" name="selector"
+									id="y-option" onclick="isBuissness(1)"> <label for="y-option">Yes</label>
+									
+								<input type="radio" id="n-option" name="selector" onclick="isBuissness(0)"
+								checked>  <label for="n-option">No </label>
+
+								</div>								
+							</div>
+							
+							<div style="display: none;" id="isbuissnessdiv">
+								<div class="profile">
+									<div class="profilefildset">Company Name*</div>
+									<div class="profileinput">
+										<input placeholder="Enter Company Name" name="companyName"
+									onchange="trim(this)" id="companyName"  type="text" class="texboxitemcode" />
+									</div>
+								</div>
+								
+								<div class="profile">
+									<div class="profilefildset">Address</div>
+									<div class="profileinput">
+										<input  placeholder="Enter Address" name="custAdd" id="custAdd"
+									onchange="trim(this)"  class="texboxitemcode" />
+									</div>
+								</div>
+								
+								<div class="profile">
+									<div class="profilefildset">GST Number*</div>
+									<div class="profileinput">
+										<input placeholder="Enter GST Number" name="gstNo" id="gstNo"
+									onchange="trim(this)" type="text" maxlength="15" class="texboxitemcode" />
+									</div>
+								</div>
+								
+							</div>
+							
+							<div class="profile">
+								<div class="profilefildset">Remark</div>
+								<div class="profileinput">
+									<input placeholder="Enter Remark"
+							name="remark" id="remark" onchange="trim(this)" class="texboxitemcode" required />
+								</div>
+							</div>
+
+						</div>
+
+						
+					</form>
+				</div>
+			</div>
+
+			<div class="pop_btns">
+				<div class="close_l" style="text-align: center;">
+					<input type="submit" class="btn additem_btn" id="saveCust" value="Save" onclick="addCustomer()">
+					<!-- <button class="btn additem_btn" onclick="closeNewCustPopUp()" id="cls_btn">Close</button> -->
+				</div>				
+				<div class="clr"></div>
+			</div>
+
+		</div>
+
+
+	</div>
+	<script>
+function openNewCustPopUp() {
+
+	var modal = document.getElementById("addEmpModal");
+	modal.style.display = "block";
+
+}
+
+function closeNewCustPopUp() {
+
+	var modal = document.getElementById("addEmpModal");
+	modal.style.display = "none";	
+}
+
+function showEmpInfo(custId) {	
+	 
+		$.getJSON('${getCustById}', {
+			custId : custId,			
+			ajax : 'true'
+	}, function(data) {
+		 //alert(JSON.stringify(data))		 	
+		document.getElementById("sp_cust_name").value = data.custName;
+		document.getElementById("datepicker4").value = data.custDob;
+		document.getElementById("sp_cust_mobile_no").value = data.phoneNumber;
+		document.getElementById("gstin").value = data.gstNo;
+		 	 
+	}); 
+}  
+
+function isBuissness(value) {
+
+	if (value == 1) {
+		$("#isbuissnessdiv").show();
+	} else {
+		$("#isbuissnessdiv").hide();
+	}
+
+}
+
+function trim(el) {
+	el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+	replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+	replace(/\n +/, "\n"); // Removes spaces after newlines
+	return;
+}
+
+function validateMobile(mobile) {
+	//alert(mobile);
+	var mob = /^[1-9]{1}[0-9]{9}$/;
+
+	if (mob.test($.trim(mobile)) == false) {
+
+		//alert("Please enter a valid email address .");
+		return false;
+
+	}
+	return true;
+
+}
+
+function checkGST(g){
+    let regTest = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/.test(g)
+     if(regTest){
+        let a=65,b=55,c=36;
+        return Array['from'](g).reduce((i,j,k,g)=>{ 
+           p=(p=(j.charCodeAt(0)<a?parseInt(j):j.charCodeAt(0)-b)*(k%2+1))>c?1+(p-c):p;
+           return k<14?i+p:j==((c=(c-(i%c)))<10?c:String.fromCharCode(c+b));
+        },0); 
+    }
+    return regTest
+}
+</script>
+
+
+<script type="text/javascript">
+function addCustomer() {
+	
+	document.getElementById("saveCust").disabled = true; 	
+	
+	var phNo="";
+	//$('#addcust').modal('hide');
+	//$('#addcust').popup('hide'); //for close popup;
+	var custId = document.getElementById("custId").value;
+	var customerName = document.getElementById("customerName").value;
+	var mobileNo = document.getElementById("mobileNo").value;
+	var kms= document.getElementById("kms").value;
+	phNo=mobileNo;
+	var dateOfBirth = document.getElementById("dateOfBirth").value;
+	var custType = document.getElementById("custType").value;
+	custType=3;
+	var ageRange = document.getElementById("ageRange").value;
+	
+	$.getJSON('${checkEmailText}', {
+		phoneNo : mobileNo,	
+			ajax : 'true',
+	},
+
+	function(saveFlag) {
+		
+	//	alert(saveFlag);
+		
+		 if(parseInt(saveFlag)>0 && parseInt(saveFlag)!=custId){		
+		
+			 document.getElementById("saveCust").disabled = false;
+			 
+			   alert("Duplicate Mobile Number Found.");
+				document.getElementById("mobileNo").value = "";
+				document.getElementById("mobileNo").focus();
+		}else{
+	var gender = 2;
+	if (document.getElementById('moption').checked) {
+		gender = 1;
+	}
+	
+	var buisness = 0;
+	if (document.getElementById('y-option').checked) {
+		buisness = 1;
+	}
+	
+	var companyName = document.getElementById("companyName").value;
+	var gstNo = document.getElementById("gstNo").value;
+	var custAdd = document.getElementById("custAdd").value;
+	var pincode = document.getElementById("pincode").value;
+	var remark = document.getElementById("remark").value;
+
+	var flag = 0;
+
+	if (customerName == "") {
+		alert("Enter Customer Name");
+		flag = 1;
+	} 
+	
+	else if (mobileNo == "" || !validateMobile(mobileNo)) {
+		alert("Enter Valid Mobile No");
+		flag = 1;
+	}  else if (ageRange == 0) {
+		alert("Please Select Age Group");
+		flag = 1;
+	} else if (buisness == 1) {
+
+		if (companyName == "") {
+			alert("Enter Company Name");
+			flag = 1;
+		} else if (gstNo == "") {
+			alert("Enter GST No");
+			flag = 1;
+		}/* else if(checkGST(gstNo)==false){
+			alert("Invalid GST No");
+			flag = 1;
+		} */
+	}
+	
+	if (kms == "") {
+		kms=0;
+	}
+	
+	if (flag == 0) {
+		
+		$
+				.post(
+						'${saveCustomerFromBill}',
+						{
+							customerName : customerName,
+							mobileNo : mobileNo,
+							dateOfBirth : dateOfBirth,
+							buisness : buisness,
+							companyName : companyName,
+							gstNo : gstNo,
+							custAdd : custAdd,
+							custId : custId,
+							custType:custType,
+							ageRange:ageRange,
+							kms:kms,
+							gender:gender,
+							pincode:pincode,
+							remark:remark,
+							ajax : 'true'
+						},
+						function(data) {
+							
+							 document.getElementById("saveCust").disabled = false;
+
+							//alert(JSON.stringify(data.customerList));
+
+							if (data.error == false) {
+
+								//var html = '<option value="0" selected>Select Customer</option>';
+								var html = '';
+								var len = data.customerList.length;
+								//alert(data.addCustomerId);
+								for (var i = 0; i < len; i++) {
+
+									if (data.customerList[i].custId == data.addCustomerId) {
+										html += '<option value="' + data.customerList[i].custId + '" selected>'
+												+ data.customerList[i].custName
+												+ '&nbsp;'
+												+ data.customerList[i].phoneNumber
+												+ '</option>';
+									} else {
+										html += '<option value="' + data.customerList[i].custId + '">'
+												+ data.customerList[i].custName
+												+ '&nbsp;'
+												+ data.customerList[i].phoneNumber
+												+ '</option>';
+									}
+
+								}
+
+								$('#sp_cust_id').html(html);
+
+								$("#sp_cust_id").trigger("chosen:updated");
+								$('.chosen-select').trigger(
+										'chosen:updated');
+								//alert("0")
+								document.getElementById("pincode").value = "";
+								document.getElementById("remark").value = "";
+								document.getElementById("customerName").value = "";
+								document.getElementById("mobileNo").value = "";
+								document.getElementById("kms").value = "0";
+								document.getElementById("dateOfBirth").value = "";
+
+								document.getElementById("n-option").checked = true;
+								document.getElementById("companyName").value = "";
+								document.getElementById("gstNo").value = "";
+								document.getElementById("custAdd").value = "";
+								document.getElementById("custId").value = 0;
+								document.getElementById("moption").checked = true;
+								document.getElementById("custType").value ="0";
+								$("#custType").trigger("chosen:updated");
+								document.getElementById("ageRange").value ="0";
+								$("#ageRange").trigger("chosen:updated");
+								$('.chosen-select').trigger('chosen:updated');
+								document
+										.getElementById("add_cust_head_name").innerHTML = "Add Customer";
+								$("#isbuissnessdiv").hide();
+								
+								alert("Customer Add Successfully");
+								
+								$("#sp_cust_id").trigger("chosen:updated");
+
+								/* if (custId != 0) {
+									alert("Update Successfully");
+								} else {
+									alert("Customer Add Successfully");
+									$("#sp_cust_id").trigger("chosen:updated");
+									
+								} */
+								//alert("1")
+							} else {
+								alert("Failed To Add Customer");
+							}
+							//alert("2")
+							closeNewCustPopUp(); 
+						});
+				}
+			}
+		});
+}
+
+		
+	</script>
 </body>
 </html>

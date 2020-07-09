@@ -1294,7 +1294,7 @@ $('#sp').change(function() {
 									var spName="";
 									if((order.spBookForMobNo).length==1)
 									{
-									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill'"+order.spOrderNo+"  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
+									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
 									spName=order.spName+"&nbsp;&nbsp;&nbsp;	<a href='editSpOrder/"+order.spOrderNo+"'  ><span	class='fa fa-pencil'></span></a>";
 									}else
 										{
@@ -1375,7 +1375,7 @@ $('#sp').change(function() {
 									var spName="";
 									if((order.spBookForMobNo).length==1)
 										{
-										tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill'"+order.spOrderNo+"  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
+										tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
 										spName=order.spName+"&nbsp;&nbsp;&nbsp;	<a href='editSpOrder/'"+order.spOrderNo+" ><span	class='fa fa-pencil'></span></a>";
 										}else
 											{
@@ -1436,8 +1436,10 @@ $('#sp').change(function() {
 	<script type="text/javascript">
 	function genBill(spOrderNo)
 	{
-		var selectedValue = document.getElementById("type").value;
+		
+		document.getElementById("genBill"+spOrderNo).disabled = true;
 
+           //end ajax send this to php page
 		   $.getJSON('${getSpBill}', {
 			   spOrderNo:spOrderNo,
                ajax : 'true'
@@ -1453,11 +1455,11 @@ $('#sp').change(function() {
                 		 {
                 		 searchOrder();
                 		 }
-        		   document.getElementById("genBill"+spOrderNo).disabled = true;
-
-        		   }
-        	   
-           });
+        		   }else{
+        			   document.getElementById("genBill"+spOrderNo).disabled = false;
+        			   
+        		   }        	   
+           });  
 		
 	}
     </script>

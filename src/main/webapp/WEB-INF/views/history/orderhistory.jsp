@@ -696,6 +696,7 @@ function exportToExcel()
 	<script type="text/javascript">
 	function genBill(spOrderNo)
 	{
+		document.getElementById("genBill"+spOrderNo).disabled = true;
 		
 		   $.getJSON('${getSpBill}', {
 			   spOrderNo:spOrderNo,
@@ -706,8 +707,10 @@ function exportToExcel()
         		   alert("Bill Generated Successfully");
         		   document.getElementById("frm_search").submit();
 
-        		   document.getElementById("genBill"+spOrderNo).disabled = true;
+        		   
 
+        		   }else{
+        			   document.getElementById("genBill"+spOrderNo).disabled = false;
         		   }
         	   
            });

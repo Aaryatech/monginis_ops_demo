@@ -1,7 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.io.IOException;
-
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -37,11 +37,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.monginis.ops.billing.SellBillDetail;
+import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.AllspMessageResponse;
+import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.Flavour;
 import com.monginis.ops.model.FlavourConf;
@@ -56,9 +59,13 @@ import com.monginis.ops.model.SearchSpCakeResponse;
 import com.monginis.ops.model.SpCakeOrder;
 import com.monginis.ops.model.SpCakeOrderRes;
 import com.monginis.ops.model.SpCakeResponse;
+import com.monginis.ops.model.SpCakeSupplement;
 import com.monginis.ops.model.SpMessage;
 import com.monginis.ops.model.SpecialCake;
+import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.pettycash.PettyCashManagmt;
 
 @Controller
 @Scope("session")
@@ -135,6 +142,10 @@ public class SpCakeController {
 					SpCakeResponse.class);
 
 			HttpSession ses = request.getSession();
+			
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
 
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			String itemShow = menuList.get(globalIndex).getItemShow();
@@ -244,10 +255,17 @@ public class SpCakeController {
 
 		String spCode = request.getParameter("sp_code");
 		ModelAndView model = new ModelAndView("order/spcakeorder");
+		
+		RestTemplate restTemplate = new RestTemplate();	
+		
+		Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+		List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+		model.addObject("customerList", customerList);
+		
 		String menuTitle = "";
 		List<Float> weightList = new ArrayList<>();
 
-		RestTemplate restTemplate = new RestTemplate();
+		
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		 String arraySp[]= spCode.split("~~~");
@@ -683,7 +701,9 @@ public class SpCakeController {
 		Boolean isEarly = now.isBefore(fromTimeLocalTime);
 		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
 
-		if (!isLate && !isEarly) {
+		//if (!isLate && !isEarly) {
+			System.out.println("In If");
+			
 			int spMenuId = Integer.parseInt(request.getParameter("spMenuId"));//new
 			int spId = Integer.parseInt(request.getParameter("sp_id"));
 			logger.info("1" + spId);
@@ -750,6 +770,9 @@ public class SpCakeController {
 
 			String spCustName = request.getParameter("sp_cust_name");
 			logger.info("21" + spCustName);
+			
+			int spCustId = Integer.parseInt(request.getParameter("sp_cust_id"));
+			logger.info("21.1 " + spCustId);
 
 			String spBookedForName = request.getParameter("sp_booked_for_name");
 			logger.info("22" + spBookedForName);
@@ -1014,6 +1037,7 @@ public class SpCakeController {
 
 			spCakeOrder.setSpCustMobNo(spCustMobileNo);
 			spCakeOrder.setSpCustName(spCustName);
+			spCakeOrder.setExInt1(spCustId);			
 			spCakeOrder.setSpDeliveryDate(sqlSpDeliveryDt);
 			spCakeOrder.setSpEstDeliDate(sqlSpEdt);
 			spCakeOrder.setSpEvents(spEvents);
@@ -1086,29 +1110,33 @@ public class SpCakeController {
 				HttpEntity<String> httpEntity = new HttpEntity<String>(jsonInString.toString(), httpHeaders);
 
 				spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder",
-						httpEntity, SpCakeOrderRes.class);
+				httpEntity, SpCakeOrderRes.class);
+				
 				System.out.println("ORDER PLACED " + spCakeOrderRes.toString());
+				
 				spCakeOrder.setSpInstructions(spCakeOrderRes.getSpCakeOrder().getSpInstructions());
+				
 				spCake = spCakeOrderRes.getSpCakeOrder();
+				
 				if (spCakeOrderRes.getErrorMessage().getError() != true) {
 					System.out.println("ORDER PLACED " + spCakeOrderRes.toString());
-					 map = new LinkedMultiValueMap<String, Object>();
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("frId", frDetails.getFrId());
-					FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
-							FrSetting.class);
-
-					int sellBillNo = frSetting.getSellBillNo();
-
-					sellBillNo = sellBillNo + 1;
-
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("frId", frDetails.getFrId());
-					map.add("sellBillNo", sellBillNo);
-
-					Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
+										
+//					map = new LinkedMultiValueMap<String, Object>();
+//
+//					map.add("frId", frDetails.getFrId());
+//					FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+//							FrSetting.class);
+//
+//					int sellBillNo = frSetting.getSellBillNo();
+//
+//					sellBillNo = sellBillNo + 1;
+//
+//					map = new LinkedMultiValueMap<String, Object>();
+//
+//					map.add("frId", frDetails.getFrId());
+//					map.add("sellBillNo", sellBillNo);
+//
+//					Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 					
 					
 					map = new LinkedMultiValueMap<String, Object>();
@@ -1181,7 +1209,7 @@ public class SpCakeController {
 				mav.addObject("flavourList", flavourList);
 
 			}
-		} else // End of if -Timeout
+		/*} else // End of if -Timeout
 		{
 			mav = new ModelAndView("order/spcakeorder");
 			mav.addObject("errorMessage", "Special Cake Order TimeOut");
@@ -1192,7 +1220,7 @@ public class SpCakeController {
 			mav.addObject("spBookb4", 0);
 			mav.addObject("sprRate", 0);
 			mav.addObject("isFound", false);
-		}
+		}*/
 		return "redirect:/orderRes";
 
 	}
@@ -1205,15 +1233,185 @@ public class SpCakeController {
 		Boolean message=false;
 		try {
 			HttpSession session = request.getSession();
+			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = new Date();
+			
 		RestTemplate restTemplate = new RestTemplate();
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		map.add("spOrderNo", spOrderNo);
-		map.add("invoiceNo", getInvoiceNo(request,response));
-		map.add("frId", frDetails.getFrId());
+		MultiValueMap<String, Object> map = null;
 		
-		message = restTemplate.postForObject(Constant.URL + "/generateSpBillOps", map,
-				Boolean.class);
+		
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("spOrderNo", spOrderNo);
+				
+				SpCakeOrder spCakeOrder=restTemplate.postForObject(Constant.URL + "/getSpOrderBySpOrderNo",	map, SpCakeOrder.class);
+				//System.out.println("Sp Order : "+spCakeOrder);
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("spId", spCakeOrder.getSpId());
+				SpCakeSupplement getSpSup=restTemplate.postForObject(Constant.URL + "/getSpecialCakeSupById", map, SpCakeSupplement.class);
+				
+				map.add("spId", spCakeOrder.getSpId());
+				SpecialCake getSpCake = restTemplate.postForObject(Constant.URL + "/getSpecialCake",map, SpecialCake.class);
+				//System.out.println("Sp Cake Details : "+getSpCake);
+				
+				/**********************************************/
+				float spGrand = spCakeOrder.getSpGrandTotal();				
+				spGrand = roundUp(spGrand);
+				
+				float tax1 = spCakeOrder.getTax1();
+				float tax2 = spCakeOrder.getTax1();
+				
+				float tax1Amt = spCakeOrder.getTax1Amt();
+				tax1Amt = roundUp(tax1Amt);
+				
+				float tax2Amt = spCakeOrder.getTax2Amt();
+				tax2Amt = roundUp(tax2Amt);
+				
+				Float mrpBaseRate = (spGrand * 100) / (100 + (tax1 + tax2));
+				mrpBaseRate = roundUp(mrpBaseRate);
+				
+				Float taxableAmt = (float) (mrpBaseRate);
+				taxableAmt = roundUp(taxableAmt);
+				
+				float totalTax = spGrand - taxableAmt;
+				totalTax = roundUp(totalTax);
+				
+				float discVal = (spGrand*spCakeOrder.getDisc())/100;
+				float discAmt = spGrand - discVal;
+				discAmt = roundUp(discAmt);
+				
+				//Detail
+				List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
+				SellBillDetail sellBillDetail = new SellBillDetail();
+				
+				sellBillDetail.setCatId(5);
+				sellBillDetail.setSgstPer(tax1);
+				sellBillDetail.setSgstRs(tax1Amt);
+				sellBillDetail.setCgstPer(tax2);
+				sellBillDetail.setCgstRs(tax2Amt);
+				sellBillDetail.setDelStatus(0);
+				sellBillDetail.setGrandTotal(spGrand);
+				sellBillDetail.setIgstPer(0);
+				sellBillDetail.setIgstRs(0);
+				sellBillDetail.setItemId(0);
+				sellBillDetail.setMrp(spGrand);
+				sellBillDetail.setMrpBaseRate(mrpBaseRate);
+				sellBillDetail.setQty(1);
+				sellBillDetail.setDiscPer(spCakeOrder.getDisc());
+				sellBillDetail.setDiscAmt(discAmt);
+				//sellBillDetail.setRemark();
+				sellBillDetail.setSellBillDetailNo(0);
+				sellBillDetail.setSellBillNo(0);
+				sellBillDetail.setBillStockType(1);
+				
+				sellBillDetail.setExtFloat1(spGrand);
+				sellBillDetail.setExtVar1(getSpSup.getSpHsncd());
+				sellBillDetail.setExtVar2(getSpCake.getSpName());
+				
+
+				sellBillDetail.setTaxableAmt(taxableAmt);
+				sellBillDetail.setTotalTax(totalTax);
+				
+				sellBillDetailList.add(sellBillDetail);
+				
+				//System.out.println("sellBillDetailList---"+sellBillDetailList);
+				
+				//Header
+				SellBillHeader sellBillHeader = new SellBillHeader();
+
+				sellBillHeader.setSellBillDetailsList(sellBillDetailList);
+				
+				sellBillHeader.setFrId(frDetails.getFrId());
+				sellBillHeader.setFrCode(frDetails.getFrCode());
+				sellBillHeader.setDelStatus(0);
+				sellBillHeader.setUserName(spCakeOrder.getExVar1());
+
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frDetails.getFrId());
+				PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+						PettyCashManagmt.class);
+
+				String billDate = sf.format(date);
+				if (petty != null) {
+
+					SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat ymdSDF1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+					cal.add(Calendar.DAY_OF_MONTH, 1);
+
+					billDate = ymdSDF.format(cal.getTime());
+				}
+
+				
+				sellBillHeader.setBillDate(billDate);
+
+				sellBillHeader.setCustId(spCakeOrder.getExInt1());
+				sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
+				sellBillHeader.setSellBillNo(0);
+				sellBillHeader.setUserGstNo(spCakeOrder.getCustGstin());
+				sellBillHeader.setUserPhone(spCakeOrder.getSpCustMobNo());
+				sellBillHeader.setUserName(frDetails.getFrName());
+				sellBillHeader.setBillType('R');
+				sellBillHeader.setTaxableAmt(taxableAmt);
+				sellBillHeader.setPayableAmt(spGrand);
+				sellBillHeader.setTotalTax(totalTax);
+				sellBillHeader.setGrandTotal(spGrand);
+				
+				//billType=1 => CASH
+				//billType=2 => CARD
+				//billType=3 => EPAY
+				sellBillHeader.setPaymentMode(1);
+				sellBillHeader.setDiscountPer(spCakeOrder.getDisc());					
+				sellBillHeader.setDiscountAmt(discAmt);
+				sellBillHeader.setStatus(2);
+				sellBillHeader.setRemainingAmt(0);
+				sellBillHeader.setPaidAmt(spGrand);			
+				sellBillHeader.setAdvanceAmt(spCakeOrder.getSpAdvance());
+				sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
+
+				float roundOff = 0;
+				roundOff = (taxableAmt + totalTax) - spGrand;
+				sellBillHeader.setExtFloat1(roundOff);		
+				
+				SellBillHeader sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData",
+						sellBillHeader, SellBillHeader.class);
+				
+				/**********************************************/
+				if (sellBillHeaderRes != null) {
+					System.out.println("sellBillHeaderRes : "+sellBillHeaderRes);
+					
+					List<TransactionDetail> dList = new ArrayList<>();
+					
+					TransactionDetail transactionDetail = new TransactionDetail();
+				
+					transactionDetail.setCashAmt(Math.round(sellBillHeaderRes.getGrandTotal()));  // header grand total
+					transactionDetail.setExInt2(0);
+
+					transactionDetail.setPayMode(1);
+					transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+					
+					transactionDetail.setTransactionDate(sellBillHeaderRes.getBillDate()); //bill header date
+					transactionDetail.setExVar1("0,1");
+					transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+					dList.add(transactionDetail);
+			
+					TransactionDetail[] transactionDetailRes = restTemplate
+						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+					
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("spOrderNo", spOrderNo);
+					map.add("invoiceNo", sellBillHeaderRes.getInvoiceNo());
+					map.add("frId", frDetails.getFrId());
+					message = restTemplate.postForObject(Constant.URL + "/generateSpBillOps", map,
+							Boolean.class);
+				}	
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -1430,6 +1628,11 @@ public class SpCakeController {
 				}
 			}
 		}
+		
+		Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+		List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+		model.addObject("customerList", customerList);
+		
 		//--------------------------------------------------Sp Message List----------------------------------------------------------
 		AllspMessageResponse allspMessageList = restTemplate.getForObject(Constant.URL + "getAllSpMessage",AllspMessageResponse.class);
 		spMessageList = allspMessageList.getSpMessage();
@@ -1680,6 +1883,9 @@ public class SpCakeController {
 
 			String spCustName = request.getParameter("sp_cust_name");
 			logger.info("21" + spCustName);
+			
+			int spCustId = Integer.parseInt(request.getParameter("sp_cust_id"));
+			logger.info("21.1 " + spCustId);
 			
 			String spBookedForName = request.getParameter("sp_booked_for_name");
 			logger.info("22" + spBookedForName);
@@ -1945,6 +2151,7 @@ public class SpCakeController {
 
 			spCakeOrder.setSpCustMobNo(spCustMobileNo);
 			spCakeOrder.setSpCustName(spCustName);
+			spCakeOrder.setExInt1(spCustId);
 			spCakeOrder.setSpDeliveryDate(sqlSpDeliveryDt);
 			spCakeOrder.setSpEstDeliDate(sqlSpEdt);
 			spCakeOrder.setSpEvents(spEvents);
@@ -2079,4 +2286,13 @@ public class SpCakeController {
 		return "redirect:/orderRes";
 
 	}
+	
+	
+	// ----------------------------roundUp()---------------------------------------------
+
+		public static float roundUp(float d) {
+
+			return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+
+		}
 }
