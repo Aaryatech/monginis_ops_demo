@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8" />
-<title>Madhvi</title>
+<title>POS</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport"
 	content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
@@ -23,7 +23,7 @@
 	type="text/css" />
 
 <link rel="icon"
-	href="${pageContext.request.contextPath}/resources/newpos/images/favicon.png"
+	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
 	type="images/png" sizes="32x32">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -84,6 +84,11 @@
 
 <c:url var="getItemCurrentStockForOps"
 	value="/getItemCurrentStockForOps" />
+	
+	<c:url var="getItemListByCatForPos" value="/getItemListByCatForPos" />
+
+<c:url var="getItemDataByIdPos" value="/getItemDataByIdPos" />
+	
 
 
 <style>
@@ -163,7 +168,7 @@ body {
 	cursor: pointer;
 }
 </style>
-<body onload="validateDefCustomer(${tempCust})">
+<body onload="validateDefCustomer(${tempCust});focusItemList();">
 	<form action="" method="get">
 
 		<!--wrapper-start-->
@@ -172,7 +177,7 @@ body {
 			<header>
 				<div class="logo">
 					<a href="${pageContext.request.contextPath}/home"><img
-						src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
+						src="${pageContext.request.contextPath}/resources/images/minlogo.png"
 						alt="madhvi_logo"></a>
 				</div>
 
@@ -193,7 +198,7 @@ body {
 							title="Logout"><i class="fa fa-sign-out"
 								aria-hidden="true"></i></abbr></a>
 					</div>
-					<div class="customer_one" style="width: auto;">
+					<div class="customer_one" style="width: auto; display: none;">
 						<select name="holdBillNo" id="holdBillNo"
 							data-placeholder="Select Bill No" class="input_add chosen-select"
 							onchange="revertHoldBillOnCurrent()">
@@ -527,6 +532,48 @@ body {
 					<c:set var="totalAmt" value="0"></c:set>
 
 
+					<div class="add_customer_bx">
+						<div class="customer_row">
+							<div class="customer_one">Item</div>
+							<div class="customer_two" style="display: flex;">
+
+								<%-- 	<select name="selItem" id="selItem"
+									data-placeholder="Select Customer"
+									class="input_add chosen-select" autofocus
+									onchange="setItemValuesToHidden(this.value)">
+
+									<option value="0">Select Item</option>
+
+									<c:forEach items="${newItemsList}" var="items">
+
+										<option value="${items.id}" style="text-align: left;">${items.itemName}</option>
+
+									</c:forEach>
+
+								</select> --%>
+
+								<input name="selItem" id="selItem" type="text" class="input_cat"
+									placeholder="Search Item" style="width: 100%"
+									autocomplete="off" list="itemList" />
+
+								<datalist id="itemList">
+									<c:forEach items="${newItemsList}" var="item">
+										<option value="${item.itemName}#${item.id}">${item.itemName}</option>
+									</c:forEach>
+								</datalist>
+
+
+								&nbsp;&nbsp; <input name="enterQty1" id="enterQty1" type="text"
+									class="input_add" style="width: 75px;" placeholder="Qty"
+									onblur="addItemToList(this.value)" />
+							</div>
+							<div class="customer_three"></div>
+						</div>
+					</div>
+
+					<br> <br>
+
+
 					<%-- <h2>${mode}</h2>
 					<h2>
 						<label>ADV = </label>${advAmtTransaction}</h2>
@@ -715,7 +762,7 @@ body {
 					<div class="buttons_row">
 						<div class="button_one">
 							<a href="#" class="hold hold_btn" onclick="billOnHold()"
-								style="pointer-events: none;" ${holdStyle}>Hold</a> <a href="#"
+								style="pointer-events: none; display: none;" ${holdStyle}>Hold</a> <a href="#"
 								class="hold can_btn" onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
 						<div class="button_one">
@@ -726,12 +773,12 @@ body {
 
 							<!-- <button onclick="openPaymentPopup()" value="pay"></button> -->
 
-							<a href="#" class="hold bill_btn " style="pointer-events: none;"
+							<a href="#" class="hold bill_btn " style="pointer-events: none; display: none;"
 								onclick="submitBill(2)">Print GST Bill</a>
 						</div>
 						<div class="button_two">
 							<a href="#" class="hold pay_btn " onclick="submitBill(1)"
-								style="pointer-events: none;">KOT Bill</a>
+								style="pointer-events: none; display: none;">KOT Bill</a>
 						</div>
 					</div>
 
@@ -1145,9 +1192,9 @@ body {
 										onclick="changeSplitSingle(1)" checked> <label
 										for="single">Single</label>
 										<div class="check"></div></li>
-									<li style="display: none;"><input type="radio" id="split" name="modePay"
-										onclick="changeSplitSingle(2)"> <label for="split">Split
-									</label>
+									<li style="display: none;"><input type="radio" id="split"
+										name="modePay" onclick="changeSplitSingle(2)"> <label
+										for="split">Split </label>
 										<div class="check">
 											<div class="inside"></div>
 										</div></li>
@@ -1303,7 +1350,7 @@ body {
 							</div>
 							<div class="clr"></div>
 						</div>
-						
+
 						<div class="add_frm_one">
 							<div class="add_customer_one">Remark</div>
 							<div class="add_input">
@@ -1313,8 +1360,8 @@ body {
 							</div>
 							<div class="clr"></div>
 						</div>
-						
-						
+
+
 						<div class="add_frm_one">
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
@@ -1341,7 +1388,7 @@ body {
 							</div>
 							<div class="clr"></div>
 						</div>
-						
+
 						<div class="add_frm_one">
 							<div class="add_customer_one"></div>
 							<div class="add_input">
@@ -1364,8 +1411,8 @@ body {
 							</div>
 							<div class="clr"></div>
 						</div>
-						
-						
+
+
 					</div>
 					<!-- <div class="add_frm_one">
 						<div class="add_customer_one">Amount</div>
@@ -3556,6 +3603,9 @@ function matchSplitAmt(flag){
 			
 			 
 			if(flag==0){
+				
+				document.getElementById("selItem").focus();
+				
 				 document.getElementById("overlay2").style.display = "block";
 				$
 				.post(
@@ -3577,6 +3627,10 @@ function matchSplitAmt(flag){
 							getCurrentItemList();
 									 
 						});
+				
+				document.getElementById("enterQty1").value="";
+				document.getElementById("selItem").value="";
+			
 			}
 			
 			  
@@ -4576,8 +4630,8 @@ function custBillPdf(sellBillNo)
 
 
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 
 	function amtReturnCal() {
@@ -4593,6 +4647,75 @@ function custBillPdf(sellBillNo)
 </script>
 
 
+
+	<script type="text/javascript">
+
+function  addItemToList(qty) {
+	
+	var str=document.getElementById("selItem").value;
+	var array = str.split("#");
+	//alert(array[1]);
+	id=array[1];
+	
+	if(id==0){
+		alert("Please Select Item First!");
+		document.getElementById("selItem").focus();
+	}else if(qty =='' || qty==0){
+		alert("Please Select Item First!");
+		document.getElementById("enterQty1").focus();
+	}else{
+		
+		var frRateCat =  $('#frRateCat').val();
+		
+
+		 $.post('${getItemDataByIdPos}',
+					{
+						id: id,
+						ajax: 'true'
+					},
+					function(data) {
+
+						//alert(JSON.stringify(data));
+						
+						var mrp=0; 
+						if(frRateCat==1){
+							mrp=data.itemMrp1;
+						}else if(frRateCat==2){
+							mrp=data.itemMrp2;
+						}else if(frRateCat==3){
+							mrp=data.itemMrp3;
+						}
+					
+						var taxper=data.itemTax1+data.itemTax2;
+						
+						var rate=mrp*qty;
+						
+						document.getElementById("rateHidden").value = mrp
+						document.getElementById("taxperHidden").value = taxper;
+						document.getElementById("itemNameHidden").value = data.itemName;
+						document.getElementById("itemIdHidden").value = data.id;
+						document.getElementById("uomHidden").value = data.itemImage;
+						document.getElementById("isDecimalHidden").value = 0;
+						document.getElementById("enterRate").value =rate;
+						document.getElementById("enterQty").value = qty;
+						
+						//alert("MRP = "+mrp+"   TAX ="+taxper+"   NAME = "+data.itemName+"    UOM = "+data.itemImage+"     RATE = "+rate+"     Qty = "+qty);
+						
+						addItemInBillList();
+
+					}); 
+		
+		
+	}
+	
+}
+</script>
+
+	<script type="text/javascript">
+	function focusItemList(){
+		document.getElementById("selItem").focus();
+		}
+	</script>
 
 
 </body>

@@ -53,7 +53,7 @@
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
-					src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
+					src="${pageContext.request.contextPath}/resources/images/minlogo.png"
 					alt="madhvi_logo"></td>
 			</tr>
 			<tr>
@@ -63,7 +63,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName} <br> (Madhvi Dairy Retail Outlet)</b>
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName}</b>
 				</td>
 			</tr>
 			<tr>
@@ -107,7 +107,7 @@
 							</tr>
 							<tr>
 								<td align="left">Place of Supply:</td>
-								<td align="left" colspan="3">Gujarat</td>
+								<td align="left" colspan="3"> </td>
 
 							</tr>
 							<tr>
@@ -292,10 +292,10 @@
 							<td align="left"
 						 		style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
 								>
-								 For wholesale inquiry contact DairyMart Team<br> Ph: 82600 60048/49<br>
-								 Visit us on  www.madhvi.in<br>
+								 For wholesale enquiry contact DairyMart Team<br> Ph: 82600 60048/49<br>
+								 Visit us on  www.monginis.in<br>
 								 Please Email us your feedback/suggestions on<br>
-								 madhvidairy@gmail.com<br>
+								 monginis@gmail.com<br>
 								 This is a computer generated invoice <br>
 								 Subject to ${frDetails.frCity} Jurisdiction</span>
 						  </td>

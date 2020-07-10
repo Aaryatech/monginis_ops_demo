@@ -34,6 +34,7 @@
 	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
 <!--font-family: 'Source Sans Pro', sans-serif;-->
 
+
 </head>
 
 <!--commanJS-->
@@ -88,6 +89,10 @@
 	value="/getItemCurrentStockForPos" />
 
 <c:url var="deleteSellBillWithRemark" value="/deleteSellBillWithRemark" />
+
+<c:url var="getItemListByCatForPos" value="/getItemListByCatForPos" />
+
+<c:url var="getItemDataByIdPos" value="/getItemDataByIdPos" />
 
 
 
@@ -173,8 +178,10 @@ body {
 .def_customer {
 	display: none;
 }
+
 </style>
-<body>
+
+<body onload="focusItemList()">
 	<form action="" method="get">
 
 		<!--wrapper-start-->
@@ -191,7 +198,7 @@ body {
 
 				<div class="drop_menu">
 
-					<div class="franchise_nm">${sessionScope.frName}
+					<div class="franchise_nm" style="color: black;">${sessionScope.frDetails.frName}
 						<span>(${sessionScope.frEmpName})</span>
 					</div>
 
@@ -232,7 +239,7 @@ body {
 			<section class="main_container">
 
 				<!--right-side-box-->
-				<div class="cat_r">
+				<div class="cat_r" id="listDiv">
 					<!--item search row-->
 
 
@@ -254,6 +261,7 @@ body {
 										</div></li> -->
 									<input type="hidden" id="s-option" name="serachBy"
 										onclick="getCatListAndSubCatList(2)">
+
 									<li><input type="radio" id="g-option" name="serachBy"
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
@@ -283,32 +291,33 @@ body {
 
 					</div>
 
-					<!--category box start here-->
-					<div id="catSubCatDivHideShow">
-						<div class="cat_bx_one">
-							<div class="category_list">
-								<div class="category_scrollbars" id="catSubCatDiv">
-									<c:forEach items="${catList}" var="catList">
-										<div class="cat_one catDummyClass">
-											<a href="#" onclick="getsubcatlist(${catList.catId})"><img
-												title="${catList.catName}"
-												src="${pageContext.request.contextPath}/resources/newpos/images/${catList.itemImage}"
-												onerror="imgError(this);" alt="${catList.catName}"> <span>${catList.catName}</span></a>
-										</div>
-									</c:forEach>
+					<div class="row" style="display: flex;">
 
-								</div>
+						<div id="catSubCatDivHideShow">
+
+							<!--category box start here-->
+							<div style="display: grid; width: fit-content;">
+
+								<c:forEach items="${catList}" var="catList">
+									<div class="cat_one catDummyClass">
+										<a href="#" onclick="getsubcatlist(${catList.catId})"><img
+											title="${catList.catName}"
+											src="${pageContext.request.contextPath}/resources/newpos/images/${catList.itemImage}"
+											onerror="imgError(this);" alt="${catList.catName}"> <span>${catList.catName}</span></a>
+									</div>
+								</c:forEach>
+
 							</div>
+
+
 						</div>
 
-					</div>
-					<!--listing box start here-->
 
+						<div
+							style="margin-left: 20px; margin-right: 20px; margin-top: 5px;">
 
-					<div class="dual_bx" style="">
-						<div class="dual_l">
 							<div class="bx_tabs">
-								<ul id="subcatUl">
+								<ul id="subcatUl" style="display: grid;">
 									<!-- <li class="subCatDummyClass"><a href="#"
 										style="margin-bottom: 5px;">Sweet</a></li>
 									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
@@ -325,39 +334,41 @@ body {
 									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
 									<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
 
-									<ul>
+								</ul>
 							</div>
+
 						</div>
-						<div class="dual_r"></div>
-					</div>
 
-					<div class="dual_bx" style=""></div>
-					<div class="cat_list_bx" id="catItmDiv">
+						<div>
 
-						<div class="cat_list" style="height: 400px;">
-							<div class="carlist_scrollbars" id="scrollDiv"
-								style="height: 380px;">
-								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
+							<div class="cat_list_bx" id="catItmDiv">
 
-
-								<div class="sweet_list" id="aaaaaa">
-									<ul id="itemDiv">
-										<!-- <li class="itemDummyClass">
-											<div class="sweet_one">
-												<a href="#"><p>210</p> Maramari <span>Qty : 6</span></a>
-											</div>
-										</li> -->
-
-									</ul>
+								<div class="cat_list"
+									style="height: 400px; padding: 0; border: 0px;">
+									<div class="carlist_scrollbars" id="scrollDiv"
+										style="height: 380px;">
+										<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
 
+										<div class="sweet_list" id="aaaaaa">
+											<ul id="itemDiv">
+
+											</ul>
+
+
+										</div>
+
+
+
+									</div>
 								</div>
-
-
-
 							</div>
+
 						</div>
+
+
 					</div>
+
 
 					<div class="cat_list_bx" id="itmDiv" style="display: none;">
 
@@ -387,6 +398,14 @@ body {
 					</div>
 
 				</div>
+
+
+
+
+
+
+
+
 
 				<div class="cat_l">
 					<!--top-buttons row-->
@@ -531,7 +550,51 @@ body {
 					<c:set var="totalTaxableAmt" value="0"></c:set>
 					<c:set var="totalTaxAmt" value="0"></c:set>
 					<c:set var="totalAmt" value="0"></c:set>
+
+					<div class="add_customer_bx">
+						<div class="customer_row">
+							<div class="customer_one">Item</div>
+							<div class="customer_two" style="display: flex;">
+
+								<%-- 	<select name="selItem" id="selItem"
+									data-placeholder="Select Customer"
+									class="input_add chosen-select" autofocus
+									onchange="setItemValuesToHidden(this.value)">
+
+									<option value="0">Select Item</option>
+
+									<c:forEach items="${newItemsList}" var="items">
+
+										<option value="${items.id}" style="text-align: left;">${items.itemName}</option>
+
+									</c:forEach>
+
+								</select> --%>
+
+								<input name="selItem" id="selItem" type="text" class="input_cat"
+									placeholder="Search Item" style="width: 100%"
+									autocomplete="off" list="itemList" />
+
+								<datalist id="itemList">
+									<c:forEach items="${newItemsList}" var="item">
+										<option value="${item.itemName}#${item.id}">${item.itemName}</option>
+									</c:forEach>
+								</datalist>
+
+
+								&nbsp;&nbsp; <input name="enterQty1" id="enterQty1" type="text"
+									class="input_add" style="width: 75px;" placeholder="Qty"
+									onblur="addItemToList(this.value)" />
+							</div>
+							<div class="customer_three"></div>
+						</div>
+					</div>
+
+					<br> <br>
+
 					<!--product table-->
+
+
 
 
 					<div class="total_table_one" id="printDivid">
@@ -746,17 +809,17 @@ body {
 					<div class="add_customer_one">Pin Code</div>
 					<div class="add_input">
 
-						<input type="text" class="input_add" placeholder="Enter Pin Code" value="0"
-							name="pincode" id="pincode" onchange="trim(this)" maxlength="6"
-							pattern="[0-9]" />
+						<input type="text" class="input_add" placeholder="Enter Pin Code"
+							value="0" name="pincode" id="pincode" onchange="trim(this)"
+							maxlength="6" pattern="[0-9]" />
 					</div>
 					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one" style="display: none;">
 					<div class="add_customer_one">Distance(In Kms)</div>
 					<div class="add_input">
-						<input placeholder="Enter distance in kms" name="kms" id="kms" value="0"
-							onchange="trim(this)" type="text" class="input_add" />
+						<input placeholder="Enter distance in kms" name="kms" id="kms"
+							value="0" onchange="trim(this)" type="text" class="input_add" />
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -863,7 +926,7 @@ body {
 					</div>
 
 					<div class="add_frm_one">
-						<div class="add_customer_one">Address </div>
+						<div class="add_customer_one">Address</div>
 						<div class="add_input">
 							<input placeholder="Enter Address" name="custAdd" id="custAdd"
 								onchange="trim(this)" type="text" class="input_add" />
@@ -1004,9 +1067,9 @@ body {
 										onclick="changeSplitSingle(1)" checked> <label
 										for="single">Single</label>
 										<div class="check"></div></li>
-									<li style="display: none;"><input type="radio" id="split" name="modePay"
-										onclick="changeSplitSingle(2)"> <label for="split">Split
-									</label>
+									<li style="display: none;"><input type="radio" id="split"
+										name="modePay" onclick="changeSplitSingle(2)"> <label
+										for="split">Split </label>
 										<div class="check">
 											<div class="inside"></div>
 										</div></li>
@@ -3356,7 +3419,7 @@ function matchSplitAmt(flag){
 										mrp=data[i].itemMrp3;
 									}
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\','+data[i].extInt2+')"><p>'
+									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].itemImage+'\','+data[i].extInt2+')"><p>'
 									+ mrp
 									+ ' </p> '
 									+ data[i].itemName
@@ -3370,7 +3433,56 @@ function matchSplitAmt(flag){
 									$("#itemDiv")
 									.append(
 											$(
-											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
+											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].itemImage+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
+								}
+								//$('.carlist_scrollbars').ClassyScroll();
+								 $(".scrollbar-content").css("top", "0");
+								 $(".scrollbar-handle").css("top", "0");
+							});
+		}
+		
+		function getItemListByCat(catId) {
+			//alert(catId)
+			  
+					$(".act_subcat").removeClass('act');
+					//$("#subcat"+catId).addClass('act');
+			
+			$
+					.post(
+							'${getItemListByCatForPos}',
+							{
+								catId : catId,
+								ajax : 'true'
+							},
+							function(data) {
+								$(".itemDummyClass").remove();
+								var frRateCat =  $('#frRateCat').val();
+								
+								for (var i = 0; i < data.length; i++) { 
+									var mrp=0; 
+									if(frRateCat==1){
+										mrp=data[i].itemMrp1;
+									}else if(frRateCat==2){
+										mrp=data[i].itemMrp2;
+									}else if(frRateCat==3){
+										mrp=data[i].itemMrp3;
+									}
+									var taxper=data[i].itemTax1+data[i].itemTax2;
+									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].itemImage+'\','+data[i].extInt2+')"><p>'
+									+ mrp
+									+ ' </p> '
+									+ data[i].itemName
+									+ '<span></span></a></div>';
+
+									/* $("#itemDiv")
+											.append(
+													$(
+															'<li class="itemDummyClass"></li>')
+															.html(timeDiv)); */
+									$("#itemDiv")
+									.append(
+											$(
+											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].itemImage+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
 								}
 								//$('.carlist_scrollbars').ClassyScroll();
 								 $(".scrollbar-content").css("top", "0");
@@ -3472,7 +3584,8 @@ function matchSplitAmt(flag){
 															.html(timeDiv));
 								}
 								
-								getItemList(subcatid);
+								//getItemList(subcatid);
+								getItemListByCat(catId);
 								//$('.category_scrollbars').ClassyScroll();
 							});
 
@@ -3514,7 +3627,7 @@ function matchSplitAmt(flag){
 									$("#itemDivForItem")
 											.append(
 													$(
-													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
+													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].itemImage+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
 															 
 								}
 							//	$('#scrollDiv').removeClass('carlist_scrollbars');
@@ -3769,8 +3882,11 @@ $("#enterQty").focus();
 					document.getElementById("discPer").value=0;
 					document.getElementById("discAmt").value=0;
 					//document.getElementById("payAmt").value=payableAmount;
+					//alert("hi");
 					
-					var totalAmt=payableAmount-0;
+					//var totalAmt=payableAmount-0;
+					var totalAmt=totalAmtPopup-0;
+					
 					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 					document.getElementById("payAmt").value = totalAmt.toFixed(0);
 					
@@ -3809,6 +3925,10 @@ $("#enterQty").focus();
 			var taxperHidden =  $('#taxperHidden').val() ;
 			var isDecimalHidden =  $('#isDecimalHidden').val() ;
 			var flag=0;
+			//alert(uomHidden);
+			
+			//alert("Qty - "+qty+"   Rate - "+rate);
+			
 			if(isNaN(rate) || rate==0){
 				alert("Enter Valid Rate ");
 				flag=1;
@@ -3825,6 +3945,9 @@ $("#enterQty").focus();
 			
 			 
 			if(flag==0){
+				
+				document.getElementById("selItem").focus();
+				
 				 document.getElementById("overlay2").style.display = "block";
 				$
 				.post(
@@ -3847,6 +3970,20 @@ $("#enterQty").focus();
 									 
 						});
 			}
+			
+			//document.getElementById("selItem").selectedIndex = 0;
+			//document.getElementById("selItem").options[0].selected=true;
+			document.getElementById("enterQty1").value="";
+			document.getElementById("selItem").value="";
+		
+			
+			/* $("#selItem").trigger("chosen:updated");
+			$('.chosen-select').trigger(
+					'chosen:updated'); */
+			
+			
+			//$("#selItem").focus();
+			
 			
 			  
 		}
@@ -3985,6 +4122,7 @@ $("#enterQty").focus();
 							
 							getUomList();
 				});
+		
 		
 	}
 	
@@ -4135,6 +4273,8 @@ $("#enterQty").focus();
 					},
 					function(data) {
 						
+						document.getElementById("selItem").focus();
+						
 						if(data==1){
 						
 						if (confirm("Todays day end process competed! Bill will be generated for next day.")) {
@@ -4176,6 +4316,9 @@ $("#enterQty").focus();
 										ajax : 'true'
 									},
 									function(data) {
+										
+										
+										
 										document.getElementById("discAmt").value=0;
 										document.getElementById("discPer").value=0;
 										  if(advAmt>0){
@@ -5391,6 +5534,76 @@ if(bills.checked==true){
 	}
 
 </script>
+
+
+	<script type="text/javascript">
+
+function  addItemToList(qty) {
+	
+	var str=document.getElementById("selItem").value;
+	var array = str.split("#");
+	//alert(array[1]);
+	id=array[1];
+	
+	if(id==0){
+		alert("Please Select Item First!");
+		document.getElementById("selItem").focus();
+	}else if(qty =='' || qty==0){
+		alert("Please Select Item First!");
+		document.getElementById("enterQty1").focus();
+	}else{
+		
+		var frRateCat =  $('#frRateCat').val();
+		
+
+		 $.post('${getItemDataByIdPos}',
+					{
+						id: id,
+						ajax: 'true'
+					},
+					function(data) {
+
+						//alert(JSON.stringify(data));
+						
+						var mrp=0; 
+						if(frRateCat==1){
+							mrp=data.itemMrp1;
+						}else if(frRateCat==2){
+							mrp=data.itemMrp2;
+						}else if(frRateCat==3){
+							mrp=data.itemMrp3;
+						}
+					
+						var taxper=data.itemTax1+data.itemTax2;
+						
+						var rate=mrp*qty;
+						
+						document.getElementById("rateHidden").value = mrp
+						document.getElementById("taxperHidden").value = taxper;
+						document.getElementById("itemNameHidden").value = data.itemName;
+						document.getElementById("itemIdHidden").value = data.id;
+						document.getElementById("uomHidden").value = data.itemImage;
+						document.getElementById("isDecimalHidden").value = 0;
+						document.getElementById("enterRate").value =rate;
+						document.getElementById("enterQty").value = qty;
+						
+						//alert("MRP = "+mrp+"   TAX ="+taxper+"   NAME = "+data.itemName+"    UOM = "+data.itemImage+"     RATE = "+rate+"     Qty = "+qty);
+						
+						addItemInBillList();
+
+					}); 
+		
+		
+	}
+	
+}
+</script>
+
+	<script type="text/javascript">
+	function focusItemList(){}
+		document.getElementById("selItem").focus();
+		}
+	</script>
 
 
 </body>

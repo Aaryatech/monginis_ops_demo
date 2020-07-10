@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -44,11 +47,17 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.FrSupplier;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.GetTotalAmt;
+import com.monginis.ops.model.Info;
+import com.monginis.ops.model.PettyCashHandover;
 import com.monginis.ops.model.othitemstock.OtherItemCurStock;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.pettycash.GetCashAdvAndExpAmt;
 import com.monginis.ops.model.pettycash.PettyCashDao;
 import com.monginis.ops.model.pettycash.PettyCashData;
 import com.monginis.ops.model.pettycash.PettyCashManagmt;
@@ -83,6 +92,10 @@ public class PettyCashController {
 			System.out.println("ToDay Date-----"+currntDat);
 		
 			model.addObject("currentDate", currntDat);
+			
+			DateFormat DF1 = new SimpleDateFormat("yyyy-MM-dd");
+			String currntDat2 = DF1.format(new java.util.Date());
+			model.addObject("dateForSearch", currntDat2);
 			
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
@@ -120,91 +133,228 @@ public class PettyCashController {
 			
 			
 			
-			/*map.add("frId", frid);
-			map.add("date", DateConvertor.convertToYMD(petty.getDate()));
-			pettyDao = rest.postForObject(Constant.URL + "/getPettyCashAmts", map, PettyCashDao.class);
-			System.out.println("Petty Cash----"+pettyDao.toString());*/
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			map.add("date", newDate);
+
+			System.err.println("DATE **************************** " + newDate);
+
+			GetCashAdvAndExpAmt amtData = rest.postForObject(Constant.URL + "/getTrCashAmtAndAdvAmtAndExpAmt", map,
+					GetCashAdvAndExpAmt.class);
+
+			model.addObject("trCashAmt", amtData.getTrCashAmt());
+			model.addObject("advAmt", amtData.getAdvAmt());
+			model.addObject("expAmt", amtData.getExpAmt());
 			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			map.add("date", newDate);
+			
+			 DecimalFormat df = new DecimalFormat("0.00");
+
+
+			GetTotalAmt creditNoteAmt = rest.postForObject(Constant.URL + "/getTotalPOSCreditNoteAmt", map,
+					GetTotalAmt.class);
+			model.addObject("creditNote", df.format(creditNoteAmt.getTotalAmt()));
+
+			/*
+			 * map.add("frId", frid); map.add("date",
+			 * DateConvertor.convertToYMD(petty.getDate())); pettyDao =
+			 * rest.postForObject(Constant.URL + "/getPettyCashAmts", map,
+			 * PettyCashDao.class);
+			 * System.out.println("Petty Cash----"+pettyDao.toString());
+			 */
+
 			List<Float> spList = new ArrayList<>();
-			
+
 			List<Float> sellBillAdvList = new ArrayList<>();
-			
+
 			List<Float> otherBillAdvList = new ArrayList<>();
-			
-			if(pettyDao!=null) {
-				if(pettyDao.getSpCakAdv()!=null) {
+
+			if (pettyDao != null) {
+				if (pettyDao.getSpCakAdv() != null) {
 					for (int i = 0; i < pettyDao.getSpCakAdv().size(); i++) {
 						spList.add(pettyDao.getSpCakAdv().get(i).getMrp());
 						spList.add(pettyDao.getSpCakAdv().get(i).getAdvance());
-						
+
 					}
 				}
 			}
-			
-			
-			
-			System.out.println("List1-------------"+spList);
-			
+
+			System.out.println("List1-------------" + spList);
+
 			float lastAdv = spList.get(1);
-			System.out.println("LastAdv-------------"+lastAdv);
-			
+			System.out.println("LastAdv-------------" + lastAdv);
+
 			float mrp = spList.get(2);
-			System.out.println("MRP-------------"+mrp);
-			
+			System.out.println("MRP-------------" + mrp);
+
 			float currentAdv = spList.get(3);
-			System.out.println("Today-------------"+currentAdv);
-			
-			float calAdv = mrp-currentAdv;
-			float amt = calAdv+lastAdv;
-			System.out.println("Total Adv-------------"+amt);
-			
-			
+			System.out.println("Today-------------" + currentAdv);
+
+			float calAdv = mrp - currentAdv;
+			float amt = calAdv + lastAdv;
+			System.out.println("Total Adv-------------" + amt);
+
 			float sellBillAdv = pettyDao.getSellBillAdv().getSellQtyMrp();
-			System.out.println("SellBillDetailAdv------------"+sellBillAdv);
-			
+			System.out.println("SellBillDetailAdv------------" + sellBillAdv);
+
 			float othrBilAdv = pettyDao.getOtherBillAdv().getBillDetailItemMrp();
-			System.out.println("OtherBillDetailAdv-----------"+othrBilAdv);
-			
-			float cashAmt = amt+sellBillAdv+othrBilAdv;
-			System.out.println("Cash Amt-------------"+cashAmt);
-			
-			
+			System.out.println("OtherBillDetailAdv-----------" + othrBilAdv);
+
+			float cashAmt = amt + sellBillAdv + othrBilAdv;
+			System.out.println("Cash Amt-------------" + cashAmt);
+
 			calendar.setTimeInMillis(Long.parseLong(petty.getDate()));
-			System.out.println("Date2=============="+dmySDF.format(cal.getTime()));
-			
+			System.out.println("Date2==============" + dmySDF.format(cal.getTime()));
+
+			Calendar todaysDate = Calendar.getInstance();
+			int isDayEnd = 0;
+			if (cal.compareTo(todaysDate) <= 0) {
+				isDayEnd = 1;
+			}
+			model.addObject("isDayEnd", isDayEnd);
+
+			System.err.println("DATE------------- " + todaysDate.getTime() + " ----------  " + cal.getTime());
+			System.err.println("isDayEnd-------------------------------- " + isDayEnd);
+
 			pettyCash.setDate(dmySDF.format(cal.getTime()));
 			pettyCash.setCashAmt(cashAmt);
 			pettyCash.setOpeningAmt(petty.getClosingAmt());
-			System.out.println("Petty Data-----------------------------"+pettyCash);
-			
+			System.out.println("Petty Data-----------------------------" + pettyCash);
+
 			model.addObject("pettycash", pettyCash);
 			model.addObject("isEdit", 0);
-		
+
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
-			
-			
-			PettyCashManagmt[] list = rest.postForObject(Constant.URL + "/getPettyCashList",map,
+
+			PettyCashManagmt[] list = rest.postForObject(Constant.URL + "/getPettyCashList", map,
 					PettyCashManagmt[].class);
-			ArrayList<PettyCashManagmt> pettyList = new ArrayList<>(Arrays.asList(list)); 
+			ArrayList<PettyCashManagmt> pettyList = new ArrayList<>(Arrays.asList(list));
 			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("dd-MM-yyyy");
-			
-			if(pettyList!=null) {
+
+			if (pettyList != null) {
 				for (int i = 0; i < pettyList.size(); i++) {
-					Calendar cal1= Calendar.getInstance();
+					Calendar cal1 = Calendar.getInstance();
 					cal1.setTimeInMillis(Long.parseLong(pettyList.get(i).getDate()));
-					pettyList.get(i).setDate(ymdSDF1.format(cal1.getTime()));	
+					pettyList.get(i).setDate(ymdSDF1.format(cal1.getTime()));
 				}
 			}
+
+			model.addObject("pettyList", pettyList);// Petty Cash List
+
+			// -----------------------------Petty Cash Hand
+			// Over--------------------------------//
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			PettyCashManagmt pettyCashMgmt = rest.postForObject(Constant.URL + "/getPettyCashDetails", map,
+					PettyCashManagmt.class);
+
+			ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+			cal = Calendar.getInstance();
+			cal.setTimeInMillis(Long.parseLong(pettyCashMgmt.getDate()));
+			// System.out.println("CashHAndDate=============="+ymdSDF.format(cal.getTime()));
+
+			// Add Day 1
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			String plusDate = ymdSDF.format(cal.getTime());
+
+			PettyCashHandover cashHandOvr = null;
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frid);
+				map.add("lastdate", plusDate);
+				cashHandOvr = rest.postForObject(Constant.URL + "/getPettyCashHandOvrLastRecrd", map,
+						PettyCashHandover.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+				cashHandOvr = null;
+			}
+
+			// From Time
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate localDate = LocalDate.now();
+
+			// To Time
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+
+			try {
+
+				if (cashHandOvr != null) {
+					System.out.println("Data Found");
+					model.addObject("openAmt", cashHandOvr.getAmtHandover());
+
+					map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("fromTime", cashHandOvr.getTransactionDate());
+					map.add("toTime", dateFormat.format(date));
+					map.add("frId", frid);
+
+					SellBillHeader sellAmt = rest.postForObject(Constant.URL + "/getPettyCashSellAmt", map,
+							SellBillHeader.class);
+					float sellingAmt = 0;
+					try {
+						sellingAmt = sellAmt.getGrandTotal();
+
+					} catch (Exception e) {
+						sellingAmt = 0;
+					}
+					model.addObject("sellAmt", sellingAmt);
+					model.addObject("totalCash", cashHandOvr.getAmtHandover() + sellingAmt);
+
+				} else {
+					System.out.println("No Data Found");
+
+					model.addObject("openAmt", pettyCashMgmt.getClosingAmt());
+
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("fromTime", dtf.format(localDate) + " " + "06:00:00");
+					map.add("toTime", dateFormat.format(date));
+					map.add("frId", frid);
+
+					SellBillHeader sellAmt = rest.postForObject(Constant.URL + "/getPettyCashSellAmt", map,
+							SellBillHeader.class);
+					model.addObject("sellAmt", sellAmt.getGrandTotal());
+
+					model.addObject("totalCash", pettyCashMgmt.getClosingAmt() + sellAmt.getGrandTotal());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+
+			/*
+			 * PettyCashEmp[] empArr = rest.postForObject(Constant.URL +
+			 * "/getAllPettyCashEmp", map, PettyCashEmp[].class); List<PettyCashEmp> empList
+			 * = new ArrayList<PettyCashEmp>(Arrays.asList(empArr));
+			 */
+
+			FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmpByFrid", map, FrEmpMaster[].class);
+			List<FrEmpMaster> empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+			model.addObject("empList", empList);
 			
-			model.addObject("pettyList", pettyList);
-			
-			
-		}catch (Exception e) {
-			System.err.println("Exception in showPattyCashMgmnt : "+e.getMessage());		
-		e.printStackTrace();
+			FrEmpMaster loginResponse = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			String loginEmpId = "" + loginResponse.getFrEmpId();
+			model.addObject("loginEmpId", loginEmpId);
+
+			model.addObject("frId", frid);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			PettyCashHandover[] cashHandOvrArr = rest.postForObject(Constant.URL + "/getPettyCashHandByFrid", map,
+					PettyCashHandover[].class);
+			List<PettyCashHandover> pcHndOvrList = new ArrayList<PettyCashHandover>(Arrays.asList(cashHandOvrArr));
+			model.addObject("cashHndOvrList", pcHndOvrList);
+
+		} catch (Exception e) {
+			System.err.println("Exception in showPattyCashMgmnt : " + e.getMessage());
+			e.printStackTrace();
 		}
-		
+
 		return model;
 		
 	}
@@ -214,63 +364,69 @@ public class PettyCashController {
 	@RequestMapping(value = "/addPettyCash", method = RequestMethod.POST)
 	public String addPettyCash(HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			
+
 			PettyCashManagmt pettycash = new PettyCashManagmt();
 			HttpSession session = req.getSession();
 			int frid = (int) session.getAttribute("frId");
-			
-			float cashAmt  = 0;
+
+			float cashAmt = 0;
 			float closAmt = 0;
 			float withdrawAmt = 0;
 			float opnAmt = 0;
 			float cashEdtAmt = 0;
-			int pettyCashId  = 0;
+			int pettyCashId = 0;
 			try {
-				
-				 cashAmt = Float.parseFloat(req.getParameter("cash_amt"));
-				 withdrawAmt = Float.parseFloat(req.getParameter("withdrawal_amt"));
-				 opnAmt = Float.parseFloat(req.getParameter("opening_amt"));
-				 cashEdtAmt = Float.parseFloat(req.getParameter("cash_edit_amt"));				 
-				 closAmt = Float.parseFloat(req.getParameter("closing_amt"));
-				 pettyCashId = Integer.parseInt(req.getParameter("petty_id"));
-			}catch (Exception e) {
+
+				cashAmt = Float.parseFloat(req.getParameter("cash_amt"));
+				withdrawAmt = Float.parseFloat(req.getParameter("withdrawal_amt"));
+				opnAmt = Float.parseFloat(req.getParameter("opening_amt"));
+				cashEdtAmt = Float.parseFloat(req.getParameter("cash_edit_amt"));
+				closAmt = Float.parseFloat(req.getParameter("closing_amt"));
+				pettyCashId = Integer.parseInt(req.getParameter("petty_id"));
+			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
+			
+			FrEmpMaster loginResponse = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			int loginEmpId = loginResponse.getFrEmpId();
 
 			String date = DateConvertor.convertToYMD(req.getParameter("cash_date"));
 			
+			SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+			Calendar cal=Calendar.getInstance();
+
 			pettycash.setPettycashId(pettyCashId);
-			pettycash.setCardAmt(0);			
-			pettycash.setCashAmt(cashAmt);			
+			pettycash.setCardAmt(0);
+			pettycash.setCashAmt(cashAmt);
 			pettycash.setClosingAmt(closAmt);
 			pettycash.setDate(date);
 			pettycash.setExFloat1(0);
-			pettycash.setExInt1(0);
-			pettycash.setExVar1("NA");
+			pettycash.setExInt1(loginEmpId);
+			pettycash.setExVar1(""+sdf.format(cal.getTime()));
 			pettycash.setExVar2("NA");
 			pettycash.setFrId(frid);
-			pettycash.setOpeningAmt(opnAmt);			
+			pettycash.setOpeningAmt(opnAmt);
 			pettycash.setCardEditAmt(0);
-			pettycash.setTtlEditAmt(0);			
+			pettycash.setTtlEditAmt(0);
 			pettycash.setOtherAmt(0);
 			pettycash.setStatus(0);
 			pettycash.setTotalAmt(0);
 			pettycash.setTtlEditAmt(0);
 			pettycash.setWithdrawalAmt(withdrawAmt);
-			pettycash.setOpnEditAmt(0);				
+			pettycash.setOpnEditAmt(0);
 			pettycash.setCashEditAmt(cashEdtAmt);
-			pettycash.setExFloat1(0);	
-			System.out.println("Cash-------"+pettycash);
-			PettyCashManagmt savePettyCash =  rest.postForObject(Constant.URL + "/addPettyCash", pettycash, PettyCashManagmt.class);
-			
-		}catch (Exception e) {
-			System.err.println("Exception in addPettyCash : "+e.getMessage());		
+			pettycash.setExFloat1(0);
+			System.out.println("Cash-------" + pettycash);
+			PettyCashManagmt savePettyCash = rest.postForObject(Constant.URL + "/addPettyCash", pettycash,
+					PettyCashManagmt.class);
+
+		} catch (Exception e) {
+			System.err.println("Exception in addPettyCash : " + e.getMessage());
 			e.printStackTrace();
 		}
 		return "redirect:/showPattyCashMgmnt";
 	}
-	
 	
 	
 	
@@ -366,17 +522,24 @@ public class PettyCashController {
 			PettyCashManagmt[] list = rest.postForObject(Constant.URL + "/getPettyCashListDateWise",map,
 					PettyCashManagmt[].class);
 			 pettyInfo = new ArrayList<>(Arrays.asList(list)); 
-			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("dd-MM-yyyy");
-			
-			if(pettyInfo!=null) {
-				for (int i = 0; i < pettyInfo.size(); i++) {
-					Calendar cal1= Calendar.getInstance();
-					cal1.setTimeInMillis(Long.parseLong(pettyInfo.get(i).getDate()));
-					pettyInfo.get(i).setDate(ymdSDF1.format(cal1.getTime()));	
+			 SimpleDateFormat ymdSDF1 = new SimpleDateFormat("dd-MM-yyyy");
+
+				if (pettyInfo != null) {
+					for (int i = 0; i < pettyInfo.size(); i++) {
+						Calendar cal1 = Calendar.getInstance();
+						cal1.setTimeInMillis(Long.parseLong(pettyInfo.get(i).getDate()));
+						pettyInfo.get(i).setDate(ymdSDF1.format(cal1.getTime()));
+						
+						if(ymdSDF1.format(cal1.getTime()).equalsIgnoreCase(currntDat)) {
+							pettyInfo.get(i).setDel("1");
+						}else {
+							pettyInfo.get(i).setDel("0");
+						}
+						
+					}
 				}
-			}
-			
-			System.out.println("PettyDateList---------------"+pettyInfo);
+
+				System.out.println("PettyDateList---------------" + pettyInfo);
 			
 		}catch (Exception e) {
 			System.err.println("Exception in showPattyCashMgmnt : "+e.getMessage());		
@@ -598,4 +761,208 @@ public class PettyCashController {
 		}
 
 	}
+	
+	
+	@RequestMapping(value = "/editPettyCashData", method = RequestMethod.GET)	
+	public @ResponseBody PettyCashManagmt editPettyCashData(HttpServletRequest req, HttpServletResponse resp) {
+		PettyCashManagmt petty = new PettyCashManagmt();
+		try {
+
+			int id = Integer.parseInt(req.getParameter("pettyCashId"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", id);
+
+			petty = rest.postForObject(Constant.URL + "/getPettyCashById", map,
+					PettyCashManagmt.class);
+			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTimeInMillis(Long.parseLong(petty.getDate()));
+			petty.setDate(ymdSDF1.format(cal1.getTime()));
+			System.err.println("Data---------"+petty);
+		} catch (Exception e) {
+			System.err.println("Exception in editPettyCashData : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return petty;
+	}
+	
+	@RequestMapping(value = "/updateWithdrawAmt", method = RequestMethod.GET)
+	public @ResponseBody int updateWithdrawAmt(HttpServletRequest req, HttpServletResponse resp) {
+		Info info = new Info();
+		int res = 0;
+		try {
+				int id = Integer.parseInt(req.getParameter("id"));
+				float closeAmt = Integer.parseInt(req.getParameter("closeAmt"));
+				float withdrawl = Integer.parseInt(req.getParameter("withdrawl"));
+				
+				System.out.println(id+" "+closeAmt+" "+withdrawl);
+	
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("id", id);
+				map.add("closeAmt", closeAmt);
+				map.add("withdrawl", withdrawl);
+	
+				info = rest.postForObject(Constant.URL + "/editPettyCashWithdrawAmt", map,
+						Info.class);
+				System.err.println("Res--------"+info);
+				
+				if(info.isError()) {
+					res=0;
+				}else {
+					res=1;
+				}
+				
+				
+		} catch (Exception e) {
+			System.err.println("Exception in updateWithdrawAmt : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	
+	@RequestMapping(value = "/deletePettyCashData/{id}", method = RequestMethod.GET)
+	public String deletePettyCashData(@PathVariable int id, HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", id);
+			int res = rest.postForObject("" + Constant.URL + "deletePettyCashData", map, Integer.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/getPettyCashTransactions";
+	}
+	
+	
+	
+	@RequestMapping(value = "/insertPettyCashHandOver", method = RequestMethod.POST)
+	public String insertPettyCashHandOver(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		try {
+
+			PettyCashHandover cashHndOvr = new PettyCashHandover();
+			session = req.getSession();
+			int frid = (int) session.getAttribute("frId");
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			// logger.info(dateFormat.format(date)); // Current Date Time
+
+			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal1 = Calendar.getInstance();
+			// String str = req.getParameter("from_emp");
+
+			FrEmpMaster loginResponse = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			System.err.println("EMP LOGIN -------------------------------- " + loginResponse);
+
+			String fromEmpId = "" + loginResponse.getFrEmpId();
+			String FromEmpName = "" + loginResponse.getFrEmpName();
+
+			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+			String currentDate = DF.format(new java.util.Date());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			map.add("lastdate", currentDate);
+
+			System.err.println("DATE **************************** " + currentDate);
+
+			PettyCashHandover data=null;
+			try {
+			data = rest.postForObject(Constant.URL + "/getLastCashHandover", map,
+					PettyCashHandover.class);
+			}catch(Exception e) {
+				data=null;
+			}
+			
+			System.err.println("PREV HANDOVER **************************** " + data);
+
+			float prevAmt = 0;
+			if (data != null) {
+				prevAmt = data.getSellingAmt();
+			}
+
+			float sellAmtTot = Float.parseFloat(req.getParameter("sell_amt"));
+
+			float saleDone = sellAmtTot - prevAmt;
+
+			// String[] part = str.split("-");
+			// String fromEmpId = part[0];
+			// String FromEmpName = part[1];
+
+			String str2 = req.getParameter("to_emp");
+			String[] parts = str2.split("-");
+			String toEmpId = parts[0];
+			String toEmpName = parts[1];
+
+			cashHndOvr.setActualAmtHandover(Float.parseFloat(req.getParameter("total_cash_amt")));
+			cashHndOvr.setAmtHandover(Float.parseFloat(req.getParameter("actual_cash_amt")));
+			cashHndOvr.setClosingDate(ymdSDF1.format(cal1.getTime()));
+			cashHndOvr.setDelStatus(0);
+			cashHndOvr.setExInt1(0);
+			cashHndOvr.setExInt2(0);
+			cashHndOvr.setExInt3(0);
+			cashHndOvr.setExVar1("" + saleDone);
+			cashHndOvr.setExVar2("NA");
+			cashHndOvr.setExVar3("NA");
+			cashHndOvr.setFrId(frid);
+			cashHndOvr.setFromUserId(Integer.parseInt(fromEmpId));
+			cashHndOvr.setFromUsername(FromEmpName);
+			cashHndOvr.setOpeningAmt(Float.parseFloat(req.getParameter("open_amt")));
+			cashHndOvr.setSellingAmt(Float.parseFloat(req.getParameter("sell_amt")));
+			cashHndOvr.setToUserId(Integer.parseInt(toEmpId));
+			cashHndOvr.setToUsername(toEmpName);
+			cashHndOvr.setTransactionDate(dateFormat.format(date));
+			cashHndOvr.setUpdateDatetime(dateFormat.format(date));
+
+			PettyCashHandover cash = rest.postForObject(Constant.URL + "/savePettyCashHandOver", cashHndOvr,
+					PettyCashHandover.class);
+			if (cash != null) {
+				System.err.println("SAVED");
+			} else {
+				System.err.println("NOT SAVED");
+			}
+
+		} catch (Exception e) {
+			System.out.println("Exception in insertPettyCashHandOver" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showPattyCashMgmnt";
+	}
+
+	@RequestMapping(value = "/getPettyCashHandOverData", method = RequestMethod.GET)
+	public @ResponseBody List<PettyCashHandover> getPettyCashHandOverData(HttpServletRequest req,
+			HttpServletResponse resp, HttpSession session) {
+		List<PettyCashHandover> cashList = null;
+		try {
+
+			String fromDate = req.getParameter("fromDate");
+			String toDate = req.getParameter("toDate");
+
+			session = req.getSession();
+			int frid = (int) session.getAttribute("frId");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frid);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+			PettyCashHandover[] list = rest.postForObject(Constant.URL + "/getCashHandOverTransctn", map,
+					PettyCashHandover[].class);
+			cashList = new ArrayList<>(Arrays.asList(list));
+		} catch (Exception e) {
+			System.out.println("Exception in getPettyCashHandOverData" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return cashList;
+
+	}
+	
+	
 }

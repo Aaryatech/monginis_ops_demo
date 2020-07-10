@@ -203,7 +203,7 @@ font-size: 16px;
 
 .ui-widget.ui-widget-content {
     border: 1px solid #c5c5c5;
-    z-index: 999 !important;
+    z-index: 10000 !important;
 }
 
 .icon{

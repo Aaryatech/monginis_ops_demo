@@ -38,8 +38,10 @@
 	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
 <link rel="stylesheet"
@@ -86,35 +88,48 @@
 
 <!----------------------------------------Dropdown With Search----------------------------------------------- -->
 
-<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
 <!--------------------------------------------------------------------------------------- -->
 <%-- <script src="${pageContext.request.contextPath}/resources/jquery.confirm/jquery.confirm.js"></script> --%>
 <style>
-.chosen-container{width: 80% !important;}
+.chosen-container {
+	width: 80% !important;
+}
 
 /* Paste this css to your style sheet file or under head tag */
 /* This only works with JavaScript, 
 if it's not present, don't show loader */
-.no-js #loader { display: none;  }
-.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.no-js #loader {
+	display: none;
+}
+
+.js #loader {
+	display: block;
+	position: absolute;
+	left: 100px;
+	top: 0;
+}
+
 .se-pre-con {
-    position: absolute;
-    left: 20px;
-    top: 230px;
-    width: 96%;
-    height: 53%;
-    z-index: 9999;
+	position: absolute;
+	left: 20px;
+	top: 230px;
+	width: 96%;
+	height: 53%;
+	z-index: 9999;
 	z-index: 9999;
 	opacity: 1;
 	background: url(resources/images/loader1.gif) center no-repeat #fff;
 }
+
 .checkdiv {
-    position: absolute;
-    left: 20px;
-    top: 230px;
-    width: 96%;
-    height: 53%;
-    z-index: 9999;
+	position: absolute;
+	left: 20px;
+	top: 230px;
+	width: 96%;
+	height: 53%;
+	z-index: 9999;
 	z-index: 9999;
 	opacity: 1;
 	background: url(resources/images/check.gif) center no-repeat #fff;
@@ -214,72 +229,129 @@ body {
 	cursor: pointer
 }
 
-@media screen and (max-width:700px){
-	
-	.dialog-ovelay .dialog {width: 90%; height: auto; border-radius: 10px;}
-	.dialog-ovelay .dialog header{border-radius:10px 10px 0 0;}
-}	
-
+@media screen and (max-width:700px) {
+	.dialog-ovelay .dialog {
+		width: 90%;
+		height: auto;
+		border-radius: 10px;
+	}
+	.dialog-ovelay .dialog header {
+		border-radius: 10px 10px 0 0;
+	}
+}
 </style>
 <style>
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
 }
 
-.switch input {display:none;}
+.switch input {
+	display: none;
+}
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
- 
-  transition: .4s;
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
+input:checked+.slider {
+	background-color: #2196F3;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+	border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+	border-radius: 50%;
 }
-label:before{
-    border: 0px solid #ccc;
+
+label:before {
+	border: 0px solid #ccc;
+}
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 555; /* Sit on top */
+	padding-top: 60px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 8px 20px 20px 20px;
+	border: 1px solid #888;
+	width: 30%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(239, 219, 219, 0.5);
+	z-index: 9992;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -329,10 +401,12 @@ label:before{
 				<div class="sidebarright">
 
 					<div class="order-left">
-						<h2 class="pageTitle"><i class="fa fa-user" aria-hidden="true"></i> Customer Bill</h2>
+						<h2 class="pageTitle">
+							<i class="fa fa-user" aria-hidden="true"></i> Customer Bill
+						</h2>
 
 					</div>
-					
+
 					<div class="order-right" align="right">
 						<a href="${pageContext.request.contextPath}/viewBill"><button
 								class="btn additem_btn" style="margin: 0;">View Bill</button></a>
@@ -343,20 +417,21 @@ label:before{
 						<!--tabMenu-->
 						<nav>
 							<ul class="cd-tabs-navigation">
-								<li id="li1"><a data-content="tab1" class="selected" href="#0"
-									onclick="onloadTab(1)" onshow="onloadTab(2)">Token 1</a></li>
-								<li id="li2"><a data-content="tab2" href="#0" onclick="onloadTab(2)">Token
-										2</a></li>
-								<li id="li3"><a data-content="tab3" href="#0" onclick="onloadTab(3)">Token
-										3</a></li>
-								<li id="li4"><a data-content="tab4" href="#0" onclick="onloadTab(4)">Token
-										4</a></li>
-								<li id="li5"><a data-content="tab5" href="#0" onclick="onloadTab(5)">Token
-										5</a></li>
-								<li id="li6"><a data-content="tab6" href="#0" onclick="onloadTab(6)">Token
-										6</a></li>
-								<li id="li7"><a data-content="tab7" href="#0" onclick="onloadTab(7)">Token
-										7</a></li>
+								<li id="li1"><a data-content="tab1" class="selected"
+									href="#0" onclick="onloadTab(1)" onshow="onloadTab(2)">Token
+										1</a></li>
+								<li id="li2"><a data-content="tab2" href="#0"
+									onclick="onloadTab(2)">Token 2</a></li>
+								<li id="li3"><a data-content="tab3" href="#0"
+									onclick="onloadTab(3)">Token 3</a></li>
+								<li id="li4"><a data-content="tab4" href="#0"
+									onclick="onloadTab(4)">Token 4</a></li>
+								<li id="li5"><a data-content="tab5" href="#0"
+									onclick="onloadTab(5)">Token 5</a></li>
+								<li id="li6"><a data-content="tab6" href="#0"
+									onclick="onloadTab(6)">Token 6</a></li>
+								<li id="li7"><a data-content="tab7" href="#0"
+									onclick="onloadTab(7)">Token 7</a></li>
 							</ul>
 						</nav>
 						<!--tabMenu-->
@@ -368,100 +443,101 @@ label:before{
 										<div class="control-label">
 
 											<div>
-													<div class="shInnerwidth">
-												<div >
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
-														
-														
-														
-														<tr>
-															<td align="center" valign="middle" style="padding: 0px;">
-																<table width="100%" border="0" cellspacing="0"
-																	cellpadding="0" >
-																	<thead>
-																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
-																		
-																	</tr>
-																	</thead>
-																	
-																	<tr>
-																		<td><input type="text" class="form-control"
-																			id="barcode1" name="barcode1"
-																			placeholder="Enter Barcode" onchange="selectItem(1)"
-																			onkeypress="onBarcode(event,1)"></td>
-																		<td><select class="chosen-select" 
-																			data-live-search="true" title="Please Select Item"
-																			name="itemName1" id="itemName1"
-																			data-rule-required="true">
-																			<option value=""></option>
-																				<c:forEach items="${catList}" var="cat">
+												<div class="shInnerwidth">
+													<div>
+														<table width="100%" border="0" cellspacing="0"
+															cellpadding="0" class="table">
 
-																					<optgroup label="${cat.catName}">
 
-																						<c:forEach items="${itemListResponse}"
-																							var="itemListResponse">
 
-																							<c:if
-																								test="${itemListResponse.catId == cat.catId}">
-																								<option value="${itemListResponse.id}">${itemListResponse.itemId}--${itemListResponse.itemName}</option>
-																							</c:if>
+															<tr>
+																<td align="center" valign="middle" style="padding: 0px;">
+																	<table width="100%" border="0" cellspacing="0"
+																		cellpadding="0">
+																		<thead>
+																			<tr class="bgpink">
+																				<td>Barcode</td>
+																				<td>Item Name</td>
+																				<td>Qty</td>
+																				<td>Rate</td>
 
-																						</c:forEach>
+																			</tr>
+																		</thead>
 
-																					</optgroup>
+																		<tr>
+																			<td><input type="text" class="form-control"
+																				id="barcode1" name="barcode1"
+																				placeholder="Enter Barcode" onchange="selectItem(1)"
+																				onkeypress="onBarcode(event,1)"></td>
+																			<td><select class="chosen-select"
+																				data-live-search="true" title="Please Select Item"
+																				name="itemName1" id="itemName1"
+																				data-rule-required="true">
+																					<option value=""></option>
+																					<c:forEach items="${catList}" var="cat">
 
-																				</c:forEach>
+																						<optgroup label="${cat.catName}">
 
-																		</select> <input name="item_name1" id="item_name1"
-																			type="hidden" value="" /></td>
-																		<td><input type="number" min="0" max="500"
-																			class="form-control qty_tbl" name="qty1" id="qty1" value="1"
-																			onkeypress="onQty(event,1)" onblur="onTab(1)"
-																			oninput="validity.valid||(value='');"></td>
-																		<td id="rateTdVal1">00</td>
+																							<c:forEach items="${itemListResponse}"
+																								var="itemListResponse">
 
-                                                                        
-									                      
-																	</tr>
-																</table>
-															</td>
-														</tr>
+																								<c:if
+																									test="${itemListResponse.catId == cat.catId}">
+																									<option value="${itemListResponse.id}">${itemListResponse.itemId}--${itemListResponse.itemName}</option>
+																								</c:if>
 
-													</table>
-												</div>
+																							</c:forEach>
+
+																						</optgroup>
+
+																					</c:forEach>
+
+																			</select> <input name="item_name1" id="item_name1"
+																				type="hidden" value="" /></td>
+																			<td><input type="number" min="0" max="500"
+																				class="form-control qty_tbl" name="qty1" id="qty1"
+																				value="1" onkeypress="onQty(event,1)"
+																				onblur="onTab(1)"
+																				oninput="validity.valid||(value='');"></td>
+																			<td id="rateTdVal1">00</td>
+
+
+
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+
+														</table>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-                                     
 
 
 
-									<div class="col-md-3" style="margin:15px 0 0 0;">
-									<div class="one_left">
-										<input name="rate1" id="rate1" type="hidden" value="00" />
 
-										<center>
-											<button class="btn additem_btn" onclick="addNewRow1(1)"
-												id="b1">Add Item</button>
-										</center>
-									</div>
-									<div class="two_left" style="display: none;">
-										
-										<span style="padding-top: 0px;float: left;margin-top: 7px; font-size: 16px; margin-right: 10px;">B2B:</span>
-                                       <label class="switch">
-                                                           <input type="checkbox" name='isb2b' id='is_b2b' />
-                                                           <span class="slider round"></span>
-                                                             </label>
-									</div>
-										
-										
-										
+									<div class="col-md-3" style="margin: 15px 0 0 0;">
+										<div class="one_left">
+											<input name="rate1" id="rate1" type="hidden" value="00" />
+
+											<center>
+												<button class="btn additem_btn" onclick="addNewRow1(1)"
+													id="b1">Add Item</button>
+											</center>
+										</div>
+										<div class="two_left" style="display: none;">
+
+											<span
+												style="padding-top: 0px; float: left; margin-top: 7px; font-size: 16px; margin-right: 10px;">B2B:</span>
+											<label class="switch"> <input type="checkbox"
+												name='isb2b' id='is_b2b' /> <span class="slider round"></span>
+											</label>
+										</div>
+
+
+
 									</div>
 									<!-- <div class="col-md-3"> 
                                       <span style="padding-top: 0px;float: left;margin-top: 13px;margin-left: 13px;font-size: 16px; ">B2B:</span>
@@ -470,18 +546,21 @@ label:before{
                                                            <span class="slider round"></span>
                                                              </label>
                                 </div> -->
-									
-								</div>	
+
+								</div>
 								<div class="se-pre-con" style="display: none;" id="loader1"></div>
 								<div class="checkdiv" style="display: none;" id="check1"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
 
-								<div id="table-scroll" > <!-- class="table-scroll" -->
-									<div id="faux-table"aria="hidden"></div>  <!-- class="faux-table"  -->
+								<div id="table-scroll">
+									<!-- class="table-scroll" -->
+									<div id="faux-table" aria="hidden"></div>
+									<!-- class="faux-table"  -->
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid1" class="responsive-table"><!--  class="main-table small-td"> -->
+										<table id="table_grid1" class="responsive-table">
+											<!--  class="main-table small-td"> -->
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -506,17 +585,14 @@ label:before{
 
 								<div class="row">
 									<div class="col-md-3">
-										<h4 class="col-md-7">
-											Total:-
-										</h4>
+										<h4 class="col-md-7">Total:-</h4>
 										<h4 class="col-md-5" id="total1">00</h4>
 										<input type="hidden" class="form-control" id="tot1">
 									</div>
 
 									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											Discount(%):-
-										</h4>
+											Discount(%):-</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount1"
 												onkeyup="disMinusTotal(1)" value="0">
@@ -524,8 +600,7 @@ label:before{
 									</div>
 									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											Discount(Rs):-
-										</h4>
+											Discount(Rs):-</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discountRs1"
 												onkeyup="disRsMinusTotal(1)" value="0">
@@ -533,9 +608,8 @@ label:before{
 									</div>
 
 									<div class="col-md-3">
-										<h4 class="col-md-7" style="margin-top: 5px">
-											Grand Total:-
-										</h4>
+										<h4 class="col-md-7" style="margin-top: 5px">Grand
+											Total:-</h4>
 
 										<h4 class="col-md-5" id="grandtotal1">00</h4>
 										<input type="hidden" class="form-control" id="grandtot1">
@@ -545,13 +619,12 @@ label:before{
 
 									<div class="col-md-3">
 
-										<h4 class="col-md-7">
-											Payment Mode:-
-										</h4>
+										<h4 class="col-md-7">Payment Mode:-</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
-												name="paymentMode1" class="form-control" tabindex="-1"
-												id="paymentMode1" data-rule-required="true">
+											<select data-placeholder="Enter Payment Mode"
+												style="padding: 0px 0px;" name="paymentMode1"
+												class="form-control" tabindex="-1" id="paymentMode1"
+												data-rule-required="true">
 
 												<option value="1">Cash</option>
 												<option value="2">Card</option>
@@ -563,9 +636,7 @@ label:before{
 									</div>
 
 									<div class="col-md-3">
-										<h4 class="col-md-7">
-											Paid Amount:-
-										</h4>
+										<h4 class="col-md-7">Paid Amount:-</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount1"
 												onkeyup="paidAmt(1)" value="0">
@@ -574,9 +645,8 @@ label:before{
 									</div>
 
 									<div class="col-md-3">
-										<h4 class="col-md-7" style="margin-top: 5px">
-											Remaining Amt:-
-										</h4>
+										<h4 class="col-md-7" style="margin-top: 5px">Remaining
+											Amt:-</h4>
 
 
 
@@ -606,7 +676,8 @@ label:before{
 										<div class="col-md-4">
 											<h4>Mobile No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo1" id="phoneNo1" maxlength="10">
+												placeholder="Enter phone No." name="phoneNo1" id="phoneNo1"
+												maxlength="10">
 										</div>
 									</div>
 
@@ -615,11 +686,11 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill1"
-										onclick="generateSellBill(1)" disabled  >Generate Bill</button>
+										onclick="generateSellBill(1)" disabled>Generate Bill</button>
 
-									<button class="btn additem_btn" id="pdfBtn1" 
-										onclick="pdfBtn(1)"  disabled >Print Bill</button>
-									<button class="btn additem_btn" id="clear1" 
+									<button class="btn additem_btn" id="pdfBtn1"
+										onclick="pdfBtn(1)" disabled>Print Bill</button>
+									<button class="btn additem_btn" id="clear1"
 										onclick="clearData(1)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo1"
 								value="" />
@@ -659,11 +730,11 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="chosen-select" 
+																</datalist> --> <select class="chosen-select"
 																			data-show-subtext="true" data-live-search="true"
-																			title="Please Select Item" name="itemName2" id="itemName2"
-																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
-																				<option value=""></option>					
+																			title="Please Select Item" name="itemName2"
+																			id="itemName2" data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
+																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -686,7 +757,7 @@ label:before{
 																			type="hidden" value="" />
 
 																		</td>
-																		<td><input type="number" min="0" 
+																		<td><input type="number" min="0"
 																			class="form-control" name="qty2" id="qty2" value="1"
 																			onkeypress="onQty(event,2)" onblur="onTab(2)"
 																			oninput="validity.valid||(value='');"></td>
@@ -717,14 +788,14 @@ label:before{
 									</div>
 								</div>
 
-	                            <div class="se-pre-con" style="display: none;" id="loader2"></div>
+								<div class="se-pre-con" style="display: none;" id="loader2"></div>
 								<div class="checkdiv" style="display: none;" id="check2"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
 
-								<div id="table-scroll" >
-									<div id="faux-table"  aria="hidden"></div>
+								<div id="table-scroll">
+									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
 										<table id="table_grid2" class="responsive-table">
 											<thead>
@@ -805,8 +876,9 @@ label:before{
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
-												name="paymentMode2" class="form-control" tabindex="-1" style="padding: 0px 0px;"
-												id="paymentMode2" data-rule-required="true">
+												name="paymentMode2" class="form-control" tabindex="-1"
+												style="padding: 0px 0px;" id="paymentMode2"
+												data-rule-required="true">
 
 
 												<option value="1">Cash</option>
@@ -862,7 +934,8 @@ label:before{
 										<div class="col-md-4">
 											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo2" id="phoneNo2" maxlength="10">
+												placeholder="Enter phone No." name="phoneNo2" id="phoneNo2"
+												maxlength="10">
 										</div>
 									</div>
 
@@ -872,7 +945,7 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill2"
 										onclick="generateSellBill(2)" disabled>Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn2" 
+									<button class="btn additem_btn" id="pdfBtn2"
 										onclick="pdfBtn(2)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear2"
 										onclick="clearData(2)">Clear</button>
@@ -913,11 +986,10 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="chosen-select" 
+																</datalist> --> <select class="chosen-select"
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName3"
-																			 id="itemName3"
-																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
+																			id="itemName3" data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
 																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
@@ -942,7 +1014,7 @@ label:before{
 																			type="hidden" value="" />
 
 																		</td>
-																		<td><input type="number" min="0" 
+																		<td><input type="number" min="0"
 																			class="form-control" name="qty3" id="qty3" value="1"
 																			onkeypress="onQty(event,3)" onblur="onTab(3)"
 																			oninput="validity.valid||(value='');"></td>
@@ -973,14 +1045,14 @@ label:before{
 									</div>
 								</div>
 
-                                <div class="se-pre-con" style="display: none;" id="loader3"></div>
+								<div class="se-pre-con" style="display: none;" id="loader3"></div>
 								<div class="checkdiv" style="display: none;" id="check3"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
 
-								<div id="table-scroll" >
-									<div id="faux-table"  aria="hidden"></div>
+								<div id="table-scroll">
+									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
 										<table id="table_grid3" class="responsive-table">
 											<thead>
@@ -1061,8 +1133,9 @@ label:before{
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
-												name="paymentMode3" class="form-control" tabindex="-1" style="padding: 0px 0px;"
-												id="paymentMode3" data-rule-required="true">
+												name="paymentMode3" class="form-control" tabindex="-1"
+												style="padding: 0px 0px;" id="paymentMode3"
+												data-rule-required="true">
 
 
 												<option value="1">Cash</option>
@@ -1118,7 +1191,8 @@ label:before{
 										<div class="col-md-4">
 											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo3" id="phoneNo3" maxlength="10">
+												placeholder="Enter phone No." name="phoneNo3" id="phoneNo3"
+												maxlength="10">
 										</div>
 									</div>
 
@@ -1128,7 +1202,7 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill3"
 										onclick="generateSellBill(3)" disabled>Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn3" 
+									<button class="btn additem_btn" id="pdfBtn3"
 										onclick="pdfBtn(3)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear3"
 										onclick="clearData(3)">Clear</button>
@@ -1167,11 +1241,10 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="chosen-select" 
+																</datalist> --> <select class="chosen-select"
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName4"
-																			 id="itemName4"
-																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
+																			id="itemName4" data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
 																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
@@ -1180,22 +1253,23 @@ label:before{
 																						<c:forEach items="${itemListResponse}"
 																							var="itemListResponse">
 
-																							<c:if test="${itemListResponse.catId == cat.catId}">
+																							<c:if
+																								test="${itemListResponse.catId == cat.catId}">
 																								<option value="${itemListResponse.id}">${itemListResponse.itemId}--${itemListResponse.itemName}</option>
 																							</c:if>
 
 																						</c:forEach>
 
 																					</optgroup>
-																					
+
 																				</c:forEach>
-		
+
 
 																		</select> <input name="item_name4" id="item_name4"
 																			type="hidden" value="" />
 
 																		</td>
-																		<td><input type="number" min="0" 
+																		<td><input type="number" min="0"
 																			class="form-control" name="qty4" id="qty4" value="1"
 																			onkeypress="onQty(event,4)" onblur="onTab(4)"
 																			oninput="validity.valid||(value='');"></td>
@@ -1226,16 +1300,16 @@ label:before{
 									</div>
 								</div>
 
-	                            <div class="se-pre-con" style="display: none;" id="loader4"></div>
+								<div class="se-pre-con" style="display: none;" id="loader4"></div>
 								<div class="checkdiv" style="display: none;" id="check4"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
 
-								<div id="table-scroll" >
+								<div id="table-scroll">
 									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid4"class="responsive-table">
+										<table id="table_grid4" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -1313,9 +1387,10 @@ label:before{
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
-												name="paymentMode4" class="form-control" tabindex="-1"
-												id="paymentMode4" data-rule-required="true">
+											<select data-placeholder="Enter Payment Mode"
+												style="padding: 0px 0px;" name="paymentMode4"
+												class="form-control" tabindex="-1" id="paymentMode4"
+												data-rule-required="true">
 
 
 												<option value="1">Cash</option>
@@ -1371,7 +1446,8 @@ label:before{
 										<div class="col-md-4">
 											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo4" id="phoneNo4" maxlength="10">
+												placeholder="Enter phone No." name="phoneNo4" id="phoneNo4"
+												maxlength="10">
 										</div>
 									</div>
 
@@ -1381,7 +1457,7 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill4"
 										onclick="generateSellBill(4)" disabled>Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn4" 
+									<button class="btn additem_btn" id="pdfBtn4"
 										onclick="pdfBtn(4)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear4"
 										onclick="clearData(4)">Clear</button>
@@ -1420,11 +1496,10 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="chosen-select" 
+																</datalist> --> <select class="chosen-select"
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName5"
-																			 id="itemName5"
-																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
+																			id="itemName5" data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
 																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
@@ -1433,21 +1508,22 @@ label:before{
 																						<c:forEach items="${itemListResponse}"
 																							var="itemListResponse">
 
-																							<c:if test="${itemListResponse.catId == cat.catId}">
+																							<c:if
+																								test="${itemListResponse.catId == cat.catId}">
 																								<option value="${itemListResponse.id}">${itemListResponse.itemId}--${itemListResponse.itemName}</option>
 																							</c:if>
 
 																						</c:forEach>
 
 																					</optgroup>
-																					
+
 																				</c:forEach>
-																				
+
 																		</select> <input name="item_name5" id="item_name5"
 																			type="hidden" value="" />
 
 																		</td>
-																		<td><input type="number" min="0" 
+																		<td><input type="number" min="0"
 																			class="form-control" name="qty5" id="qty5" value="1"
 																			onkeypress="onQty(event,5)" onblur="onTab(5)"
 																			oninput="validity.valid||(value='');"></td>
@@ -1478,13 +1554,13 @@ label:before{
 									</div>
 								</div>
 
-                                <div class="se-pre-con" style="display: none;" id="loader5"></div>
+								<div class="se-pre-con" style="display: none;" id="loader5"></div>
 								<div class="checkdiv" style="display: none;" id="check5"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
 
-								<div id="table-scroll" >
+								<div id="table-scroll">
 									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
 										<table id="table_grid5" class="responsive-table">
@@ -1556,9 +1632,10 @@ label:before{
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
-												name="paymentMode5" class="form-control" tabindex="-1"
-												id="paymentMode5" data-rule-required="true">
+											<select data-placeholder="Enter Payment Mode"
+												style="padding: 0px 0px;" name="paymentMode5"
+												class="form-control" tabindex="-1" id="paymentMode5"
+												data-rule-required="true">
 
 
 												<option value="1">Cash</option>
@@ -1614,7 +1691,8 @@ label:before{
 										<div class="col-md-4">
 											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo5" id="phoneNo5" maxlength="10">
+												placeholder="Enter phone No." name="phoneNo5" id="phoneNo5"
+												maxlength="10">
 										</div>
 									</div>
 
@@ -1626,7 +1704,7 @@ label:before{
 										onclick="generateSellBill(5)" disabled>Generate Bill</button>
 									<button class="btn additem_btn" id="pdfBtn5"
 										onclick="pdfBtn(5)" disabled>Print Bill</button>
-									<button class="btn additem_btn" id="clear5" 
+									<button class="btn additem_btn" id="clear5"
 										onclick="clearData(5)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo5"
 								value="" />
@@ -1663,7 +1741,7 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="chosen-select" 
+																</datalist> --> <select class="chosen-select"
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName6"
 																			class="form-control" id="itemName6"
@@ -1676,21 +1754,22 @@ label:before{
 																						<c:forEach items="${itemListResponse}"
 																							var="itemListResponse">
 
-																							<c:if test="${itemListResponse.catId == cat.catId}">
+																							<c:if
+																								test="${itemListResponse.catId == cat.catId}">
 																								<option value="${itemListResponse.id}">${itemListResponse.itemId}--${itemListResponse.itemName}</option>
 																							</c:if>
 
 																						</c:forEach>
 
 																					</optgroup>
-																					
+
 																				</c:forEach>
 
 																		</select> <input name="item_name6" id="item_name6"
 																			type="hidden" value="" />
 
 																		</td>
-																		<td><input type="number" min="0" 
+																		<td><input type="number" min="0"
 																			class="form-control" name="qty6" id="qty6" value="1"
 																			onkeypress="onQty(event,6)" onblur="onTab(6)"
 																			oninput="validity.valid||(value='');"></td>
@@ -1721,13 +1800,13 @@ label:before{
 									</div>
 								</div>
 
-                                	<div class="se-pre-con" style="display: none;" id="loader6"></div>
+								<div class="se-pre-con" style="display: none;" id="loader6"></div>
 								<div class="checkdiv" style="display: none;" id="check6"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
 
-								<div id="table-scroll" >
+								<div id="table-scroll">
 									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
 										<table id="table_grid6" class="responsive-table">
@@ -1808,9 +1887,10 @@ label:before{
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
-												name="paymentMode6" class="form-control" tabindex="-1"
-												id="paymentMode6" data-rule-required="true">
+											<select data-placeholder="Enter Payment Mode"
+												style="padding: 0px 0px;" name="paymentMode6"
+												class="form-control" tabindex="-1" id="paymentMode6"
+												data-rule-required="true">
 
 
 												<option value="1">Cash</option>
@@ -1866,7 +1946,8 @@ label:before{
 										<div class="col-md-4">
 											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo6" id="phoneNo6" maxlength="10">
+												placeholder="Enter phone No." name="phoneNo6" id="phoneNo6"
+												maxlength="10">
 										</div>
 									</div>
 
@@ -1876,9 +1957,9 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill6"
 										onclick="generateSellBill(6)" disabled>Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn6" 
+									<button class="btn additem_btn" id="pdfBtn6"
 										onclick="pdfBtn(6)" disabled>Print Bill</button>
-									<button class="btn additem_btn" id="clear6" 
+									<button class="btn additem_btn" id="clear6"
 										onclick="clearData(6)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo6"
 								value="" />
@@ -1915,11 +1996,10 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="chosen-select" 
+																</datalist> --> <select class="chosen-select"
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName7"
-																			 id="itemName7"
-																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
+																			id="itemName7" data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
 																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
@@ -1928,21 +2008,22 @@ label:before{
 																						<c:forEach items="${itemListResponse}"
 																							var="itemListResponse">
 
-																							<c:if test="${itemListResponse.catId == cat.catId}">
+																							<c:if
+																								test="${itemListResponse.catId == cat.catId}">
 																								<option value="${itemListResponse.id}">${itemListResponse.itemId}--${itemListResponse.itemName}</option>
 																							</c:if>
 
 																						</c:forEach>
 
 																					</optgroup>
-																					
+
 																				</c:forEach>
-																				
+
 																		</select> <input name="item_name7" id="item_name7"
 																			type="hidden" value="" />
 
 																		</td>
-																		<td><input type="number" min="0" 
+																		<td><input type="number" min="0"
 																			class="form-control" name="qty7" id="qty7" value="1"
 																			onkeypress="onQty(event,7)" onblur="onTab(7)"
 																			oninput="validity.valid||(value='');"></td>
@@ -1973,12 +2054,12 @@ label:before{
 									</div>
 								</div>
 
-                                	<div class="se-pre-con" style="display: none;" id="loader7"></div>
+								<div class="se-pre-con" style="display: none;" id="loader7"></div>
 								<div class="checkdiv" style="display: none;" id="check7"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
-								<div id="table-scroll" >
-									<div id="faux-table"  aria="hidden"></div>
+								<div id="table-scroll">
+									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
 										<table id="table_grid7" class="responsive-table">
 											<thead>
@@ -2020,7 +2101,7 @@ label:before{
 											<input type="text" class="form-control" id="discount7"
 												onkeyup="disMinusTotal(7)" value="0">
 										</div>
-										</div>
+									</div>
 									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(Rs):-</b>
@@ -2048,9 +2129,10 @@ label:before{
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
-												name="paymentMode7" class="form-control" tabindex="-1"
-												id="paymentMode7" data-rule-required="true">
+											<select data-placeholder="Enter Payment Mode"
+												style="padding: 0px 0px;" name="paymentMode7"
+												class="form-control" tabindex="-1" id="paymentMode7"
+												data-rule-required="true">
 
 
 												<option value="1">Cash</option>
@@ -2106,7 +2188,8 @@ label:before{
 										<div class="col-md-4">
 											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo7" id="phoneNo7" maxlength="10">
+												placeholder="Enter phone No." name="phoneNo7" id="phoneNo7"
+												maxlength="10">
 										</div>
 									</div>
 
@@ -2116,7 +2199,7 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill7"
 										onclick="generateSellBill(7)" disabled>Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn7" 
+									<button class="btn additem_btn" id="pdfBtn7"
 										onclick="pdfBtn(7)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear7"
 										onclick="clearData(7)">Clear</button>
@@ -2143,6 +2226,99 @@ label:before{
 
 	</div>
 	<!--wrapper-end-->
+
+	<!-- ------CUSTOMER POPUP-------------------- -->
+
+	<div id="customerModal" class="modal">
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
+
+		<div class="modal-content" style="width: 75%; padding: 2%;">
+			<span class="close" onclick="closeCustomerPopup()"
+				style="opacity: 2;">&times;</span> <br>
+
+			<div class="row">
+
+				<div class="col-md-12">
+					<h3 class="pop_head">Customer</h3>
+				</div>
+
+			</div>
+			<hr>
+			<br>
+			<div class="row" style="margin-left: 0%">
+
+				<div class="row">
+
+					<div class="col-md-2" style="text-align: center;">Customer</div>
+
+					<div class="col-md-6">
+
+						<select name="cust" id="cust" data-placeholder="Select Customer"
+							class="input_add chosen-select" required>
+							<option value="0">Select Customer</option>
+
+
+							<c:forEach items="${customerList}" var="customerList">
+								<c:choose>
+									<c:when test="${customerList.custId==defaultCustomer}">
+										<option value="${customerList.custId}"
+											style="text-align: left;" selected>${customerList.custName}
+											&nbsp;${customerList.phoneNumber}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${customerList.custId}"
+											style="text-align: left;">${customerList.custName}
+											&nbsp;${customerList.phoneNumber}</option>
+									</c:otherwise>
+								</c:choose>
+
+							</c:forEach>
+
+
+						</select>
+					</div>
+
+					<div class="col-md-4">
+
+						<button class="plus_btn addcust_open" type="button"
+							onclick="onPlusClick()">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+						</button>
+
+						<button class="plus_btn" type="button" onclick="editCustomer()">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</button>
+
+
+					</div>
+
+
+
+
+				</div>
+
+
+
+
+
+
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- ------CUSTOMER POPUP END-------------------- -->
+
+
+
+
+
+
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
@@ -3213,7 +3389,27 @@ label:before{
 	</script>
 
 	<script type="text/javascript">
+	
+	function openCustomerPopup() {
+
+		var modal = document.getElementById("customerModal");
+		modal.style.display = "block";
+
+	}
+
+	function closeCustomerPopup() {
+
+		var modal = document.getElementById("customerModal");
+		modal.style.display = "none";
+
+	}
+	
+	</script>
+
+	<script type="text/javascript">
 		function generateSellBill(token) {
+			
+			//openCustomerPopup();
 
 			//var isValid = validation(token);
 			var grandtot = $("#grandtot" + token).val();			
@@ -3249,9 +3445,10 @@ label:before{
 									gstNo : gstNo,
 									phoneNo : phoneNo,
 									discount : discount,
-									paymentMode : paymentMode,
+									billType : paymentMode,
 									paidAmount : paidAmount,
 									token : token,
+									payType : 1,
 									ajax : 'true'
 
 								},

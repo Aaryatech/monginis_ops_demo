@@ -21,23 +21,31 @@
 	
 	// Picker object
 	
-	var Datepicker = function(element, options){
+	var Datepicker = function(element, options, closeCallBack){
 		this.element = $(element);
-		this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||'dd/mm/yyyy');
+		this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||'dd-mm-yyyy');
+		this.autoClose = options.autoClose||this.element.data('date-autoClose')|| true;
+	    this.closeCallback = closeCallBack || function(){};
 		this.picker = $(DPGlobal.template)
 							.appendTo('body')
 							.on({
 								click: $.proxy(this.click, this),
-								mousedown: $.proxy(this.mousedown, this)
+								//mousedown: $.proxy(this.mousedown, this),
+								//mouseup: $.proxy(this.hide, this)
 							});
+		
+		
 		this.isInput = this.element.is('input');
 		this.component = this.element.is('.date') ? this.element.find('.input-group-addon') : false;
+		
 		
 		if (this.isInput) {
 			this.element.on({
 				focus: $.proxy(this.show, this),
-				blur: $.proxy(this.hide, this),
+				//blur: $.proxy(this.hide, this),
 				keyup: $.proxy(this.update, this)
+				
+				
 			});
 		} else {
 			if (this.component){
@@ -85,7 +93,7 @@
 	
 	Datepicker.prototype = {
 		constructor: Datepicker,
-		
+		 
 		show: function(e) {
 			this.picker.show();
 			this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
@@ -96,8 +104,14 @@
 				e.preventDefault();
 			}
 			if (!this.isInput) {
-				$(document).on('mousedown', $.proxy(this.hide, this));
+				//$(document).on('mousedown', $.proxy(this.hide, this));
 			}
+			 var that = this;
+		        $(document).on('mousedown', function(ev){
+		            if ($(ev.target).closest('.datepicker').length == 0) {
+		                that.hide();
+		            }
+		        });
 			this.element.trigger({
 				type: 'show',
 				date: this.date
@@ -106,13 +120,18 @@
 		
 		hide: function(){
 			this.picker.hide();
+/*
+			this.element.on({
+				click: $.proxy(this.show, this)
+			});*/
+			
 			$(window).off('resize', this.place);
 			this.viewMode = this.startViewMode;
 			this.showMode();
 			if (!this.isInput) {
 				$(document).off('mousedown', this.hide);
 			}
-			this.set();
+			//this.set();
 			this.element.trigger({
 				type: 'hide',
 				date: this.date
@@ -238,6 +257,10 @@
 				year += 1;
 			}
 			yearCont.html(html);
+			
+			//this.picker.hide();
+			// $('input').blur();
+			
 		},
 		
 		click: function(e) {
@@ -302,6 +325,11 @@
 								date: this.date,
 								viewMode: DPGlobal.modes[this.viewMode].clsName
 							});
+							
+							 if(this.autoClose === true){
+		                            this.hide();
+		                            this.closeCallback();
+		                        }
 						}
 						break;
 				}
@@ -450,5 +478,9 @@
 								'</table>'+
 							'</div>'+
 						'</div>';
+	
+	
+		
+	
 
-}( window.jQuery )
+}( window.jQuery );

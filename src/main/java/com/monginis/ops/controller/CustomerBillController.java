@@ -40,8 +40,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.itextpdf.text.log.SysoCounter;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.CustomerBillData;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrConfigure;
@@ -68,7 +70,11 @@ import com.monginis.ops.model.SellBillDetailEdit;
 import com.monginis.ops.model.SellBillDetailList;
 import com.monginis.ops.model.SellBillEditBean;
 import com.monginis.ops.model.SpOrderHis;
+import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.pettycash.PettyCashManagmt;
+import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
 @Scope("session")
@@ -716,6 +722,17 @@ public class CustomerBillController {
 				customerBillItemList.add(customerBillItem);
 
 			}
+
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "DEFLTCUST");
+			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", map,
+					NewSetting.class);
+			System.err.println("Default Customer Val------------------" + settingValue.toString());
+			model.addObject("defaultCustomer", settingValue.getSettingValue1());
 
 			System.out.println("*********customerBillItemList***********" + customerBillItemList.toString());
 			model.addObject("catList", catergoryList.getmCategoryList());
@@ -1871,8 +1888,14 @@ public class CustomerBillController {
 	public @ResponseBody SellBillHeader generateSellBill(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		RestTemplate restTemplate = new RestTemplate();
 		int token = Integer.parseInt(request.getParameter("token"));
 		int isB2b = 0;
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
+
+		
 		if (token == 1) {
 			try {
 				isB2b = Integer.parseInt(request.getParameter("isb2b"));
@@ -1892,6 +1915,8 @@ public class CustomerBillController {
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		SellBillHeader sellBillHeaderRes = new SellBillHeader();
 		try {
+			
+			
 
 			double billGrandTotal;
 			double calBillGrandTotal;
@@ -1911,11 +1936,19 @@ public class CustomerBillController {
 			float discountPer = Float.parseFloat(request.getParameter("discount"));
 			System.out.println("discount:" + discountPer);
 
-			int paymentMode = Integer.parseInt(request.getParameter("paymentMode"));
-			System.out.println("paymentMode:" + paymentMode);
+			int billType = Integer.parseInt(request.getParameter("billType"));
+			System.out.println("billType:" + billType);
+			
+			int payType = Integer.parseInt(request.getParameter("payType"));
+			System.out.println("payType:" + payType);
 
 			float paidAmount = Float.parseFloat(request.getParameter("paidAmount"));
 			System.out.println("paidAmount:" + paidAmount);
+			
+			int custId=Integer.parseInt(request.getParameter("custId"));
+			System.out.println("custId:" + custId);
+
+			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 
 			switch (token) {
 			case 1:
@@ -2015,6 +2048,28 @@ public class CustomerBillController {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate localDate = LocalDate.now();
 			System.out.println(dtf.format(localDate)); // 2016/11/16
+			
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+			map1 = new LinkedMultiValueMap<String, Object>();
+			map1.add("frId", frDetails.getFrId());
+			PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map1,
+					PettyCashManagmt.class);
+			
+			Date date = new Date();
+			
+			String billDate = sf.format(date);
+			if (petty != null) {
+
+				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+
+				billDate = ymdSDF.format(cal.getTime());
+				System.err.println("BILL DATE ---------------- " + billDate);
+			}
+			
+			
 
 			SellBillHeader sellBillHeader = new SellBillHeader();
 
@@ -2022,11 +2077,12 @@ public class CustomerBillController {
 			sellBillHeader.setFrCode(frDetails.getFrCode());
 			sellBillHeader.setDelStatus(0);
 			sellBillHeader.setUserName(custName);
-			sellBillHeader.setBillDate(dtf.format(localDate));
+			//sellBillHeader.setBillDate(dtf.format(localDate));
+			sellBillHeader.setBillDate(billDate);
 
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
 			sellBillHeader.setPaidAmt(Math.round(paidAmount));
-			sellBillHeader.setPaymentMode(paymentMode);
+			sellBillHeader.setPaymentMode(billType);
 			if (isB2b == 1) {
 				sellBillHeader.setBillType('B');
 			} else {
@@ -2069,6 +2125,17 @@ public class CustomerBillController {
 				break;
 			}
 			float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
+			
+			
+			float detItemSum=0;
+			
+			for (int i = 0; i < customerBillItemList.size(); i++) {
+				
+				Float rate = (float) customerBillItemList.get(i).getMrp();
+				int qty = customerBillItemList.get(i).getQty();
+				
+				detItemSum=detItemSum+(qty*rate);
+			}
 
 			for (int i = 0; i < customerBillItemList.size(); i++) {
 				System.out.println("dddd");
@@ -2085,6 +2152,8 @@ public class CustomerBillController {
 
 				Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
 				mrpBaseRate = roundUp(mrpBaseRate);
+				
+				float grandSum=qty*rate;
 
 				System.out.println("Mrp: " + rate);
 				System.out.println("Tax1 : " + tax1);
@@ -2111,6 +2180,8 @@ public class CustomerBillController {
 
 				Float grandTotal = totalTax + taxableAmt;
 				grandTotal = roundUp(grandTotal);
+				
+				//float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
 
 				sellBillDetail.setCatId(customerBillItemList.get(i).getCatId());
 				sellBillDetail.setSgstPer(tax1);
@@ -2125,7 +2196,7 @@ public class CustomerBillController {
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
 				sellBillDetail.setQty(customerBillItemList.get(i).getQty());
-				sellBillDetail.setRemark(customerBillItemList.get(i).getHsnCode());// new for hsn
+				sellBillDetail.setRemark("");
 				sellBillDetail.setSellBillDetailNo(0);
 				sellBillDetail.setSellBillNo(0);
 				sellBillDetail.setBillStockType(customerBillItemList.get(i).getBillStockType());
@@ -2137,6 +2208,9 @@ public class CustomerBillController {
 
 				sellBillDetail.setTaxableAmt(taxableAmt);
 				sellBillDetail.setTotalTax(totalTax);
+				
+				sellBillDetail.setExtFloat1(grandSum);
+				sellBillDetail.setExtVar1(customerBillItemList.get(i).getHsnCode());
 
 				sellBillDetailList.add(sellBillDetail);
 
@@ -2174,12 +2248,20 @@ public class CustomerBillController {
 			} else if (payableAmt > calRemainingTotal) {
 				sellBillHeader.setStatus(3);
 			}
+			
+			sellBillHeader.setCustId(custId);
+			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
+			
+			float roundOff = 0;
+			roundOff = sumTaxableAmt + sumTotalTax - Math.round(paidAmount);
+			
+			sellBillHeader.setExtFloat1(roundOff);
 
 			sellBillHeader.setSellBillDetailsList(sellBillDetailList);
 
 			System.out.println("Sell Bill Detail: " + sellBillHeader.toString());
 
-			RestTemplate restTemplate = new RestTemplate();
+		
 
 			sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
 					SellBillHeader.class);
@@ -2187,6 +2269,49 @@ public class CustomerBillController {
 			System.out.println("info :" + sellBillHeaderRes.toString());
 
 			if (sellBillHeaderRes != null) {
+
+				// --------------------TRANSACTION SAVE---------------------
+
+				List<TransactionDetail> dList = new ArrayList<>();
+
+				TransactionDetail transactionDetail = new TransactionDetail();
+
+				transactionDetail.setCashAmt(Math.round(paidAmount));
+				transactionDetail.setExInt2(0);
+
+				System.err.println("BILLDATE ============ " + billDate);
+
+				transactionDetail.setPayMode(1);
+				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+				// transactionDetail.setTransactionDate(sf1.format(date));
+
+				
+				Date dt = sf.parse(billDate);
+
+				transactionDetail.setTransactionDate(sf1.format(dt));
+				
+				
+				transactionDetail.setePayType(payType);
+				
+				if (billType == 1) {
+					transactionDetail.setCashAmt(Math.round(paidAmount));
+					transactionDetail.setExVar1("0," + payType);
+				} else if (billType == 2) {
+					transactionDetail.setCardAmt(Math.round(paidAmount));
+					transactionDetail.setExVar1("0," + payType);
+				} else if (billType == 3) {
+					transactionDetail.setePayAmt(Math.round(paidAmount));
+					transactionDetail.setExVar1("0," + payType);
+				}
+
+				transactionDetail.setExVar1("0,1");
+				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+				dList.add(transactionDetail);
+
+				TransactionDetail[] transactionDetailRes = restTemplate
+						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+
+				// ---------------------------------------------------------
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
