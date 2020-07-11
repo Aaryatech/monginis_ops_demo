@@ -65,6 +65,7 @@ public class SellBillHeader implements Serializable{
 
 	private int delStatus;
 	private int extInt1;
+	private int extInt2;
 	private float extFloat1;
 
 	private String extVar1;
@@ -335,6 +336,14 @@ public class SellBillHeader implements Serializable{
 		this.extFloat1 = extFloat1;
 	}
 
+	public int getExtInt2() {
+		return extInt2;
+	}
+
+	public void setExtInt2(int extInt2) {
+		this.extInt2 = extInt2;
+	}
+
 	@Override
 	public String toString() {
 		return "SellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
@@ -346,9 +355,9 @@ public class SellBillHeader implements Serializable{
 				+ ", couponNo=" + couponNo + ", custId=" + custId + ", custLoyaltyPtRate=" + custLoyaltyPtRate
 				+ ", custLoyaltyPt=" + custLoyaltyPt + ", userName=" + userName + ", userGstNo=" + userGstNo
 				+ ", userPhone=" + userPhone + ", status=" + status + ", billType=" + billType + ", delStatus="
-				+ delStatus + ", extInt1=" + extInt1 + ", extFloat1=" + extFloat1 + ", extVar1=" + extVar1
-				+ ", sellBillDetailsList=" + sellBillDetailsList + "]";
+				+ delStatus + ", extInt1=" + extInt1 + ", extInt2=" + extInt2 + ", extFloat1=" + extFloat1
+				+ ", extVar1=" + extVar1 + ", sellBillDetailsList=" + sellBillDetailsList + "]";
 	}
 
-	
+		
 }

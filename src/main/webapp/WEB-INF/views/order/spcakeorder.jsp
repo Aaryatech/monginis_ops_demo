@@ -512,10 +512,10 @@ select {
                               <option value="3" id="english" selected>English</option>
                        </select></div>
                        <div class="col3" id="msgGujrati" style="display: none"><input class="texboxitemcode" placeholder="Name" name="event_name2" type="text" id="event_name_g" autocomplete="off">
-		</div> 
- <div class="col3" id="msgMarathi" style="display: none"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name" autocomplete="off">
-		</div> 
-		<div class="col3" id="msgEnglish" ><input class="texboxitemcode" placeholder="Name" name="event_name1" type="text" id="event_name_e" autocomplete="off">
+				</div> 
+ 						<div class="col3" id="msgMarathi" style="display: none"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name" autocomplete="off">
+			</div> 
+						<div class="col3" id="msgEnglish" ><input class="texboxitemcode" placeholder="Name" name="event_name1" type="text" id="event_name_e" autocomplete="off">
 		</div>
 		</div>
 <c:choose>
@@ -835,6 +835,9 @@ select {
 </div>
 
 <script>
+$( function() {
+    $( "#dob" ).datepicker({ dateFormat: 'dd-mm-yy' });
+  } );
 $('#sp_ex_charges').on('input', function() {
 	  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
 	});
@@ -1807,8 +1810,8 @@ $("#sp_code").on('input', function () {
 		<div class="modal-content" style="width: 75%">
 			<span class="close" onclick="closeNewCustPopUp()" style="opacity: 2;">&times;</span>
 
-			<h3 class="pop_head">Add Customer</h3>
-			<hr>
+			<h3 class="pageTitle">Add Customer</h3>
+			
 			<div>
 				<div class="row">
 					<form action="saveFranchiseeEmp" id="fr_emp_form" method="post" autocomplete="off">
@@ -2182,7 +2185,7 @@ function addCustomer() {
 								$("#sp_cust_id").trigger("chosen:updated");
 								$('.chosen-select').trigger(
 										'chosen:updated');
-								//alert("0")
+								
 								document.getElementById("pincode").value = "";
 								document.getElementById("remark").value = "";
 								document.getElementById("customerName").value = "";
@@ -2201,22 +2204,14 @@ function addCustomer() {
 								document.getElementById("ageRange").value ="0";
 								$("#ageRange").trigger("chosen:updated");
 								$('.chosen-select').trigger('chosen:updated');
-								document
-										.getElementById("add_cust_head_name").innerHTML = "Add Customer";
+								
 								$("#isbuissnessdiv").hide();
 								
-								alert("Customer Add Successfully");
+								alert("Customer Added Successfully");
 								
 								$("#sp_cust_id").trigger("chosen:updated");
-
-								/* if (custId != 0) {
-									alert("Update Successfully");
-								} else {
-									alert("Customer Add Successfully");
-									$("#sp_cust_id").trigger("chosen:updated");
-									
-								} */
-								//alert("1")
+					
+								closeNewCustPopUp(); 
 							} else {
 								alert("Failed To Add Customer");
 							}

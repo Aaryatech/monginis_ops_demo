@@ -71,6 +71,7 @@ private float extFloat1;
 private String extVar1;
 
 private String extVar2;
+private int extInt1;
 
 
 public String getExtVar1() {
@@ -275,6 +276,14 @@ public void setExtFloat1(float exFloat1) {
 	this.extFloat1 = exFloat1;
 }
 
+public int getExtInt1() {
+	return extInt1;
+}
+
+public void setExtInt1(int extInt1) {
+	this.extInt1 = extInt1;
+}
+
 @Override
 public String toString() {
 	return "SellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", catId=" + catId
@@ -283,8 +292,10 @@ public String toString() {
 			+ ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer
 			+ ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt + ", totalTax=" + totalTax
 			+ ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus=" + delStatus + ", extFloat1="
-			+ extFloat1 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + "]";
+			+ extFloat1 + ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + ", extInt1=" + extInt1 + "]";
 }
+
+
 
 	
 }

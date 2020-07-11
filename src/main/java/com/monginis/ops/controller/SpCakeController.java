@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -1310,8 +1311,7 @@ public class SpCakeController {
 				
 				sellBillDetail.setExtFloat1(spGrand);
 				sellBillDetail.setExtVar1(getSpSup.getSpHsncd());
-				sellBillDetail.setExtVar2(getSpCake.getSpName());
-				
+				sellBillDetail.setExtVar2(getSpCake.getSpName());		
 
 				sellBillDetail.setTaxableAmt(taxableAmt);
 				sellBillDetail.setTotalTax(totalTax);
@@ -1351,12 +1351,13 @@ public class SpCakeController {
 				
 				sellBillHeader.setBillDate(billDate);
 
-				sellBillHeader.setCustId(spCakeOrder.getExInt1());
+				
 				sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
 				sellBillHeader.setSellBillNo(0);
+				sellBillHeader.setCustId(spCakeOrder.getExInt1());
 				sellBillHeader.setUserGstNo(spCakeOrder.getCustGstin());
 				sellBillHeader.setUserPhone(spCakeOrder.getSpCustMobNo());
-				sellBillHeader.setUserName(frDetails.getFrName());
+				sellBillHeader.setUserName(spCakeOrder.getSpCustName());
 				sellBillHeader.setBillType('R');
 				sellBillHeader.setTaxableAmt(taxableAmt);
 				sellBillHeader.setPayableAmt(spGrand);
@@ -1374,7 +1375,7 @@ public class SpCakeController {
 				sellBillHeader.setPaidAmt(spGrand);			
 				sellBillHeader.setAdvanceAmt(spCakeOrder.getSpAdvance());
 				sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
-
+				
 				float roundOff = 0;
 				roundOff = (taxableAmt + totalTax) - spGrand;
 				sellBillHeader.setExtFloat1(roundOff);		
@@ -1442,6 +1443,320 @@ public class SpCakeController {
 		
 		return info;
 	}
+	
+	/***********************Generate Sp Order Bill**************************/
+	@RequestMapping(value = "/getSpOrderBill", method = RequestMethod.GET)
+	public @ResponseBody SpCakeOrder getSpOrderBill(@RequestParam(value = "spOrderNo", required = true) int spOrderNo,HttpServletRequest request, 
+			HttpServletResponse response, Model model) {
+		
+
+		SpCakeOrder spCakeOrder = new SpCakeOrder();
+		try {
+			HttpSession session = request.getSession();
+			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = new Date();
+			
+		RestTemplate restTemplate = new RestTemplate();
+		MultiValueMap<String, Object> map = null;		
+		
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("spOrderNo", spOrderNo);
+				
+				 spCakeOrder=restTemplate.postForObject(Constant.URL + "/getSpOrderBySpOrderNo",	map, SpCakeOrder.class);
+				System.out.println("Sp Order : "+spCakeOrder);
+				model.addAttribute("totalAmt", spCakeOrder.getSpGrandTotal()); 
+				model.addAttribute("advanceAmt", spCakeOrder.getSpAdvance());
+				model.addAttribute("advOrderDate", spCakeOrder.getOrderDate());
+				model.addAttribute("discPer", spCakeOrder.getDisc());
+		}catch (Exception e) {
+			System.out.println("Exception In /getSpOrderBill : "+e.getMessage());
+		}
+		return spCakeOrder;
+	}
+	
+	@RequestMapping(value = "/saveSpOrderBill", method = RequestMethod.GET)
+	public @ResponseBody Boolean saveSpOrderBill(HttpServletRequest request, HttpServletResponse response) {
+		
+		Boolean message=false;
+		try {
+			HttpSession session = request.getSession();
+			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = new Date();
+			
+		RestTemplate restTemplate = new RestTemplate();
+		MultiValueMap<String, Object> map = null;
+		
+		int spOrderNo = Integer.parseInt(request.getParameter("spOrderNo"));
+		int creditBill = Integer.parseInt(request.getParameter("creditBill"));
+		int paymentMode = Integer.parseInt(request.getParameter("paymentMode"));
+		int billType = Integer.parseInt(request.getParameter("billType"));
+		int payType = Integer.parseInt(request.getParameter("payType"));
+		String payTypeSplit = request.getParameter("payTypeSplit");
+		float cashAmt = Float.parseFloat(request.getParameter("cashAmt"));
+		float cardAmt = Float.parseFloat(request.getParameter("cardAmt"));
+		float epayAmt = Float.parseFloat(request.getParameter("epayAmt"));
+		//float discPer = Float.parseFloat(request.getParameter("discPer"));
+		//float discAmtValue = Float.parseFloat(request.getParameter("discAmt"));
+		
+		String payAmt = request.getParameter("payAmt");
+		String remark = request.getParameter("remark");
+		
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("spOrderNo", spOrderNo);
+				
+				SpCakeOrder spCakeOrder=restTemplate.postForObject(Constant.URL + "/getSpOrderBySpOrderNo",	map, SpCakeOrder.class);
+				System.out.println("Sp Order : "+spCakeOrder);
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("spId", spCakeOrder.getSpId());
+				SpCakeSupplement getSpSup=restTemplate.postForObject(Constant.URL + "/getSpecialCakeSupById", map, SpCakeSupplement.class);
+				
+				map.add("spId", spCakeOrder.getSpId());
+				SpecialCake getSpCake = restTemplate.postForObject(Constant.URL + "/getSpecialCake",map, SpecialCake.class);
+				//System.out.println("Sp Cake Details : "+getSpCake);
+				
+				/**********************************************/
+				float spGrand = spCakeOrder.getSpPrice();				
+				spGrand = roundUp(spGrand);
+				
+				float tax1 = spCakeOrder.getTax1();
+				float tax2 = spCakeOrder.getTax1();
+				
+				float tax1Amt = spCakeOrder.getTax1Amt();
+				tax1Amt = roundUp(tax1Amt);
+				
+				float tax2Amt = spCakeOrder.getTax2Amt();
+				tax2Amt = roundUp(tax2Amt);
+				
+				Float mrpBaseRate = (spGrand * 100) / (100 + (tax1 + tax2));
+				mrpBaseRate = roundUp(mrpBaseRate);				
+				
+				
+				float totalTaxAmt = mrpBaseRate * ((tax1 + tax2) / 100);
+				totalTaxAmt = roundUp(totalTaxAmt);
+				
+				float discVal = spGrand*(spCakeOrder.getDisc()/100);
+				discVal = roundUp(discVal);		
+				
+				float ttlAmt = spGrand - discVal;
+				ttlAmt = roundUp(ttlAmt);				
+				
+				float taxableAmt = ttlAmt + totalTaxAmt;
+				taxableAmt = roundUp(taxableAmt);
+				
+				float payable = taxableAmt+totalTaxAmt;
+				payable = roundUp(payable);
+				
+				//Detail
+				List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
+				SellBillDetail sellBillDetail = new SellBillDetail();
+				
+				sellBillDetail.setCatId(5);
+				sellBillDetail.setSgstPer(tax1);
+				sellBillDetail.setSgstRs(tax1Amt);
+				sellBillDetail.setCgstPer(tax2);
+				sellBillDetail.setCgstRs(tax2Amt);
+				sellBillDetail.setDelStatus(0);
+				sellBillDetail.setGrandTotal(ttlAmt);
+				sellBillDetail.setIgstPer(0);
+				sellBillDetail.setIgstRs(0);
+				sellBillDetail.setItemId(0);
+				sellBillDetail.setMrp(spGrand);
+				sellBillDetail.setMrpBaseRate(mrpBaseRate);
+				sellBillDetail.setQty(1);
+				
+				if(spCakeOrder.getDisc()>0) {
+					sellBillDetail.setDiscPer(100);
+				}else {
+					sellBillDetail.setDiscPer(0);
+				}
+				
+				sellBillDetail.setDiscAmt(roundUp(discVal));
+				//sellBillDetail.setRemark();
+				sellBillDetail.setSellBillDetailNo(0);
+				sellBillDetail.setSellBillNo(0);
+				sellBillDetail.setBillStockType(1);
+				
+				sellBillDetail.setExtFloat1(spGrand);
+				sellBillDetail.setExtVar1(getSpSup.getSpHsncd());
+				sellBillDetail.setExtVar2(getSpCake.getSpName());
+				sellBillDetail.setExtInt1(getSpCake.getSpId());		
+				
+
+				sellBillDetail.setTaxableAmt(taxableAmt);
+				sellBillDetail.setTotalTax(totalTaxAmt);
+				
+				sellBillDetailList.add(sellBillDetail);
+				
+				//System.out.println("sellBillDetailList---"+sellBillDetailList);
+				
+				//Header
+				SellBillHeader sellBillHeader = new SellBillHeader();
+
+				sellBillHeader.setSellBillDetailsList(sellBillDetailList);
+				
+				sellBillHeader.setFrId(frDetails.getFrId());
+				sellBillHeader.setFrCode(frDetails.getFrCode());
+				sellBillHeader.setDelStatus(0);
+				sellBillHeader.setUserName(spCakeOrder.getExVar1());
+
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frDetails.getFrId());
+				PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+						PettyCashManagmt.class);
+
+				String billDate = sf.format(date);
+				if (petty != null) {
+
+					SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat ymdSDF1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+					cal.add(Calendar.DAY_OF_MONTH, 1);
+
+					billDate = ymdSDF.format(cal.getTime());
+				}
+
+				
+				sellBillHeader.setBillDate(billDate);
+				if (creditBill == 1) {
+					sellBillHeader.setStatus(3);
+					sellBillHeader.setRemainingAmt(ttlAmt);
+					sellBillHeader.setPaidAmt(0);
+				} else {
+					sellBillHeader.setStatus(2);
+					sellBillHeader.setRemainingAmt(0);
+					sellBillHeader.setPaidAmt(ttlAmt);
+
+				}
+
+				sellBillHeader.setCustId(spCakeOrder.getExInt1());
+				sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
+				sellBillHeader.setSellBillNo(0);
+				sellBillHeader.setUserGstNo(spCakeOrder.getCustGstin());
+				sellBillHeader.setUserPhone(spCakeOrder.getSpCustMobNo());
+				sellBillHeader.setUserName(frDetails.getFrName());
+				sellBillHeader.setBillType('R');
+				sellBillHeader.setTaxableAmt(taxableAmt);
+				sellBillHeader.setPayableAmt(ttlAmt);
+				sellBillHeader.setTotalTax(totalTaxAmt);
+				sellBillHeader.setGrandTotal(spGrand);
+				
+				//billType=1 => CASH
+				//billType=2 => CARD
+				//billType=3 => EPAY
+				sellBillHeader.setPaymentMode(billType);
+				sellBillHeader.setDiscountPer(spCakeOrder.getDisc());					
+				sellBillHeader.setDiscountAmt(discVal);	
+				sellBillHeader.setAdvanceAmt(spCakeOrder.getSpAdvance());
+				sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
+				sellBillHeader.setExtInt2(1);
+				
+				float roundOff = 0;
+				roundOff = (taxableAmt + totalTaxAmt) - spGrand;
+				sellBillHeader.setExtFloat1(roundOff);		
+				
+				SellBillHeader sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData",
+					sellBillHeader, SellBillHeader.class);
+				
+				/**********************************************/
+			if (sellBillHeaderRes != null) {
+				System.out.println("sellBillHeaderRes : "+sellBillHeaderRes);
+				
+					List<TransactionDetail> dList = new ArrayList<>();
+
+				TransactionDetail transactionDetail = new TransactionDetail();
+				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+				// transactionDetail.setTransactionDate(sf1.format(date));
+
+				Date dt = sf.parse(billDate);
+
+				transactionDetail.setTransactionDate(sf1.format(dt));
+
+				
+				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+				
+				
+				transactionDetail.setePayType(payType);
+				if (creditBill == 1) {
+					transactionDetail.setCashAmt(0);
+					transactionDetail.setPayMode(1);
+					transactionDetail.setExVar1("0");
+
+				} else {
+					transactionDetail.setPayMode(paymentMode);
+
+					if (paymentMode == 1) {
+
+						if (billType == 1) {
+							transactionDetail.setCashAmt(Math.round(Float.parseFloat(payAmt)));
+							transactionDetail.setExVar1("0," + payType);
+						} else if (billType == 2) {
+							transactionDetail.setCardAmt(Math.round(Float.parseFloat(payAmt)));
+							transactionDetail.setExVar1("0," + payType);
+						} else if (billType == 3) {
+							transactionDetail.setePayAmt(Math.round(Float.parseFloat(payAmt)));
+							transactionDetail.setExVar1("0," + payType);
+						}
+					} else {
+
+						String type = payTypeSplit;
+						if (cashAmt > 0) {
+							transactionDetail.setCashAmt(Math.round(cashAmt));
+						}
+						if (cardAmt > 0) {
+							transactionDetail.setCardAmt(Math.round(cardAmt));
+							// type = type + "," + 2;
+						}
+						if (epayAmt > 0) {
+							transactionDetail.setePayAmt(Math.round(epayAmt));
+							// type = type + "," + 3;
+						}
+						transactionDetail.setExVar1(type);
+					}
+
+				}
+				
+				transactionDetail.setRemark(remark);
+
+				dList.add(transactionDetail);
+				TransactionDetail[] transactionDetailRes = restTemplate
+						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+					map = new LinkedMultiValueMap<String, Object>();
+					
+					map.add("frId", frDetails.getFrId());
+					FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+							FrSetting.class);
+					
+					int sellBillNo = frSetting.getSellBillNo();
+					
+					sellBillNo = sellBillNo + 1;
+					
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("spOrderNo", spOrderNo);
+					map.add("invoiceNo", sellBillHeaderRes.getInvoiceNo());
+					map.add("frId", frDetails.getFrId());
+					message = restTemplate.postForObject(Constant.URL + "/generateSpBillOps", map,
+							Boolean.class);
+				}	
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return message;
+	}
+
+	/**************************************************/
 	// -----------------Showing of order Datails Page------------------------------
 	@RequestMapping(value = "/orderRes", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
@@ -2285,6 +2600,27 @@ public class SpCakeController {
 		}*/
 		return "redirect:/orderRes";
 
+	}
+	
+	@RequestMapping(value = "/getCustById", method = RequestMethod.GET)
+	@ResponseBody
+	public Customer getCustById(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Customer cust = new Customer();
+
+		try {
+				RestTemplate restTemplate = new RestTemplate();
+				int custId = Integer.parseInt(request.getParameter("custId"));
+	
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("custId", custId);
+				cust = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
+				cust.setCustDob(DateConvertor.convertToDMY(cust.getCustDob()));
+				//System.out.println("Customer ---- "+cust);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cust;
 	}
 	
 	

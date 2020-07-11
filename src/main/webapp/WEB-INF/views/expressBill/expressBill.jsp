@@ -161,6 +161,58 @@ input:checked+.slider:before {
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 }
+/* **************************************************** */
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 555; /* Sit on top */
+	padding-top: 60px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 8px 20px 20px 20px;
+	border: 1px solid #888;
+	width: 30%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(239, 219, 219, 0.5);
+	z-index: 9992;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -183,6 +235,9 @@ input:checked+.slider:before {
 	<c:url var="getSpOrder" value="/getSpOrder" />
 	<c:url var="dayClose" value="/dayClose" />
 	<c:url var="getSpBill" value="/getSpBill" />
+	<c:url var="getSpOrderBill" value="/getSpOrderBill" />
+	<c:url var="saveSpOrderBill" value="/saveSpOrderBill" />
+	
 
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
@@ -244,7 +299,7 @@ input:checked+.slider:before {
 									id="id"> <span class="slider round"></span></label>
 							</div>
 
-							<div class="col-md-2">
+							<div class="col-md-2">							
 								<span
 									style="padding-top: 0px; float: left; margin-top: 11px; font-size: 14px; width: 40px;">SP</span>
 								<label class="switch"> <input type="checkbox" id="sp"
@@ -1294,7 +1349,8 @@ $('#sp').change(function() {
 									var spName="";
 									if((order.spBookForMobNo).length==1)
 									{
-									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
+									tr.append(/* $('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='genBill("+order.spOrderNo+")'>Generate</button>")); */
+											$('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='openPaymentPopup("+order.spOrderNo+")'>Generate</button>"));
 									spName=order.spName+"&nbsp;&nbsp;&nbsp;	<a href='editSpOrder/"+order.spOrderNo+"'  ><span	class='fa fa-pencil'></span></a>";
 									}else
 										{
@@ -1375,7 +1431,8 @@ $('#sp').change(function() {
 									var spName="";
 									if((order.spBookForMobNo).length==1)
 										{
-										tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
+										tr.append(/* $('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='genBill("+order.spOrderNo+")'>Generate</button>")); */
+												$('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill"+order.spOrderNo+"'  onclick='openPaymentPopup("+order.spOrderNo+")'>Generate</button>"));
 										spName=order.spName+"&nbsp;&nbsp;&nbsp;	<a href='editSpOrder/'"+order.spOrderNo+" ><span	class='fa fa-pencil'></span></a>";
 										}else
 											{
@@ -1487,6 +1544,465 @@ function on() {
 
 function off() {
     document.getElementById("overlay").style.display = "none";
+}
+</script>
+<!-- ************************************************* -->
+	<div id="payment" class="modal">
+		<div class="modal-content" style="width: 75%">
+			<span class="close" onclick="closePaymentPopup()" style="opacity: 2;">&times;</span>
+
+			<h3 class="pageTitle">Payment</h3>
+
+			<div class="row">
+				<form action="saveFranchiseeEmp" id="fr_emp_form" method="post"
+					autocomplete="off">
+					<div class="col-lg-12">
+
+						<input type="hidden" name="sp_bill_no" id="sp_bill_no">
+
+						<div class="profile">
+							<div class="profilefildset">Total AMT</div>
+							<div class="profileinput" >
+							<input name="totalAmtPopup" id="totalAmtPopup" type="text"
+										class="texboxitemcode" readonly="readonly"
+										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
+							</div>							
+						</div>
+
+						<div class="profile">
+							<div class="profilefildset">Advance AMT</div>
+							<div class="profileinput" >
+							<input name="advAmtPopup" id="advAmtPopup"type="text"
+										class="texboxitemcode" readonly="readonly"
+										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
+							</div>
+							
+						</div>
+						<div class="profile">
+							<div class="profilefildset">Discount %</div>
+							<div class="profileinput" id="discountPopup">
+								<input name="discPer" id="discPer" step="0.01" readonly="readonly"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+									onchange="itemDiscPerCalculation(1)"
+									onkeyup="itemDiscPerCalculation(1)" type="text"
+									class="texboxitemcode" value="0" placeholder="Disc %"
+									style="border-radius: 20px; width: 40%; background-color: lightgrey;" />
+							</div>
+						</div>
+						<div class="profile">
+							<div class="profilefildset">Discount Amt</div>
+							<div class="profileinput">
+								<input class="texboxitemcode" type="text" name="discAmt"
+									id="discAmt"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+									onchange="itemDiscPerCalculation(2)"
+									onkeyup="itemDiscPerCalculation(2)" class="form-control"
+									 placeholder="Disc Amt"
+									style="border-radius: 20px; width: 40%; background-color: lightgrey;" />
+							</div>
+						</div>
+						<div class="profile">
+							<div class="profilefildset">Total Payable</div>
+							<div class="profileinput">
+								<input name="totalPayableAmt" id="totalPayableAmt" type="text"
+										class="texboxitemcode" readonly="readonly"
+										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
+							</div>
+							
+						</div>
+						<div class="profile">
+							<div class="profilefildset">Credit Bill</div>
+							<div class="profileinput">
+								<input type="radio"  id="creditBillyes" name="creditBill"
+									onclick="modeOfPayDivHideShow(1)"> Yes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+									type="radio"  id="creditBillno" name="creditBill"
+									onclick="modeOfPayDivHideShow(2)" checked> NO
+							</div>
+						</div>
+						
+						<div id="modeOfPayDiv">
+							<div class="profile">
+								<div class="profilefildset">Mode of Payment</div>
+								<div class="profileinput">
+									<input type="radio" id="single" name="modePay"
+										value="0" checked onclick="changeSplitSingle(1)"> Single
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<div style="display: none;">
+										<input type="radio" name="modePay" id="split" name="modePay" onclick="changeSplitSingle(2)" > Split
+								</div>
+								</div>
+							</div>
+							
+							<div id="splitDiv" style="display: none;">
+						<div class="profile">
+							<div class="profilefildset">Cash</div>
+							<div class="profileinput">
+								
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="cashCheck"
+											name="cashCheck" checked> &nbsp;  --> <input type="text"
+											id="cashAmt" name="cashAmt" class="texboxitemcode"
+											oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"
+											style="font-size: 16px;" placeholder="Cash Amount" value="0">
+										</li>
+									</ul>								
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="profile">
+							<div class="profilefildset">Card</div>
+							<div class="profileinput">
+								
+									<ul style="padding-left: 5px;">
+										<li>
+											<!-- <input type="checkbox" id="cardCheck"
+											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt"
+											name="cardAmt" class="texboxitemcode"
+											placeholder="Card Amount" value="0" style="font-size: 16px;"
+											oninput="matchSplitAmt(2)" onchange="matchSplitAmt(2)">
+										</li>
+										<li style="padding-left: 5px;"><select
+											name="cardTypeSplit" id="cardTypeSplit"
+											data-placeholder="Card Type" class="texboxitemcode"
+											style="text-align: left; font-size: 16px;">
+												<option value="" style="text-align: left;">Select
+													Card</option>
+
+												<option value="4" style="text-align: left;">Debit
+													Card</option>
+												<option value="5" style="text-align: left;">Credit
+													Card</option>
+										</select></li>
+									</ul>								
+							<div class="clr"></div>
+						</div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">E-Pay</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="epayCheck"
+											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt"
+											name="epayAmt" class="texboxitemcode"
+											placeholder="E-Pay Ammount" value="0"
+											style="font-size: 16px;" oninput="matchSplitAmt(3)"
+											onchange="matchSplitAmt(3)">
+										</li>
+										<li style="padding-left: 5px;"><select
+											name="ePayTypeSplit" id="ePayTypeSplit"
+											data-placeholder="E-Pay Type" class="texboxitemcode "
+											style="text-align: left; font-size: 16px;">
+												<option value="">E-Pay Type</option>
+
+												<option value="7" style="text-align: left;">Paytm</option>
+
+												<option value="8" style="text-align: left;">Google
+													Pay</option>
+												<option value="6" style="text-align: left;">Bank
+													Transaction</option>
+												<option value="9" style="text-align: left;">Amazon
+													Pay</option>
+										</select></li>
+
+									</ul>
+								</div>
+							</div>
+
+						</div>
+						<div class="add_frm_one">
+							<div class="texboxitemcode" id="epayLabel"></div>
+						</div>
+
+						<div class="clr"></div>
+					</div>
+						</div>	
+							<div class="profile">
+									<div class="profilefildset">Type</div>
+									<div class="profileinput">
+										<select  name="billType" id="billType" style="border-radius: 20px; width: 40%;" data-placeholder="Type"
+										onchange="onPayTypeChange(this.value)" class="texboxitemcode"
+											class="input_add " style="text-align: left;">
+											<option value="1" style="text-align: left;" selected>Cash</option>
+											<option value="2" style="text-align: left;">Card</option>
+											<option value="3" style="text-align: left;">E-Pay</option>
+										</select>
+									</div>
+								</div>
+								
+							<div class="add_frm_one" id="cardTypeDiv" style="display: none;">
+							<div class="profile">
+							<div class="profilefildset">Card Type</div>
+							<div class="profileinput">
+								<select name="cardType" id="cardType" style="border-radius: 20px; width: 40%;" 
+									data-placeholder="Card Type" class="texboxitemcode"
+									style="text-align: left; font-size: 16px;">
+									<option value="" style="text-align: left;">Select Card</option>
+
+									<option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option>
+								</select>
+
+							</div>
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one" id="epayTypeDiv" style="display: none;">
+							<div class="profile">
+							<div class="profilefildset">E-Pay Type</div>
+							<div class="profileinput">
+								<select name="ePayType" id="ePayType"
+									data-placeholder="E-Pay Type" class="texboxitemcode"
+									style="text-align: left; font-size: 16px; border-radius: 20px; width: 40%;" >
+									<option value="">Select E-Pay Type</option>
+									<option value="7" style="text-align: left;">Paytm</option>
+									<option value="8" style="text-align: left;">Google Pay</option>
+									<option value="6" style="text-align: left;">Bank
+										Transaction</option>
+
+									<option value="9" style="text-align: left;">Amazon Pay</option>
+								</select>
+							</div>
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="profile">
+								<div class="profilefildset">Amount</div>
+								<div class="profileinput">
+									<input name="payAmt" id="payAmt" type="text"
+										class="texboxitemcode" readonly="readonly"
+										value="${totalAmt-advanceAmt}" placeholder="Enter Amount"
+										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
+								</div>
+							</div>		
+							<div class="profile">
+								<div class="profilefildset">Remark</div>
+								<div class="profileinput">
+									<textarea  name="payRemark" id="payRemark" type="text" cols="3" rows="3"
+										class="texboxitemcode" placeholder="Enter Remark" style="border-radius: 20px; width: 40%;"></textarea>
+								</div>
+							</div>
+						</div>				
+					</div>
+				</form>
+			</div>
+			<div class="pop_btns">
+				<div class="close_l" style="text-align: center;">
+					<input type="submit" class="btn additem_btn" id="sbtbtn4" onclick="saveSpOrderBill()" value="Save">
+					<!-- <button class="btn additem_btn" onclick="closePaymentPopup()" id="cls_btn">Close</button> -->
+				</div>				
+				<div class="clr"></div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- ************************************************* -->
+<script type="text/javascript">
+function openPaymentPopup(spOrderNo) {
+	//alert(spOrderNo)
+	document.getElementById("genBill"+spOrderNo).disabled = true;
+
+    //end ajax send this to php page
+	   $.getJSON('${getSpOrderBill}', {
+		   spOrderNo:spOrderNo,
+        ajax : 'true'
+    }, function(data) {
+ 	   if(data!=null)
+ 		   {
+	 		  	var modal = document.getElementById("payment");
+	 			modal.style.display = "block";
+	 		  	document.getElementById("genBill"+spOrderNo).disabled = false;
+	 		   
+	 		 	
+	 		 	document.getElementById("sp_bill_no").value = data.spOrderNo;  
+ 			   	 document.getElementById("totalAmtPopup").value = data.spPrice;				
+ 				 document.getElementById("discPer").value = data.disc; 
+ 				 var discAmt = data.spPrice*(data.disc/100)
+ 				 document.getElementById("discAmt").value = discAmt; 
+ 				 var pableAmt = data.spPrice - discAmt;
+ 				 document.getElementById("totalPayableAmt").value = pableAmt;
+ 				 document.getElementById("advAmtPopup").value = data.spAdvance;
+ 		   }        
+ 	   		
+ 	   
+    });  
+	
+	
+}
+
+function saveSpOrderBill(){
+	
+	document.getElementById("sbtbtn4").disabled = true;
+	
+	var spOrderNo = $('#sp_bill_no').val();
+	var billType = $('#billType').val();	
+	var cashAmt =  $('#cashAmt').val();
+	var cardAmt =  $('#cardAmt').val();
+	var epayAmt =  $('#epayAmt').val();
+	
+	var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
+	if(billType==1){
+		payTypeFlag=0;
+		payType=1;
+	}else if(billType==2) {
+		var cardType = $('#cardType option:selected').val();
+		if(cardType=="")
+			{
+				payTypeFlag=1;
+			}
+		payType=cardType;
+		}else if(billType==3)
+			{
+			var ePayType =  $('#ePayType option:selected').val();
+			if(ePayType=="")
+			{
+				payTypeFlag=1;
+			msg="Please Select Pay Type( Card Type Or E-Pay type)";
+			}
+				payType=ePayType;
+			} 
+	var payAmt =  $('#payAmt').val() ;
+	var frtype =  $('#frtype').val() ;
+	var discPer =  $('#discPer').val() ;
+	var discAmt =  $('#discAmt').val() ;
+	
+	var creditBill = 1;
+	var single = 1;	
+	var flag=0;
+	
+	if (document.getElementById('creditBillno').checked) {
+		creditBill = 2;
+	}
+	if (document.getElementById('split').checked) {
+		single = 2;
+		if(cashAmt>0){
+			payTypeSplit=",1";
+		}
+		var cardTypeSplit = $('#cardTypeSplit option:selected').val();
+		if(cardTypeSplit=="" && cardAmt>0)
+			{
+			msg="Please Select Card Type";
+			payTypeFlag=1;
+			}else if(cardAmt>0)
+				{
+				payTypeSplit=payTypeSplit+","+cardTypeSplit;
+				}
+		var ePayTypeSplit =  $('#ePayTypeSplit option:selected').val();
+		if(ePayTypeSplit=="" && epayAmt>0)
+		{
+			msg="Please Select Card & E-pay Type";payTypeFlag=1;
+		}else if(epayAmt>0)
+		{
+			payTypeSplit=payTypeSplit+","+ePayTypeSplit;
+		}
+	}
+	
+	if (cashAmt=="") {
+		cashAmt=0;
+	}
+	if (cardAmt=="") {
+		cardAmt=0;
+	}
+	if (epayAmt=="") {
+		epayAmt=0;
+	}
+	if (discPer=="") {
+		discPer=0;
+	}
+	if (discAmt=="") {
+		discAmt=0;
+	}
+	var payRemark = $('#payRemark').val();
+	
+	  $.getJSON('${saveSpOrderBill}', {
+		    spOrderNo : spOrderNo,
+		    creditBill : creditBill,
+			paymentMode : single,
+			billType : billType,
+			payType : payType,
+			payTypeSplit : payTypeSplit,
+			cashAmt : cashAmt,
+			cardAmt : cardAmt,
+			epayAmt : epayAmt,			
+			payAmt : payAmt,
+			discPer :discPer,
+			discAmt : discAmt,
+			remark : payRemark,
+      		 ajax : 'true'
+   }, function(data) {
+	   document.getElementById("sbtbtn4").disabled = false;
+	   document.getElementById("genBill"+spOrderNo).disabled = true;
+	   if(data)
+		   {
+		   	document.getElementById("sp_bill_no").value = '';  
+		   	 document.getElementById("totalAmtPopup").value = ''; 				
+			 document.getElementById("discPer").value = '';  			 
+			 document.getElementById("discAmt").value = ''; 
+			 document.getElementById("totalPayableAmt").value = ''; 
+			 document.getElementById("advAmtPopup").value = ''; 
+			 alert("Special Cake Order Saved Successfully")
+			 closePaymentPopup();
+		   } else{
+			   document.getElementById("genBill"+spOrderNo).disabled = false;
+		   }       
+	   		
+	   
+   });  
+}
+
+function closePaymentPopup() {
+	var modal = document.getElementById("payment");
+	modal.style.display = "none";	
+}
+function modeOfPayDivHideShow(value) {
+	if (value == 2) {
+		$("#modeOfPayDiv").show();
+	} else {
+		
+		$("#modeOfPayDiv").hide();
+		 document.getElementById('single').checked = true;
+		 changeSplitSingle(1);
+		
+		
+		/*  let element = document.getElementById('billType');
+		    element.value = 1; */		    
+	}
+
+}
+
+function changeSplitSingle(value) {
+
+	if (value == 2) {
+		$("#splitDiv").show();
+		$("#singleDiv").hide();
+	} else {
+		$("#singleDiv").show();
+		$("#splitDiv").hide();
+	}
+
+}
+
+function onPayTypeChange(type){
+	if(type==1){
+		$('#cardTypeDiv').hide();
+		$('#epayTypeDiv').hide();
+	}else
+	if(type==2){
+		$('#cardTypeDiv').show();
+		$('#epayTypeDiv').hide();
+		document.getElementById("cardType").value=4;
+	}else if(type==3){
+		$('#epayTypeDiv').show();
+		$('#cardTypeDiv').hide();
+		
+		document.getElementById("ePayType").value=7;
+	}
 }
 </script>
 </body>
