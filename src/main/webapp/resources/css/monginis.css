@@ -676,6 +676,13 @@ min-height:330px /* 500px */;}
 
 
 
+/*new css for popup*/
+.mon_pop_row{display: inline-block;  width: 100%;}
+.pop_row_l{float: left; width: 48%;margin: 0 0 15px 0; text-align: left;}
+.pop_row_r{float: right; width: 48%;margin: 0 0 15px 0; text-align: left;}
+
+
+
 /*--css-divices--*/
 @media screen and (max-width:1366px){
 .wrapperIn{ width:100%;}

@@ -855,38 +855,42 @@ function exportToExcel()
 					<div class="col-lg-12">
 
 						<input type="hidden" name="sp_bill_no" id="sp_bill_no">
-
-						<div class="profile">
-							<div class="profilefildset">Total AMT</div>
+						<!-- 1 -->
+						<div class="mon_pop_row">
+							<div class="pop_row_l">
+								<div class="profilefildset">Total AMT</div>
 							<div class="profileinput" >
 							<input name="totalAmtPopup" id="totalAmtPopup" type="text"
 										class="texboxitemcode" readonly="readonly"
-										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
-							</div>							
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Advance AMT</div>
+										style="background-color: lightgrey; font-size: 16px; " />
+							</div>	
+							</div>
+							<div class="pop_row_r">
+								<div class="profilefildset">Advance AMT</div>
 							<div class="profileinput" >
 							<input name="advAmtPopup" id="advAmtPopup"type="text"
 										class="texboxitemcode" readonly="readonly"
-										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
+										style="background-color: lightgrey; font-size: 16px; " />
 							</div>
-							
-						</div>
-						<div class="profile">
-							<div class="profilefildset">Discount %</div>
+							</div>
+							<div class="clr"></div>
+						</div>	
+						
+						<!-- 2 -->
+						<div class="mon_pop_row">
+							<div class="pop_row_l">
+								<div class="profilefildset">Discount %</div>
 							<div class="profileinput" id="discountPopup">
 								<input name="discPer" id="discPer" step="0.01" readonly="readonly"
 									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 									onchange="itemDiscPerCalculation(1)"
 									onkeyup="itemDiscPerCalculation(1)" type="text"
 									class="texboxitemcode" value="0" placeholder="Disc %"
-									style="border-radius: 20px; width: 40%; background-color: lightgrey;" />
+									style=" background-color: lightgrey;" />
+							</div>	
 							</div>
-						</div>
-						<div class="profile">
-							<div class="profilefildset">Discount Amt</div>
+							<div class="pop_row_r">
+								<div class="profilefildset">Discount Amt</div>
 							<div class="profileinput">
 								<input class="texboxitemcode" type="text" name="discAmt"
 									id="discAmt"
@@ -894,44 +898,53 @@ function exportToExcel()
 									onchange="itemDiscPerCalculation(2)"
 									onkeyup="itemDiscPerCalculation(2)" class="form-control"
 									 placeholder="Disc Amt"
-									style="border-radius: 20px; width: 40%; background-color: lightgrey;" />
+									style="background-color: lightgrey;" />
 							</div>
-						</div>
-						<div class="profile">
-							<div class="profilefildset">Total Payable</div>
+							</div>
+							<div class="clr"></div>
+						</div>	
+						
+						<!-- 3 -->
+						<div class="mon_pop_row">
+							<div class="pop_row_l">
+								<div class="profilefildset">Total Payable</div>
 							<div class="profileinput">
 								<input name="totalPayableAmt" id="totalPayableAmt" type="text"
 										class="texboxitemcode" readonly="readonly"
-										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
+										style="background-color: lightgrey; font-size: 16px; " />
 							</div>
-							
-						</div>
-						<div class="profile">
-							<div class="profilefildset">Credit Bill</div>
+							</div>
+							<div class="pop_row_r">
+								<div class="profilefildset">Credit Bill</div>
 							<div class="profileinput">
-								<input type="radio"  id="creditBillyes" name="creditBill"
+								<input type="radio" id="creditBillyes" name="creditBill"
 									onclick="modeOfPayDivHideShow(1)"> Yes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-									type="radio"  id="creditBillno" name="creditBill"
+									type="radio" id="creditBillno" name="creditBill"
 									onclick="modeOfPayDivHideShow(2)" checked> NO
 							</div>
-						</div>
+							</div>
+							<div class="clr"></div>
+						</div>	
 						
 						<div id="modeOfPayDiv">
-							<div class="profile">
+							<div class="mon_pop_row" style="display: none;">
+								<div class="pop_row_l">
 								<div class="profilefildset">Mode of Payment</div>
 								<div class="profileinput">
 									<input type="radio" id="single" name="modePay"
 										value="0" checked onclick="changeSplitSingle(1)"> Single
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<div style="display: none;">
+									
 										<input type="radio" name="modePay" id="split" name="modePay" onclick="changeSplitSingle(2)" > Split
 								</div>
-								</div>
+							</div>
+							<div class="pop_row_r">&nbsp;</div>
 							</div>
 							
 							<div id="splitDiv" style="display: none;">
-						<div class="profile">
-							<div class="profilefildset">Cash</div>
+								<div class="mon_pop_row">
+									<div class="pop_row_l">
+										<div class="profilefildset">Cash</div>
 							<div class="profileinput">
 								
 									<ul>
@@ -944,11 +957,9 @@ function exportToExcel()
 										</li>
 									</ul>								
 							</div>
-							<div class="clr"></div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Card</div>
+									</div>
+									<div class="pop_row_r">
+										<div class="profilefildset">Card</div>
 							<div class="profileinput">
 								
 									<ul style="padding-left: 5px;">
@@ -974,9 +985,12 @@ function exportToExcel()
 									</ul>								
 							<div class="clr"></div>
 						</div>
-
-						<div class="add_frm_one">
-							<div class="add_customer_one">E-Pay</div>
+									</div>
+									<div class="clr"></div>
+								</div>
+								<div class="mon_pop_row">
+									<div class="pop_row_l">
+										<div class="add_customer_one">E-Pay</div>
 							<div class="add_input">
 								<div class="radio_row popup_radio">
 									<ul>
@@ -1007,19 +1021,20 @@ function exportToExcel()
 									</ul>
 								</div>
 							</div>
-
-						</div>
-						<div class="add_frm_one">
 							<div class="texboxitemcode" id="epayLabel"></div>
-						</div>
-
-						<div class="clr"></div>
-					</div>
-						</div>	
-							<div class="profile">
-									<div class="profilefildset">Type</div>
+									</div>
+									<div class="pop_row_r">&nbsp;</div>
+									<div class="clr"></div>
+								</div>
+								
+							</div>
+							
+							<div class="mon_pop_row" >
+							
+							<div class="pop_row_l">
+								<div class="profilefildset">Type</div>
 									<div class="profileinput">
-										<select  name="billType" id="billType" style="border-radius: 20px; width: 40%;" data-placeholder="Type"
+										<select  name="billType" id="billType" style="" data-placeholder="Type"
 										onchange="onPayTypeChange(this.value)" class="texboxitemcode"
 											class="input_add " style="text-align: left;">
 											<option value="1" style="text-align: left;" selected>Cash</option>
@@ -1027,13 +1042,11 @@ function exportToExcel()
 											<option value="3" style="text-align: left;">E-Pay</option>
 										</select>
 									</div>
-								</div>
-								
-							<div class="add_frm_one" id="cardTypeDiv" style="display: none;">
-							<div class="profile">
-							<div class="profilefildset">Card Type</div>
+							</div>
+							<div class="pop_row_r" id="cardTypeDiv" style="display: none;">
+								<div class="profilefildset">Card Type</div>
 							<div class="profileinput">
-								<select name="cardType" id="cardType" style="border-radius: 20px; width: 40%;" 
+								<select name="cardType" id="cardType"  
 									data-placeholder="Card Type" class="texboxitemcode"
 									style="text-align: left; font-size: 16px;">
 									<option value="" style="text-align: left;">Select Card</option>
@@ -1045,15 +1058,12 @@ function exportToExcel()
 
 							</div>
 							</div>
-							<div class="clr"></div>
-						</div>
-						<div class="add_frm_one" id="epayTypeDiv" style="display: none;">
-							<div class="profile">
-							<div class="profilefildset">E-Pay Type</div>
+							<div class="pop_row_r"  id="epayTypeDiv" style="display: none;">
+								<div class="profilefildset">E-Pay Type</div>
 							<div class="profileinput">
 								<select name="ePayType" id="ePayType"
 									data-placeholder="E-Pay Type" class="texboxitemcode"
-									style="text-align: left; font-size: 16px; border-radius: 20px; width: 40%;" >
+									style="text-align: left; font-size: 16px; " >
 									<option value="">Select E-Pay Type</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
@@ -1064,25 +1074,29 @@ function exportToExcel()
 								</select>
 							</div>
 							</div>
-							<div class="clr"></div>
-						</div>
-						<div class="profile">
+							<div class="pop_row_r">
 								<div class="profilefildset">Amount</div>
 								<div class="profileinput">
 									<input name="payAmt" id="payAmt" type="text"
 										class="texboxitemcode" readonly="readonly"
 										value="${totalAmt-advanceAmt}" placeholder="Enter Amount"
-										style="background-color: lightgrey; font-size: 16px; border-radius: 20px; width: 40%;" />
+										style="background-color: lightgrey; font-size: 16px;" />
 								</div>
-							</div>		
-							<div class="profile">
+							</div>
+							<div class="pop_row_l">
 								<div class="profilefildset">Remark</div>
 								<div class="profileinput">
 									<textarea  name="payRemark" id="payRemark" type="text" cols="3" rows="3"
-										class="texboxitemcode" placeholder="Enter Remark" style="border-radius: 20px; width: 40%;"></textarea>
+										class="texboxitemcode" placeholder="Enter Remark" style="resize: none;"></textarea>
 								</div>
 							</div>
-						</div>				
+						</div>
+						
+							
+							
+						</div>
+						
+									
 					</div>
 				</form>
 			</div>
