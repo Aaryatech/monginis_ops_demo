@@ -7,12 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
+<title>ATS</title>
 <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />
 <link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
+	href="${pageContext.request.contextPath}/resources/images/atsfav.png"
 	type="image/x-icon" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
@@ -115,7 +115,7 @@
 					<div class="loginInner">
 					
 						<div class="login_l"><a href=""><img
-						src="${pageContext.request.contextPath}/resources/images/monginis1.png"
+						src="${pageContext.request.contextPath}/resources/images/ats-logo.png"
 						alt="monginis"></a>
 						
 						<p class="login_txt">

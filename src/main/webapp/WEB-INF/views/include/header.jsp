@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
+<title>ATS</title>
 <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />
@@ -18,7 +18,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/lightbox.css">
 <link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
+	href="${pageContext.request.contextPath}/resources/images/atsfav.png"
 	type="image/x-icon" />
 	
 	<link
